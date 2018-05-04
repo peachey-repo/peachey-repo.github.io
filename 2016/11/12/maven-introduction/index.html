@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>maven-introduction | Peachey Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="Maven" />
+    
+    <meta name="description" content="在业余时间对Maven的文档做了一个翻译，由于本人的水平有限，可能会有一些出入，欢迎指正。这个指南意欲为第一次使用Maven的人做参考，同时也是作为一个常见用例的指南。对于第一次使用的人，推荐按这个指南的步骤去学习，对于比较熟悉Maven的人来说，这个指南尽量为目前的需求提供一个快速的解决方案。以下的教程是假设读者已经下载Maven并将Maven本地安装的前提下，如果没有进行次步，请点击这个链">
+<meta name="keywords" content="Maven">
+<meta property="og:type" content="article">
+<meta property="og:title" content="maven-introduction">
+<meta property="og:url" content="peachey.blog/2016/11/12/maven-introduction/index.html">
+<meta property="og:site_name" content="Peachey Blog">
+<meta property="og:description" content="在业余时间对Maven的文档做了一个翻译，由于本人的水平有限，可能会有一些出入，欢迎指正。这个指南意欲为第一次使用Maven的人做参考，同时也是作为一个常见用例的指南。对于第一次使用的人，推荐按这个指南的步骤去学习，对于比较熟悉Maven的人来说，这个指南尽量为目前的需求提供一个快速的解决方案。以下的教程是假设读者已经下载Maven并将Maven本地安装的前提下，如果没有进行次步，请点击这个链">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="/img/maven.jpg">
+<meta property="og:updated_time" content="2018-05-04T14:28:19.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="maven-introduction">
+<meta name="twitter:description" content="在业余时间对Maven的文档做了一个翻译，由于本人的水平有限，可能会有一些出入，欢迎指正。这个指南意欲为第一次使用Maven的人做参考，同时也是作为一个常见用例的指南。对于第一次使用的人，推荐按这个指南的步骤去学习，对于比较熟悉Maven的人来说，这个指南尽量为目前的需求提供一个快速的解决方案。以下的教程是假设读者已经下载Maven并将Maven本地安装的前提下，如果没有进行次步，请点击这个链">
+<meta name="twitter:image" content="/img/maven.jpg">
+    
+
+    
+        <link rel="alternate" href="/" title="Peachey Blog" type="application/atom+xml" />
+    
+
+    
+        <link rel="icon" href="/images/favicon.ico" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Java/">Java</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Mysql/">Mysql</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Python/">Python</a></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/Java/">Java</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-maven-introduction" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        maven-introduction
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2016/11/12/maven-introduction/" class="article-date">
+            <time datetime="2016-11-12T14:25:44.000Z" itemprop="datePublished">2016-11-12</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Maven/">Maven</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p><img src="/img/maven.jpg" alt=""></p>
+<blockquote>
+<p>在业余时间对Maven的文档做了一个翻译，由于本人的水平有限，可能会有一些出入，欢迎指正。<br>这个指南意欲为第一次使用Maven的人做参考，同时也是作为一个常见用例的指南。对于第一次使用的人，推荐按这个指南的步骤去学习，对于比较熟悉Maven的人来说，这个指南尽量为目前的需求提供一个快速的解决方案。以下的教程是假设读者已经下载Maven并将Maven本地安装的前提下，如果没有进行次步，请点击这个链接下载和安装下载并安装。<br>好了，现在你应该已经安装了Maven,我们即将开始。在我们介绍例子之前，我们先会简介的介绍一下什么是Maven、Maven怎样帮助你做日常工作以及与团队协作。当然,Maven对于小项目很有效，但是Maven同样能够很有效的使团队成员聚焦于项目的更重要的部分，基础架构的建立完全可以交给Maven.</p>
+</blockquote>
+<h5 id="小结目录"><a href="#小结目录" class="headerlink" title="小结目录"></a>小结目录</h5><ul>
+<li><a href="#1">什么是Maven？</a></li>
+<li><a href="#2">Mavne如何使我的开发流程受益？</a></li>
+<li><a href="#3">我如何初始化Maven？</a></li>
+<li><a href="#4">我如何建立第一个Maven项目？</a></li>
+<li><a href="#5">我如何编译应用源码？</a></li>
+<li><a href="#6">我如何编译测试源码并且做单元测试？</a></li>
+<li><a href="#7">我如何创建一个jar文件并且将之安装到我的本地仓库？</a></li>
+<li><a href="#8">什么是SNAPSHOT版本？</a></li>
+<li><a href="#9">我如何使用插件？</a></li>
+<li><a href="#10">我如何将资源添加到jar文件当中？</a></li>
+<li><a href="#11">我如何过滤资源文件？</a></li>
+<li><a href="#12">我如何使用外部的依赖？</a></li>
+<li><a href="#13">我如何发布jar到远程仓库？</a></li>
+<li><a href="#14">我如何创建帮助文档？</a></li>
+<li><a href="#15">我如何构建其他类型的项目？</a></li>
+<li><a href="#16">我如何同时构建多个项目？</a></li>
+</ul>
+<p><span id="1"></span></p>
+<h5 id="什么是Maven？"><a href="#什么是Maven？" class="headerlink" title="什么是Maven？"></a>什么是Maven？</h5><p>大致一看，Maven貌似有很多东西，但是简单来说，Maven是对于模型化创建项目基础结构的一种尝试，通过一种清晰的并且拥有最佳实践效果的目录来提高生产率和项目的可读性。Maven是一款项目管理和理解项目的工具，通过以下方式来管理项目：</p>
+<ul>
+<li>构建</li>
+<li>帮助文档</li>
+<li>报告</li>
+<li>依赖</li>
+<li>软件配置管理</li>
+<li>发行</li>
+<li>发布<br>如果你想知道更多关于Maven的背景知识，你可以查阅<a href="http://maven.apache.org/background/philosophy-of-maven.html" target="_blank" rel="noopener">Maven的哲学</a>以及<a href="http://maven.apache.org/background/history-of-maven.html" target="_blank" rel="noopener">Maven的历史</a>。接下来开始讲述如何让用户受益于Maven。</li>
+</ul>
+<p><span id="2"></span></p>
+<h5 id="Mavne如何使我的开发流程受益？"><a href="#Mavne如何使我的开发流程受益？" class="headerlink" title="Mavne如何使我的开发流程受益？"></a>Mavne如何使我的开发流程受益？</h5><p>Maven有助于你项目的构建过程，Maven通过使用标准约定和惯例来加速你的开发周期，同时有助于提高你的项目开发的成功率。<br>现在我们概述了一些关于Maven的历史和目的，让我们通过几个实际的例子来帮助你使用Maven!</p>
+<p><span id="3"></span></p>
+<h5 id="我如何初始化Maven？"><a href="#我如何初始化Maven？" class="headerlink" title="我如何初始化Maven？"></a>我如何初始化Maven？</h5><p>Maven的默认配置通常都很高效，但是如果你需要改变缓存位置，或通过HTTP代理使用Maven，你需要创建配置文件，具体请看<a href="http://maven.apache.org/guides/mini/guide-configuring-maven.html" target="_blank" rel="noopener">Maven配置指南</a></p>
+<p><span id="4"></span></p>
+<h5 id="我如何建立第一个Maven项目？"><a href="#我如何建立第一个Maven项目？" class="headerlink" title="我如何建立第一个Maven项目？"></a>我如何建立第一个Maven项目？</h5><p>我们将要开始创建你的第一个Maven项目！为了创建我们第一个Maven项目，我们需要利用Maven的archetype插件。archetype被定义为原始的类型或者模型，是从所有拥有相似成分的东西抽象出来的。在Maven中，archetype是一个项目模板，包含了一些针对用户需求生成的一些上线的Maven项目的特性。现在我们将要展示archetype插件如何工作，但是如果你想知道更多的关于archetype的信息，请看<a href="http://maven.apache.org/guides/introduction/introduction-to-archetypes.html" target="_blank" rel="noopener">Archetypes介绍</a>。<br>开始创建你的第一个项目，为了创建最简单的Maven项目，请执行如下命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mvn -B archetype:generate \</span><br><span class="line">  -DarchetypeGroupId=org.apache.maven.archetypes \</span><br><span class="line">  -DgroupId=com.mycompany.app \</span><br><span class="line">  -DartifactId=my-app</span><br></pre></td></tr></table></figure></p>
+<p>一旦你执行了这条命令，你将会发现一些事情会发生。首先你会注意到一个名称为<code>my-app</code>的目录被创建为一个新的项目，冰鞋这个目录包含一个名称为<code>pom.xml</code>的文件，如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">"http://maven.apache.org/POM/4.0.0"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://maven.apache.org/POM/4.0.0</span></span></span><br><span class="line"><span class="tag"><span class="string">                      http://maven.apache.org/xsd/maven-4.0.0.xsd"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.mycompany.app<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>my-app<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">packaging</span>&gt;</span>jar<span class="tag">&lt;/<span class="name">packaging</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>Maven Quick Start Archetype<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://maven.apache.org<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.11<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><code>pom.xml</code>包含此项目的项目对象模型(POM).POM是Maven的最小工作单元，这个很重要，需要记住，因为Maven所有的围绕关于项目概念的东西是项目式的，简单来说，POM包含了所有关于你的项目重要的信息片段，而且基本上是以一站式服务的形式来找到所有关于你的项目的的东西。明白POM是很重要的，新手推荐看一下<a href="http://maven.apache.org/guides/introduction/introduction-to-the-pom.html" target="_blank" rel="noopener">POM简介</a>。<br>上边pom文件描述的是一个很简单的POM，但是仍然展现出了每个POM的关键元素，因此让我们通过他们来了解POM的要点：</li>
+<li><code>project</code>:这是所有Maven的pom.xml的顶层元素</li>
+<li><code>modelVersion</code>:这个元素表明当前POM所使用什么版本的对象模型。这个版本号很少发生改变，为了确保使用的稳定性，这是强制的，有但也是很少就是当Maven开发人员觉得有必要改变模型的时候。</li>
+<li><code>groupId</code>:这个元素代表创建这个项目的组织或小组的唯一标识。这个groupId是一个项目的关键标识符，很典型的做法是基于你组织的经过完全认证的域名。比如org.apache.maven.plugins是所有Maven插件的指定groupId。</li>
+<li><code>artifactId</code>：这个元素代表着个项目生成的初级artifact的唯一基名。一个项目的初级artifact通常都是一个jar文件。二级artifacts比如源码包经常会使用artifactId作为他们最终名称的一部分。一个Mavne生成的典型的artifact应该有类似-.的命名模式。(例如myapp-1.0.jar)</li>
+<li><code>packaging</code>:这个元素代表打包类型，比如jar,war,ear等等。这不仅意味artifact生成文件是jar,war或者ear，而且指出在构建过程中使用的特定的生命周期。(生命周期这个主题我们将会在指南的接下来进行讲述。现在，只需记住一个项目的打包类型可以在定制的构建生命周期当中发挥作用).packaging元素的默认值是jar，因此你在大多数项目中没有必要去指定。</li>
+<li><code>version</code>:这个元素代表项目生成的artifact的版本。Maven的版本管理对你大有帮助并且你经常在版本号中看到SNAPSHOT，这表明这个项目还处于开发的阶段，我们将会讨论snapshots的使用以及在本指南中其有何进一步功用。</li>
+<li><code>name</code>:这个元素代表项目的显示名称，经常在Maven生成文档的使用被用到。</li>
+<li><code>description</code>:这个元素提供了为你的项目提供了一个基本的描述。这个也经常在Maven生成文档时候被用到。<br>对于适合在POM中使用的元素的完全参考，请参考<a href="http://maven.apache.org/ref/3.3.9/maven-model/maven.html" target="_blank" rel="noopener">POM参考</a>，现在让我们返回到项目。<br>在通过archetype生成你的第一个项目后，你会注意到如下的目录结构被创建了：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">my-app</span><br><span class="line">|-- pom.xml</span><br><span class="line">`-- src</span><br><span class="line">    |-- main</span><br><span class="line">    |   `-- java</span><br><span class="line">    |       `-- com</span><br><span class="line">    |           `-- mycompany</span><br><span class="line">    |               `-- app</span><br><span class="line">    |                   `-- App.java</span><br><span class="line">    `-- test</span><br><span class="line">        `-- java</span><br><span class="line">            `-- com</span><br><span class="line">                `-- mycompany</span><br><span class="line">                    `-- app</span><br><span class="line">                        `-- AppTest.java</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>正如你看到的，这个项目拥有一个POM和一个你的应用源码的源码目录树以及一个你的测试代码的源码目录树。这个是Maven项目的标准布局(应用源码在<code>${basedir}/src/main/java</code>中，测试代码在<code>${basedir}/src/test/java,${basedir}</code>代表包含<code>pom.xml</code>文件的目录)。<br>如果你准备创建一个maven项目，这中目录结构是我们推荐使用的。这是一个Maven的约定，想要了解更多，你可以阅读标准目录布局介绍。<br>现在我们拥有一个POM，一些应用源码，一些测试代码，你有可能会问…</p>
+<p><span id="5"></span></p>
+<h5 id="我如何编译应用源码？"><a href="#我如何编译应用源码？" class="headerlink" title="我如何编译应用源码？"></a>我如何编译应用源码？</h5><p>将目录改变到pom.xml所在的目录并且执行如下的命令来编译你的应用源码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn compile</span><br></pre></td></tr></table></figure></p>
+<p>在执行了这条命令后你应该看到如下的输出：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">[INFO] ----------------------------------------------------------------------------</span><br><span class="line">[INFO] Building Maven Quick Start Archetype</span><br><span class="line">[INFO]    task-segment: [compile]</span><br><span class="line">[INFO] ----------------------------------------------------------------------------</span><br><span class="line">[INFO] artifact org.apache.maven.plugins:maven-resources-plugin: \</span><br><span class="line">  checking for updates from central</span><br><span class="line">...</span><br><span class="line">[INFO] artifact org.apache.maven.plugins:maven-compiler-plugin: \</span><br><span class="line">  checking for updates from central</span><br><span class="line">...</span><br><span class="line">[INFO] [resources:resources]</span><br><span class="line">...</span><br><span class="line">[INFO] [compiler:compile]</span><br><span class="line">Compiling 1 source file to &lt;dir&gt;/my-app/target/classes</span><br><span class="line">[INFO] ----------------------------------------------------------------------------</span><br><span class="line">[INFO] BUILD SUCCESSFUL</span><br><span class="line">[INFO] ----------------------------------------------------------------------------</span><br><span class="line">[INFO] Total time: 3 minutes 54 seconds</span><br><span class="line">[INFO] Finished at: Fri Sep 23 15:48:34 GMT-05:00 2005</span><br><span class="line">[INFO] Final Memory: 2M/6M</span><br><span class="line">[INFO] ----------------------------------------------------------------------------</span><br></pre></td></tr></table></figure></p>
+<p>第一次你执行这个命令，Maven将会下载执行此命令的所有的插件和相关的依赖。初始安装Maven，这个过程将会需要一段时间来完成(从上面的输出来看，这将会需要大约4分钟)。如果你再次执行这个命令，Maven会拥有它所有的需要的，因此它不会下载任何新的东西，并且会很快的执行这条命令。</p>
+<p>正如你从输出中可以看到的，编译后的class文件将会被放在<code>${basedir}/target/classes</code>,这是Maven的另外一个通常的约定。因此，如果你的观察很敏锐，你会发现利用通常的约定，POM篇幅很小，你不用很明确的告诉Maven你的源码在哪里，应该向什么地方输出。通过利用通常的Maven约定，你花费很小的力气可以获得很多的便利！</p>
+<p><span id="6"></span></p>
+<h5 id="我如何编译测试源码并且做单元测试？"><a href="#我如何编译测试源码并且做单元测试？" class="headerlink" title="我如何编译测试源码并且做单元测试？"></a>我如何编译测试源码并且做单元测试？</h5><p>现在你成功的编译了你的应用源码并且现在你需要做一些单元测试，这些测试代码需要编译和执行(因为每个程序员总是编写和执行他们的单元测试)<br>执行 如下的命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn test</span><br></pre></td></tr></table></figure></p>
+<p>执行这条命令，你应该看到如下的输出：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">[INFO] ----------------------------------------------------------------------------</span><br><span class="line">[INFO] Building Maven Quick Start Archetype</span><br><span class="line">[INFO]    task-segment: [test]</span><br><span class="line">[INFO] ----------------------------------------------------------------------------</span><br><span class="line">[INFO] artifact org.apache.maven.plugins:maven-surefire-plugin: \</span><br><span class="line">  checking for updates from central</span><br><span class="line">...</span><br><span class="line">[INFO] [resources:resources]</span><br><span class="line">[INFO] [compiler:compile]</span><br><span class="line">[INFO] Nothing to compile - all classes are up to date</span><br><span class="line">[INFO] [resources:testResources]</span><br><span class="line">[INFO] [compiler:testCompile]</span><br><span class="line">Compiling 1 source file to C:\Test\Maven2\test\my-app\target\test-classes</span><br><span class="line">...</span><br><span class="line">[INFO] [surefire:test]</span><br><span class="line">[INFO] Setting reports dir: C:\Test\Maven2\test\my-app\target/surefire-reports</span><br><span class="line"> </span><br><span class="line">-------------------------------------------------------</span><br><span class="line"> T E S T S</span><br><span class="line">-------------------------------------------------------</span><br><span class="line">[surefire] Running com.mycompany.app.AppTest</span><br><span class="line">[surefire] Tests run: 1, Failures: 0, Errors: 0, Time elapsed: 0 sec</span><br><span class="line"> </span><br><span class="line">Results :</span><br><span class="line">[surefire] Tests run: 1, Failures: 0, Errors: 0</span><br><span class="line"> </span><br><span class="line">[INFO] ----------------------------------------------------------------------------</span><br><span class="line">[INFO] BUILD SUCCESSFUL</span><br><span class="line">[INFO] ----------------------------------------------------------------------------</span><br><span class="line">[INFO] Total time: 15 seconds</span><br><span class="line">[INFO] Finished at: Thu Oct 06 08:12:17 MDT 2005</span><br><span class="line">[INFO] Final Memory: 2M/8M</span><br><span class="line">[INFO] ----------------------------------------------------------------------------</span><br></pre></td></tr></table></figure></p>
+<p>一些需要注意的是：<br>-Maven这次下载了更多的依赖，这些事执行测试需要的依赖和插件，但是对于已经存在的是不会下载的(本地仓库)<br>-在编译和执行测试之前，Maven编译主要的代码(所有的class文件都是最新的，只要我们在编译以后不改变任何东西)<br>如果你简单的想编译你的测试代码(并不去执行)，你可以执行如下命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn test-compile</span><br></pre></td></tr></table></figure></p>
+<p>现在你可以编译你的应用源码，编译你的测试代码，并且执行测试，你想继续下一步，你将会问…</p>
+<p><span id="7"></span></p>
+<h5 id="我如何创建一个jar文件并且将之安装到我的本地仓库？"><a href="#我如何创建一个jar文件并且将之安装到我的本地仓库？" class="headerlink" title="我如何创建一个jar文件并且将之安装到我的本地仓库？"></a>我如何创建一个jar文件并且将之安装到我的本地仓库？</h5><p>创建一个jar文件很简单，执行如下命令就可以了：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn package</span><br></pre></td></tr></table></figure></p>
+<p>如果你看一下你项目的POM你就会发现<code>packaging</code>元素是被设置为<code>jar</code>的。这就是为什么Maven知道去生成一个jar文件的原因了。你查看一下<code>${basedir}/target</code>目录你就会看到生成的jar文件。<br>现在你将想去安装你生成的artifact(jar文件)到你的本地仓库(<code>${user.home/.m2/repository</code>是默认位置)。想了解更到关于仓库的信息，你可以查看<a href="http://maven.apache.org/guides/introduction/introduction-to-repositories.html" target="_blank" rel="noopener">仓库介绍</a>，接着让我们继续安装我们的artifact执行如下的命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn install</span><br></pre></td></tr></table></figure></p>
+<p>执行命令后你应该看到如下的输出：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">[INFO] ----------------------------------------------------------------------------</span><br><span class="line">[INFO] Building Maven Quick Start Archetype</span><br><span class="line">[INFO]    task-segment: [install]</span><br><span class="line">[INFO] ----------------------------------------------------------------------------</span><br><span class="line">[INFO] [resources:resources]</span><br><span class="line">[INFO] [compiler:compile]</span><br><span class="line">Compiling 1 source file to &lt;dir&gt;/my-app/target/classes</span><br><span class="line">[INFO] [resources:testResources]</span><br><span class="line">[INFO] [compiler:testCompile]</span><br><span class="line">Compiling 1 source file to &lt;dir&gt;/my-app/target/test-classes</span><br><span class="line">[INFO] [surefire:test]</span><br><span class="line">[INFO] Setting reports dir: &lt;dir&gt;/my-app/target/surefire-reports</span><br><span class="line"> </span><br><span class="line">-------------------------------------------------------</span><br><span class="line"> T E S T S</span><br><span class="line">-------------------------------------------------------</span><br><span class="line">[surefire] Running com.mycompany.app.AppTest</span><br><span class="line">[surefire] Tests run: 1, Failures: 0, Errors: 0, Time elapsed: 0.001 sec</span><br><span class="line"> </span><br><span class="line">Results :</span><br><span class="line">[surefire] Tests run: 1, Failures: 0, Errors: 0</span><br><span class="line"> </span><br><span class="line">[INFO] [jar:jar]</span><br><span class="line">[INFO] Building jar: &lt;dir&gt;/my-app/target/my-app-1.0-SNAPSHOT.jar</span><br><span class="line">[INFO] [install:install]</span><br><span class="line">[INFO] Installing &lt;dir&gt;/my-app/target/my-app-1.0-SNAPSHOT.jar to \</span><br><span class="line">   &lt;local-repository&gt;/com/mycompany/app/my-app/1.0-SNAPSHOT/my-app-1.0-SNAPSHOT.jar</span><br><span class="line">[INFO] ----------------------------------------------------------------------------</span><br><span class="line">[INFO] BUILD SUCCESSFUL</span><br><span class="line">[INFO] ----------------------------------------------------------------------------</span><br><span class="line">[INFO] Total time: 5 seconds</span><br><span class="line">[INFO] Finished at: Tue Oct 04 13:20:32 GMT-05:00 2005</span><br><span class="line">[INFO] Final Memory: 3M/8M</span><br><span class="line">[INFO] ----------------------------------------------------------------------------</span><br></pre></td></tr></table></figure></p>
+<p>注意surefire插件(用于执行测试)通过特定的文件命名约定去寻找测试代码。默认的命名规则如下：<br><code>**/*Test.java</code><br><code>**/Test*.java</code><br><code>**/*TestCase.java</code><br>但是默认的不包括如下：<br><code>**/Abstract*Test.java</code><br><code>**/Abstract*TestCase.java</code><br>你已经走了初始化、构建、测试、打包和安装整个流程，这是Maven项目的典型过程。如果你已经注意的话，这就是大部分项目利用Maven来做的工作。所有你能够做的都在这个18行的文件中即项目模型或POM。如果你了解利用Ant创建相同功能的文件，你会发现篇幅一般是POM的两倍。Maven可以给你提供更多的功能而且不用更多的设置。利用Ant得到更多的功能，你必须注意各种容易错的条件。<br>什么东西还是你可以免费得到的呢？这里有很多的Maven插件。我们这里提及一个插件，它是Maven的一个重要特性之一。POM中不用任何多余的设置，可以为你的项目生成一个站点。你可能会想去定制化你的Maven站点，但是假如你想很快为你的项目提供一个基本信息的介绍，那么可以执行如下的命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn site</span><br></pre></td></tr></table></figure></p>
+<p>这里也有很多独立的功能可以去执行，例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn clean</span><br></pre></td></tr></table></figure></p>
+<p>这个命令将会删除<code>target</code>目录和其中的所有构建数据，就类似开始的样子.<br>可能你想为项目生成一个intellij idea的描述？<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn idea:idea</span><br></pre></td></tr></table></figure></p>
+<p>这样就可以运行在IDEA中，这将会更新设置，而不是恢复成最开始的样子。<br>如果你使用Eclipse IDE,只需：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn eclipse:eclipse</span><br></pre></td></tr></table></figure></p>
+<p>注意：许多类似的Maven1.0目标还存在，比如<code>jar:jar</code>,但是他们的结果可能和你所期望的是不一样的，现在jar:jar不会重新编译源码，它只会简单的利用<code>target/classes</code>来创建jar文件，会假设所有的东西在之前已经做了，比如说编译。</p>
+<p><span id="8"></span></p>
+<h5 id="什么是SNAPSHOT版本？"><a href="#什么是SNAPSHOT版本？" class="headerlink" title="什么是SNAPSHOT版本？"></a>什么是SNAPSHOT版本？</h5><p>注意<code>pom.xml</code>中版本号的值会带有<code>-SNAPSHOT</code>的后缀。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;</span><br><span class="line">  ...</span><br><span class="line">  &lt;groupId&gt;...&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;my-app&lt;/artifactId&gt;</span><br><span class="line">  ...</span><br><span class="line">  &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;</span><br><span class="line">  &lt;name&gt;Maven Quick Start Archetype&lt;/name&gt;</span><br><span class="line">  ...</span><br></pre></td></tr></table></figure></p>
+<p><code>SNAPSHOT</code>指开发分支的最新的代码，无法保证代码是稳定的或者不会改变的。相反的，<code>release</code>版本的代码是不会改变的。<br>换句话说，<code>SNAPSHOT</code>版本是<code>release</code>之前的开发版本。<br>在发布过程中，版本例如<code>x.y-SNAPSHOT</code>会变成<code>x.y</code>。发布过程经常会增量开发版本为<code>x.(y+1)-SNAPSHOT</code>。比如：版本号<code>1.0-SNAPSHOT</code>的发布版本为<code>1.0</code>,并且新的开发版本为<code>1.1-SNAPSHOT</code>。</p>
+<p><span id="9"></span></p>
+<h5 id="我如何使用插件？"><a href="#我如何使用插件？" class="headerlink" title="我如何使用插件？"></a>我如何使用插件？</h5><p>无论何时你想去定制化你的Maven项目，所需做的就是添加或重新配置插件。<br>Maven 1.0的用户请注意：在Maven1.0中，你可能会添加一些preGoal到maven.xml并且在project.properties中添加一些条目。这里有些变化。</p>
+<p>比如，我们将会配置java编译器能够编译jdk 5.0的代码，只需在你的POM中如下配置即可：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;build&gt;</span><br><span class="line">  &lt;plugins&gt;</span><br><span class="line">    &lt;plugin&gt;</span><br><span class="line">      &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</span><br><span class="line">      &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;</span><br><span class="line">      &lt;version&gt;3.3&lt;/version&gt;</span><br><span class="line">      &lt;configuration&gt;</span><br><span class="line">        &lt;source&gt;1.5&lt;/source&gt;</span><br><span class="line">        &lt;target&gt;1.5&lt;/target&gt;</span><br><span class="line">      &lt;/configuration&gt;</span><br><span class="line">    &lt;/plugin&gt;</span><br><span class="line">  &lt;/plugins&gt;</span><br><span class="line">&lt;/build&gt;</span><br></pre></td></tr></table></figure></p>
+<p>你会注意所有的Maven插件都在某种程度上类似依赖，插件会自动的下载和使用，而且是一个确定的版本。<br><code>configuration</code>元素会将给定的参数应用到每个目标。在以上的案例中，编译插件被作为构建过程的一部分，也可以在过程中添加新的目标并配置指定的目标。想了解更多的信息，请看<a href="http://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html" target="_blank" rel="noopener">生命周期构建简介</a><br>想查看什么配置适合一个插件，你可以看<a href="http://maven.apache.org/plugins/" target="_blank" rel="noopener">插件列表</a>并导航到你在使用的插件和目标。对于怎样配置插件的合适参数，可以查看<a href="http://maven.apache.org/guides/mini/guide-configuring-plugins.html" target="_blank" rel="noopener">插件配置指南</a></p>
+<p><span id="10"></span></p>
+<h5 id="我如何将资源添加到jar文件当中？"><a href="#我如何将资源添加到jar文件当中？" class="headerlink" title="我如何将资源添加到jar文件当中？"></a>我如何将资源添加到jar文件当中？</h5><p>另外一个很常用的案例是不需要做任何POM改变，可以将资源我文件打包到Jar文件当中。对于这个功能，Maven需要依赖标准的目录结构,意思是利用标准的Maven约定将资源放在约定的<a href="http://maven.apache.org/guides/introduction/introduction-to-the-standard-directory-layout.html" target="_blank" rel="noopener">目录结构</a>，你可以将资源打包到jar文件。<br>看下边的例子，我们可以将想打包的资源文件放在目录<code>${basedir}/src/main/resources</code>。这个简单的规则是说:任何在<code>{basedir}/src/main/resources</code>目录下的目录或文件都会打包到你的jar文件中，而且目录结构也是一样的，基目录的jar文件的根目录。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">my-app</span><br><span class="line">|-- pom.xml</span><br><span class="line">`-- src</span><br><span class="line">    |-- main</span><br><span class="line">    |   |-- java</span><br><span class="line">    |   |   `-- com</span><br><span class="line">    |   |       `-- mycompany</span><br><span class="line">    |   |           `-- app</span><br><span class="line">    |   |               `-- App.java</span><br><span class="line">    |   `-- resources</span><br><span class="line">    |       `-- META-INF</span><br><span class="line">    |           `-- application.properties</span><br><span class="line">    `-- test</span><br><span class="line">        `-- java</span><br><span class="line">            `-- com</span><br><span class="line">                `-- mycompany</span><br><span class="line">                    `-- app</span><br><span class="line">                        `-- AppTest.java</span><br></pre></td></tr></table></figure></p>
+<p>在打包的<code>jar</code>文件中会有一个<code>META-INF</code>目录中有文件<code>appllication.properties</code>。如果你解包jar文件，你可以看到类似如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">|-- META-INF</span><br><span class="line">|   |-- MANIFEST.MF</span><br><span class="line">|   |-- application.properties</span><br><span class="line">|   `-- maven</span><br><span class="line">|       `-- com.mycompany.app</span><br><span class="line">|           `-- my-app</span><br><span class="line">|               |-- pom.properties</span><br><span class="line">|               `-- pom.xml</span><br><span class="line">`-- com</span><br><span class="line">    `-- mycompany</span><br><span class="line">        `-- app</span><br><span class="line">            `-- App.class</span><br></pre></td></tr></table></figure></p>
+<p>你可以看到<code>${basedir}/src/main/resources</code>可以在jar文件的根目录下找到，并且在META-INF目录下可以找到<code>application.properties</code>。你同样会注意到一些其他的文件比如<code>META-INF/MANIFEST.MF</code>，<code>pom.xml</code>和<code>pom.properties</code>，这些事Maven默认生成的文件。你可以创建你自己的manifest,如果你不创建，Maven会默认创建一个(你同样可以改变默认的manifest，我们将会在一会说到这个)。<code>pom.xml</code>和<code>pom.properties</code>文件被打包到jar中，因此每个artifact都是独立的，如果你需要的话，你可以利用你自己应用的元数据。一个简单的应用就是可以恢复你应用的版本号。配置文件POM需要你利用一些Maven工具，但是properties可以利用java api，比如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#Generated by Maven</span><br><span class="line">#Tue Oct 04 15:43:21 GMT-05:00 2005</span><br><span class="line">version=1.0-SNAPSHOT</span><br><span class="line">groupId=com.mycompany.app</span><br><span class="line">artifactId=my-app</span><br></pre></td></tr></table></figure></p>
+<p>为将资源文件为你的单元测试加载到类路径下，你需要遵循与你添加资源文件到jar中同样的模式，这是你应该拥有一个项目目录结构类似下边：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">my-app</span><br><span class="line">|-- pom.xml</span><br><span class="line">`-- src</span><br><span class="line">    |-- main</span><br><span class="line">    |   |-- java</span><br><span class="line">    |   |   `-- com</span><br><span class="line">    |   |       `-- mycompany</span><br><span class="line">    |   |           `-- app</span><br><span class="line">    |   |               `-- App.java</span><br><span class="line">    |   `-- resources</span><br><span class="line">    |       `-- META-INF</span><br><span class="line">    |           |-- application.properties</span><br><span class="line">    `-- test</span><br><span class="line">        |-- java</span><br><span class="line">        |   `-- com</span><br><span class="line">        |       `-- mycompany</span><br><span class="line">        |           `-- app</span><br><span class="line">        |               `-- AppTest.java</span><br><span class="line">        `-- resources</span><br><span class="line">            `-- test.properties</span><br></pre></td></tr></table></figure></p>
+<p>在一个单元测试中你可以利用一小段代码如下去访问需要的资源文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">// Retrieve resource</span><br><span class="line">InputStream is = getClass().getResourceAsStream( &quot;/test.properties&quot; );</span><br><span class="line">// Do something with the resource</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<p><span id="11"></span></p>
+<h5 id="我如何过滤资源文件？"><a href="#我如何过滤资源文件？" class="headerlink" title="我如何过滤资源文件？"></a>我如何过滤资源文件？</h5><p>有时候资源文件需要包含一个值，这个值只能在构建时期使用。为了完成这个功能，利用<code>${&lt;propertyname&gt;}</code>就可以将这个值带入你的资源文件。这个属性可以是你在pom.xml中定义的一个值，用户的setting.xml中的一个值，外部properties文件中的一个值，或者是一个系统属性。<br>为了在复制时利用Maven过滤资源，简单的设置<code>filtering</code>为真即可：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;</span><br><span class="line">  xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">  xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0</span><br><span class="line">                      http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</span><br><span class="line">  &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</span><br><span class="line"> </span><br><span class="line">  &lt;groupId&gt;com.mycompany.app&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;my-app&lt;/artifactId&gt;</span><br><span class="line">  &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;</span><br><span class="line">  &lt;packaging&gt;jar&lt;/packaging&gt;</span><br><span class="line"> </span><br><span class="line">  &lt;name&gt;Maven Quick Start Archetype&lt;/name&gt;</span><br><span class="line">  &lt;url&gt;http://maven.apache.org&lt;/url&gt;</span><br><span class="line"> </span><br><span class="line">  &lt;dependencies&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">      &lt;groupId&gt;junit&lt;/groupId&gt;</span><br><span class="line">      &lt;artifactId&gt;junit&lt;/artifactId&gt;</span><br><span class="line">      &lt;version&gt;4.11&lt;/version&gt;</span><br><span class="line">      &lt;scope&gt;test&lt;/scope&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br><span class="line">  &lt;/dependencies&gt;</span><br><span class="line"> </span><br><span class="line">  &lt;build&gt;</span><br><span class="line">    &lt;resources&gt;</span><br><span class="line">      &lt;resource&gt;</span><br><span class="line">        &lt;directory&gt;src/main/resources&lt;/directory&gt;</span><br><span class="line">        &lt;filtering&gt;true&lt;/filtering&gt;</span><br><span class="line">      &lt;/resource&gt;</span><br><span class="line">    &lt;/resources&gt;</span><br><span class="line">  &lt;/build&gt;</span><br><span class="line">&lt;/project&gt;</span><br></pre></td></tr></table></figure></p>
+<p>你会注意到我们不得不增加<code>build</code>,<code>resources</code>,<code>resource</code>元素，此外我们不得不明确声明资源文件的位置是<code>src/mai/resources</code>目录。左右的这些信息都是默认提供的，但是因为默认的<code>filtering</code>是<code>false</code>的，我们不得不增加这些信息到我们的<code>pom.xml</code>,为了去重写默认值并且将<code>filtering</code>设置为<code>true</code>。<br>为了引用你在<code>pom.xml</code>中定义的属性，属性名称利用<code>xml</code>元素名称去定义值，pom运行将项目元素作为一个别名，因此<code>${project.version}</code>指的是项目的名称，<code>${project.version}</code>指的是你项目的版本，<code>${project.build.finalName}</code>指的是在项目打包时生成的文件的最终的名称等等。注意一些POM元素拥有默认值，因此不需要明确的在pom.xml中定义。同样，用户的<code>setting.xml</code>中的值可以利用一settings开头的属性名来引用(比如,<code>${settings.localRepository}</code>指的是用户的本地路径)。<br>继续我们的例子，让我们在<code>application.properties</code>中增加两个属性(这个文件我们放到<code>src/main/resources</code>).当资源文件被过滤后，这个文件中的值将会被应用(过滤可以看作扫描)：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># application.properties</span><br><span class="line">application.name=$&#123;project.name&#125;</span><br><span class="line">application.version=$&#123;project.version&#125;</span><br></pre></td></tr></table></figure></p>
+<p>到这里，你可以执行如下的命令(process-resources是构建生命周期阶段资源的复制和筛选)：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn process-resources</span><br></pre></td></tr></table></figure></p>
+<p><code>application.properties</code>文件在<code>target/classes</code>就像如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># application.properties</span><br><span class="line">application.name=Maven Quick Start Archetype</span><br><span class="line">application.version=1.0-SNAPSHOT</span><br></pre></td></tr></table></figure></p>
+<p>为了引用定义在外部文件中的属性，你所做的事需要增加一个外部文件的引用到你的pom.xml文件中。首先，让我们创建外部属性文件<code>src/main/filters/filter.properties</code>:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># filter.properties</span><br><span class="line">my.filter.value=hello!</span><br></pre></td></tr></table></figure></p>
+<p>接着我们将在pom.xml中引用这个文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;</span><br><span class="line">  xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">  xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0</span><br><span class="line">                      http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</span><br><span class="line">  &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</span><br><span class="line"> </span><br><span class="line">  &lt;groupId&gt;com.mycompany.app&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;my-app&lt;/artifactId&gt;</span><br><span class="line">  &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;</span><br><span class="line">  &lt;packaging&gt;jar&lt;/packaging&gt;</span><br><span class="line"> </span><br><span class="line">  &lt;name&gt;Maven Quick Start Archetype&lt;/name&gt;</span><br><span class="line">  &lt;url&gt;http://maven.apache.org&lt;/url&gt;</span><br><span class="line"> </span><br><span class="line">  &lt;dependencies&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">      &lt;groupId&gt;junit&lt;/groupId&gt;</span><br><span class="line">      &lt;artifactId&gt;junit&lt;/artifactId&gt;</span><br><span class="line">      &lt;version&gt;4.11&lt;/version&gt;</span><br><span class="line">      &lt;scope&gt;test&lt;/scope&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br><span class="line">  &lt;/dependencies&gt;</span><br><span class="line"> </span><br><span class="line">  &lt;build&gt;</span><br><span class="line">    &lt;filters&gt;</span><br><span class="line">      &lt;filter&gt;src/main/filters/filter.properties&lt;/filter&gt;</span><br><span class="line">    &lt;/filters&gt;</span><br><span class="line">    &lt;resources&gt;</span><br><span class="line">      &lt;resource&gt;</span><br><span class="line">        &lt;directory&gt;src/main/resources&lt;/directory&gt;</span><br><span class="line">        &lt;filtering&gt;true&lt;/filtering&gt;</span><br><span class="line">      &lt;/resource&gt;</span><br><span class="line">    &lt;/resources&gt;</span><br><span class="line">  &lt;/build&gt;</span><br><span class="line">&lt;/project&gt;</span><br></pre></td></tr></table></figure></p>
+<p>接着，如我我们可以在<code>application.properties</code>中引用这个属性：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># application.properties</span><br><span class="line">application.name=$&#123;project.name&#125;</span><br><span class="line">application.version=$&#123;project.version&#125;</span><br><span class="line">message=$&#123;my.filter.value&#125;</span><br></pre></td></tr></table></figure></p>
+<p>下一步执行<code>mvn process-resources</code>命令将会把我们的新属性值放进<code>application.properties</code>。除了定义<code>my.filter.value</code>在外部文件，你也可以定义其在pom文件中的<code>properties</code>小结，你可以达到相同的效果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;</span><br><span class="line">  xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">  xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0</span><br><span class="line">                      http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</span><br><span class="line">  &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</span><br><span class="line"> </span><br><span class="line">  &lt;groupId&gt;com.mycompany.app&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;my-app&lt;/artifactId&gt;</span><br><span class="line">  &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;</span><br><span class="line">  &lt;packaging&gt;jar&lt;/packaging&gt;</span><br><span class="line"> </span><br><span class="line">  &lt;name&gt;Maven Quick Start Archetype&lt;/name&gt;</span><br><span class="line">  &lt;url&gt;http://maven.apache.org&lt;/url&gt;</span><br><span class="line"> </span><br><span class="line">  &lt;dependencies&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">      &lt;groupId&gt;junit&lt;/groupId&gt;</span><br><span class="line">      &lt;artifactId&gt;junit&lt;/artifactId&gt;</span><br><span class="line">      &lt;version&gt;4.11&lt;/version&gt;</span><br><span class="line">      &lt;scope&gt;test&lt;/scope&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br><span class="line">  &lt;/dependencies&gt;</span><br><span class="line"> </span><br><span class="line">  &lt;build&gt;</span><br><span class="line">    &lt;resources&gt;</span><br><span class="line">      &lt;resource&gt;</span><br><span class="line">        &lt;directory&gt;src/main/resources&lt;/directory&gt;</span><br><span class="line">        &lt;filtering&gt;true&lt;/filtering&gt;</span><br><span class="line">      &lt;/resource&gt;</span><br><span class="line">    &lt;/resources&gt;</span><br><span class="line">  &lt;/build&gt;</span><br><span class="line"> </span><br><span class="line">  &lt;properties&gt;</span><br><span class="line">    &lt;my.filter.value&gt;hello&lt;/my.filter.value&gt;</span><br><span class="line">  &lt;/properties&gt;</span><br><span class="line">&lt;/project&gt;</span><br></pre></td></tr></table></figure></p>
+<p>过滤资源同样可以获取系统属性；java内建的系统属性(比如<code>java.version</code>或者<code>user.home</code>)或者利用java -D 参数定义在命令行的属性。继续我们的例子，让我们改变<code>application.properties</code>文件像如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># application.properties</span><br><span class="line">java.version=$&#123;java.version&#125;</span><br><span class="line">command.line.prop=$&#123;command.line.prop&#125;</span><br></pre></td></tr></table></figure></p>
+<p>现在，当我们执行如下的命令(注意定义在命令行的<code>command.line.prop</code>的属性)，<code>application.properties</code>文件将会包含属性系统属性的值.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn process-resources &quot;-Dcommand.line.prop=hello again&quot;</span><br></pre></td></tr></table></figure></p>
+<p><span id="12"></span></p>
+<h5 id="我如何使用外部的依赖？"><a href="#我如何使用外部的依赖？" class="headerlink" title="我如何使用外部的依赖？"></a>我如何使用外部的依赖？</h5><p>在之前的例子中，你可能已经注意有一个<code>dependencies</code>元素。实际上你一直在使用一个外部的依赖，但是现在我们讨论一些其工作的细节。想深入了解，请查看<a href="http://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html" target="_blank" rel="noopener">依赖机制介绍</a><br><code>dependencies</code>小结列出了所有在项目构建过程(无论是变异期、测试期、运行期或者其他)中需要的外部依赖。现在我们的项目只依赖JUnit(为了清晰，我将所有的关于资源的东西都提取出来):<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;</span><br><span class="line">  xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">  xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0</span><br><span class="line">                      http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</span><br><span class="line">  &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</span><br><span class="line"> </span><br><span class="line">  &lt;groupId&gt;com.mycompany.app&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;my-app&lt;/artifactId&gt;</span><br><span class="line">  &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;</span><br><span class="line">  &lt;packaging&gt;jar&lt;/packaging&gt;</span><br><span class="line"> </span><br><span class="line">  &lt;name&gt;Maven Quick Start Archetype&lt;/name&gt;</span><br><span class="line">  &lt;url&gt;http://maven.apache.org&lt;/url&gt;</span><br><span class="line"> </span><br><span class="line">  &lt;dependencies&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">      &lt;groupId&gt;junit&lt;/groupId&gt;</span><br><span class="line">      &lt;artifactId&gt;junit&lt;/artifactId&gt;</span><br><span class="line">      &lt;version&gt;4.11&lt;/version&gt;</span><br><span class="line">      &lt;scope&gt;test&lt;/scope&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br><span class="line">  &lt;/dependencies&gt;</span><br><span class="line">&lt;/project&gt;</span><br></pre></td></tr></table></figure></p>
+<p>对于每个外部一拉，你需要定义至少四个东西：<code>groupId</code>,<code>artifactId</code>,<code>version</code>和<code>scope</code>,<code>groupId</code>,<code>artifactId</code>和<code>version</code>和上边介绍的pom.xml是一样的。<code>scope</code>元素表明你的项目怎样使用此依赖，值可以是<code>compile</code>,<code>test</code>和<code>runtime</code>。要了解更多的信息，你可以指定一个依赖，并查看项目描述符参考<br>根据这个依赖信息，Maven能够在构建项目是引用依赖Maven从哪里引用依赖呢？Maven会从你的本地仓库中寻找所有的依赖。在之前的章节，我们将<code>artifact</code>(my-app-1.0-SNAPSHOT.jar)安装到了本地仓库.一旦被安装到了本地仓库，另外一个项目也可以引用这个jar文件作为依赖，只需像之前那样讲依赖信息添加到pom.xml文件中就可以了:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;</span><br><span class="line">  xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">  xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0</span><br><span class="line">                      http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</span><br><span class="line">  &lt;groupId&gt;com.mycompany.app&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;my-other-app&lt;/artifactId&gt;</span><br><span class="line">  ...</span><br><span class="line">  &lt;dependencies&gt;</span><br><span class="line">    ...</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">      &lt;groupId&gt;com.mycompany.app&lt;/groupId&gt;</span><br><span class="line">      &lt;artifactId&gt;my-app&lt;/artifactId&gt;</span><br><span class="line">      &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;</span><br><span class="line">      &lt;scope&gt;compile&lt;/scope&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br><span class="line">  &lt;/dependencies&gt;</span><br><span class="line">&lt;/project&gt;</span><br></pre></td></tr></table></figure></p>
+<p>假如依赖在其他地方使用呢？他们怎样来访问我的本地仓库呢？当一个项目引用依赖在本地仓库不可得是，Maven将会从远程仓库下载依赖到本地仓库。你可能注意到maven下载了许多东西在你勾线你的第一个项目的时候(折现下载的依赖是一些用于构建项目的插件)。默认远程仓库是<code>http://repo.maven.apache.org/maven2/</code>。你同样可以建立自己的远程仓库(可能是你公司的中央仓库)用于替换默认的远程仓库，或者增加一个。了解更多关于仓库的信息你可以引用<a href="http://maven.apache.org/guides/introduction/introduction-to-repositories.html" target="_blank" rel="noopener">仓库介绍</a>。<br>让我们添加另外一个依赖到我们的项目。现在我们增加以下日志到代码并且需要增加log4j作为一个依赖。首先我们需要知道log4j的<code>groupId</code>,<code>artifactId</code>以及<code>version</code>等信息。我们可以浏览ibiblio找到这些，或者利用google搜索<code>site:www.ibiblio.org maven2 log4j</code>。搜索会给你展示一个目录<code>/maven2/log4j/log4j</code>或者<code>/pub/packages/maven2/log4j/log4j</code>。在这个目录下有一个文件叫作<code>maven-metadata.xml</code>。这里是log4j的<code>maven-meatdata.xml</code>：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;metadata&gt;</span><br><span class="line">  &lt;groupId&gt;log4j&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;log4j&lt;/artifactId&gt;</span><br><span class="line">  &lt;version&gt;1.1.3&lt;/version&gt;</span><br><span class="line">  &lt;versioning&gt;</span><br><span class="line">    &lt;versions&gt;</span><br><span class="line">      &lt;version&gt;1.1.3&lt;/version&gt;</span><br><span class="line">      &lt;version&gt;1.2.4&lt;/version&gt;</span><br><span class="line">      &lt;version&gt;1.2.5&lt;/version&gt;</span><br><span class="line">      &lt;version&gt;1.2.6&lt;/version&gt;</span><br><span class="line">      &lt;version&gt;1.2.7&lt;/version&gt;</span><br><span class="line">      &lt;version&gt;1.2.8&lt;/version&gt;</span><br><span class="line">      &lt;version&gt;1.2.11&lt;/version&gt;</span><br><span class="line">      &lt;version&gt;1.2.9&lt;/version&gt;</span><br><span class="line">      &lt;version&gt;1.2.12&lt;/version&gt;</span><br><span class="line">    &lt;/versions&gt;</span><br><span class="line">  &lt;/versioning&gt;</span><br><span class="line">&lt;/metadata&gt;</span><br></pre></td></tr></table></figure></p>
+<p>从这个文件里，我们可以看到groupId为log4j并且artifactId为log4j。我们有不多的版本可以进行选择；现在我们用罪行的版本,1.2.12(一些maven-metadata.xml文件可能指定哪个版本是最新的发布版本)。在目录下我们还可以看到每个版本的log4j库。在里边，我们可以看到jar文件(比如log4j-1.2.12.jar)和一个pom文件(这个是依赖的pom文件，表明它拥有的更多的依赖和其他信息)以及另外一个maven-metadata.xml文件。这里还有一个md5文件包含这些文件的MD5哈希值。你可以用这个去验证一个库或者知道你现在正在使用的库的版本号。<br>现在我们知道我们需要的信息，我们可以吧依赖添加到我们的pom.xml文件中。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;</span><br><span class="line">  xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">  xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0</span><br><span class="line">                      http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</span><br><span class="line">  &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</span><br><span class="line"> </span><br><span class="line">  &lt;groupId&gt;com.mycompany.app&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;my-app&lt;/artifactId&gt;</span><br><span class="line">  &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;</span><br><span class="line">  &lt;packaging&gt;jar&lt;/packaging&gt;</span><br><span class="line"> </span><br><span class="line">  &lt;name&gt;Maven Quick Start Archetype&lt;/name&gt;</span><br><span class="line">  &lt;url&gt;http://maven.apache.org&lt;/url&gt;</span><br><span class="line"> </span><br><span class="line">  &lt;dependencies&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">      &lt;groupId&gt;junit&lt;/groupId&gt;</span><br><span class="line">      &lt;artifactId&gt;junit&lt;/artifactId&gt;</span><br><span class="line">      &lt;version&gt;4.11&lt;/version&gt;</span><br><span class="line">      &lt;scope&gt;test&lt;/scope&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">      &lt;groupId&gt;log4j&lt;/groupId&gt;</span><br><span class="line">      &lt;artifactId&gt;log4j&lt;/artifactId&gt;</span><br><span class="line">      &lt;version&gt;1.2.12&lt;/version&gt;</span><br><span class="line">      &lt;scope&gt;compile&lt;/scope&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br><span class="line">  &lt;/dependencies&gt;</span><br><span class="line">&lt;/project&gt;</span><br></pre></td></tr></table></figure></p>
+<p><span id="13"></span></p>
+<h5 id="我如何发布jar到远程仓库？"><a href="#我如何发布jar到远程仓库？" class="headerlink" title="我如何发布jar到远程仓库？"></a>我如何发布jar到远程仓库？</h5><p>对于将jar文件发布到外部仓库，你应该在pom.xml中配置url并且在settings.xml中配置连接到仓库的验证信息。<br>这里是个例子，用scp和用户名/密码验证：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;</span><br><span class="line">  xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">  xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0</span><br><span class="line">                      http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</span><br><span class="line">  &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</span><br><span class="line"> </span><br><span class="line">  &lt;groupId&gt;com.mycompany.app&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;my-app&lt;/artifactId&gt;</span><br><span class="line">  &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;</span><br><span class="line">  &lt;packaging&gt;jar&lt;/packaging&gt;</span><br><span class="line"> </span><br><span class="line">  &lt;name&gt;Maven Quick Start Archetype&lt;/name&gt;</span><br><span class="line">  &lt;url&gt;http://maven.apache.org&lt;/url&gt;</span><br><span class="line"> </span><br><span class="line">  &lt;dependencies&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">      &lt;groupId&gt;junit&lt;/groupId&gt;</span><br><span class="line">      &lt;artifactId&gt;junit&lt;/artifactId&gt;</span><br><span class="line">      &lt;version&gt;4.11&lt;/version&gt;</span><br><span class="line">      &lt;scope&gt;test&lt;/scope&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">      &lt;groupId&gt;org.apache.codehaus.plexus&lt;/groupId&gt;</span><br><span class="line">      &lt;artifactId&gt;plexus-utils&lt;/artifactId&gt;</span><br><span class="line">      &lt;version&gt;1.0.4&lt;/version&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br><span class="line">  &lt;/dependencies&gt;</span><br><span class="line"> </span><br><span class="line">  &lt;build&gt;</span><br><span class="line">    &lt;filters&gt;</span><br><span class="line">      &lt;filter&gt;src/main/filters/filters.properties&lt;/filter&gt;</span><br><span class="line">    &lt;/filters&gt;</span><br><span class="line">    &lt;resources&gt;</span><br><span class="line">      &lt;resource&gt;</span><br><span class="line">        &lt;directory&gt;src/main/resources&lt;/directory&gt;</span><br><span class="line">        &lt;filtering&gt;true&lt;/filtering&gt;</span><br><span class="line">      &lt;/resource&gt;</span><br><span class="line">    &lt;/resources&gt;</span><br><span class="line">  &lt;/build&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  &lt;distributionManagement&gt;</span><br><span class="line">    &lt;repository&gt;</span><br><span class="line">      &lt;id&gt;mycompany-repository&lt;/id&gt;</span><br><span class="line">      &lt;name&gt;MyCompany Repository&lt;/name&gt;</span><br><span class="line">      &lt;url&gt;scp://repository.mycompany.com/repository/maven2&lt;/url&gt;</span><br><span class="line">    &lt;/repository&gt;</span><br><span class="line">  &lt;/distributionManagement&gt;</span><br><span class="line">&lt;/project&gt;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;settings xmlns=&quot;http://maven.apache.org/SETTINGS/1.0.0&quot;</span><br><span class="line">  xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">  xsi:schemaLocation=&quot;http://maven.apache.org/SETTINGS/1.0.0</span><br><span class="line">                      http://maven.apache.org/xsd/settings-1.0.0.xsd&quot;&gt;</span><br><span class="line">  ...</span><br><span class="line">  &lt;servers&gt;</span><br><span class="line">    &lt;server&gt;</span><br><span class="line">      &lt;id&gt;mycompany-repository&lt;/id&gt;</span><br><span class="line">      &lt;username&gt;jvanzyl&lt;/username&gt;</span><br><span class="line">      &lt;!-- Default value is ~/.ssh/id_dsa --&gt;</span><br><span class="line">      &lt;privateKey&gt;/path/to/identity&lt;/privateKey&gt; (default is ~/.ssh/id_dsa)</span><br><span class="line">      &lt;passphrase&gt;my_key_passphrase&lt;/passphrase&gt;</span><br><span class="line">    &lt;/server&gt;</span><br><span class="line">  &lt;/servers&gt;</span><br><span class="line">  ...</span><br><span class="line">&lt;/settings&gt;</span><br></pre></td></tr></table></figure>
+<p>现在如果你连接到了匿名登录的openssh ssh服务器，你每次都需要输入你的用户名和密码去验证(尽管你可以利用另外一个ssh客户端去登录)。这种情况你可以利用公钥去登录验证。<br>假如在settings.xml中有密码这种情况应该注意，了解更多信息，请看<a href="http://maven.apache.org/guides/mini/guide-encryption.html" target="_blank" rel="noopener">密码加密</a></p>
+<p><span id="14"></span></p>
+<h5 id="我如何创建帮助文档？"><a href="#我如何创建帮助文档？" class="headerlink" title="我如何创建帮助文档？"></a>我如何创建帮助文档？</h5><p>在创建你的帮助文档之前，你可以利用<code>archetype</code>机制来为你的项目生成一个网站，利用如下命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mvn archetype:generate \</span><br><span class="line">  -DarchetypeGroupId=org.apache.maven.archetypes \</span><br><span class="line">  -DarchetypeArtifactId=maven-archetype-site \</span><br><span class="line">  -DgroupId=com.mycompany.app \</span><br><span class="line">  -DartifactId=my-app-site</span><br></pre></td></tr></table></figure></p>
+<p>现在你可以到<a href="http://maven.apache.org/guides/mini/guide-site.html" target="_blank" rel="noopener">创建站点指南</a>去学习如何为你的项目创建帮助文档。</p>
+<p><span id="15"></span></p>
+<h5 id="我如何构建其他类型的项目？"><a href="#我如何构建其他类型的项目？" class="headerlink" title="我如何构建其他类型的项目？"></a>我如何构建其他类型的项目？</h5><p>注意生命周期适用于任何项目类型。比如，回到基本目录我们可以创建一个简单的web应用：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mvn archetype:generate \</span><br><span class="line">    -DarchetypeGroupId=org.apache.maven.archetypes \</span><br><span class="line">    -DarchetypeArtifactId=maven-archetype-webapp \</span><br><span class="line">    -DgroupId=com.mycompany.app \</span><br><span class="line">    -DartifactId=my-webapp</span><br></pre></td></tr></table></figure></p>
+<p>注意这些都必须位于同一行。这将会创建一个目录叫作<code>my-webapp</code>包含如下的项目描述：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;</span><br><span class="line">  xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">  xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0</span><br><span class="line">                      http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</span><br><span class="line">  &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</span><br><span class="line"> </span><br><span class="line">  &lt;groupId&gt;com.mycompany.app&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;my-webapp&lt;/artifactId&gt;</span><br><span class="line">  &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;</span><br><span class="line">  &lt;packaging&gt;war&lt;/packaging&gt;</span><br><span class="line"> </span><br><span class="line">  &lt;dependencies&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">      &lt;groupId&gt;junit&lt;/groupId&gt;</span><br><span class="line">      &lt;artifactId&gt;junit&lt;/artifactId&gt;</span><br><span class="line">      &lt;version&gt;4.11&lt;/version&gt;</span><br><span class="line">      &lt;scope&gt;test&lt;/scope&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br><span class="line">  &lt;/dependencies&gt;</span><br><span class="line"> </span><br><span class="line">  &lt;build&gt;</span><br><span class="line">    &lt;finalName&gt;my-webapp&lt;/finalName&gt;</span><br><span class="line">  &lt;/build&gt;</span><br><span class="line">&lt;/project&gt;</span><br></pre></td></tr></table></figure></p>
+<p>注意<code>&lt;packaging&gt;</code>元素,这个告诉maven打包类型为<code>war</code>，进入<code>webapp</code>的项目目录并且尝试：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn clean package</span><br></pre></td></tr></table></figure></p>
+<p>你将会看到<code>target/my-webapp.war</code>被创建，到目前为止，所有的正常步骤都被执行。</p>
+<p><span id="16"></span></p>
+<h5 id="我如何同时构建多个项目？"><a href="#我如何同时构建多个项目？" class="headerlink" title="我如何同时构建多个项目？"></a>我如何同时构建多个项目？</h5><p>这个概念是说利用Maven构建多个模块。在这节，我们将会展示如何同时构建上述的war包括先前的jar。<br>首先我们需要一个父pom.xml文件在另外两个的上层目录，例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">+- pom.xml</span><br><span class="line">+- my-app</span><br><span class="line">| +- pom.xml</span><br><span class="line">| +- src</span><br><span class="line">|   +- main</span><br><span class="line">|     +- java</span><br><span class="line">+- my-webapp</span><br><span class="line">| +- pom.xml</span><br><span class="line">| +- src</span><br><span class="line">|   +- main</span><br><span class="line">|     +- webapp</span><br></pre></td></tr></table></figure></p>
+<p>这个pom文件你将会创建包含如下的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;</span><br><span class="line">  xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">  xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0</span><br><span class="line">                      http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</span><br><span class="line">  &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</span><br><span class="line"> </span><br><span class="line">  &lt;groupId&gt;com.mycompany.app&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;app&lt;/artifactId&gt;</span><br><span class="line">  &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;</span><br><span class="line">  &lt;packaging&gt;pom&lt;/packaging&gt;</span><br><span class="line"> </span><br><span class="line">  &lt;modules&gt;</span><br><span class="line">    &lt;module&gt;my-app&lt;/module&gt;</span><br><span class="line">    &lt;module&gt;my-webapp&lt;/module&gt;</span><br><span class="line">  &lt;/modules&gt;</span><br><span class="line">&lt;/project&gt;</span><br></pre></td></tr></table></figure></p>
+<p>jar需要依赖webapp，因此我们向<code>my-webapp/pom.xml</code>添加如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">  &lt;dependencies&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">      &lt;groupId&gt;com.mycompany.app&lt;/groupId&gt;</span><br><span class="line">      &lt;artifactId&gt;my-app&lt;/artifactId&gt;</span><br><span class="line">      &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br><span class="line">    ...</span><br><span class="line">  &lt;/dependencies&gt;</span><br></pre></td></tr></table></figure></p>
+<p>接着向另外子目录下的pom.xml文件中添加<code>&lt;parent&gt;</code>标签：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;</span><br><span class="line">  xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">  xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0</span><br><span class="line">                      http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</span><br><span class="line">  &lt;parent&gt;</span><br><span class="line">    &lt;groupId&gt;com.mycompany.app&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;app&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;</span><br><span class="line">  &lt;/parent&gt;</span><br><span class="line">  ...</span><br></pre></td></tr></table></figure></p>
+<p>现在在顶层目录尝试运行：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn clean install</span><br></pre></td></tr></table></figure></p>
+<p>war文件将会被创建在<code>my-webapp/target/my-webapp.war</code>中，同样jar也会被创建：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$ jar tvf my-webapp/target/my-webapp-1.0-SNAPSHOT.war</span><br><span class="line">   0 Fri Jun 24 10:59:56 EST 2005 META-INF/</span><br><span class="line"> 222 Fri Jun 24 10:59:54 EST 2005 META-INF/MANIFEST.MF</span><br><span class="line">   0 Fri Jun 24 10:59:56 EST 2005 META-INF/maven/</span><br><span class="line">   0 Fri Jun 24 10:59:56 EST 2005 META-INF/maven/com.mycompany.app/</span><br><span class="line">   0 Fri Jun 24 10:59:56 EST 2005 META-INF/maven/com.mycompany.app/my-webapp/</span><br><span class="line">3239 Fri Jun 24 10:59:56 EST 2005 META-INF/maven/com.mycompany.app/my-webapp/pom.xml</span><br><span class="line">   0 Fri Jun 24 10:59:56 EST 2005 WEB-INF/</span><br><span class="line"> 215 Fri Jun 24 10:59:56 EST 2005 WEB-INF/web.xml</span><br><span class="line"> 123 Fri Jun 24 10:59:56 EST 2005 META-INF/maven/com.mycompany.app/my-webapp/pom.properties</span><br><span class="line">  52 Fri Jun 24 10:59:56 EST 2005 index.jsp</span><br><span class="line">   0 Fri Jun 24 10:59:56 EST 2005 WEB-INF/lib/</span><br><span class="line">2713 Fri Jun 24 10:59:56 EST 2005 WEB-INF/lib/my-app-1.0-SNAPSHOT.jar</span><br></pre></td></tr></table></figure></p>
+<p>这个是怎么创建的？首先父pom创建(称作app),有一个<code>packaging</code>和一系列<code>modules</code>定义。这个告诉Maven在项目集合上去运行操作，而不是当前这个(重写这个行为，你可以利用<code>--non-recursive</code>命令)<br>接着，我们告诉<code>war</code>需要<code>my-app</code>的jar.这个做了一些事情：可以是其在类路径上，<code>war</code>中的其他代码可以找到，保证<code>jar</code>的构建总是先于<code>war</code>的，并且表明<code>war</code>插件将<code>jar</code>包含到它的库目录下。<br>你可能注意到<code>junit-4.11.jar</code>是一个依赖，但是并没有在war中结束(与生命周期有关，因此用结束来修饰)。原因是<code>&lt;scope&gt;test&lt;/scope&gt;</code>原色，这个仅用来测试，并且不会包含在web应用当中。<br>最后一步是添加<code>parent</code>定义，这个不同于<code>extend</code>元素(maven 1.0):这个保证POM总是可以定位到，即使项目与其双亲是分布式的，以查找仓库的方式。<br>不想Maven1.0，不需要你运行install去成功执行这些步骤，你可以运行<code>package</code>，可以在target目录中生成，而不会是本地仓库。<br>你可能喜欢再次生成你的IDEA工作区在顶层目录…<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn idea:idea</span><br></pre></td></tr></table></figure></p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="peachey.blog/2016/11/12/maven-introduction/" data-id="cjgs324qr0004o70go2hs4y55" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="/" target="_blank">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="/" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="/" target="_blank">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/ppoffice/hexo-theme-hueman" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="/" target="_blank">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/" target="_blank">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2017/12/28/shadowsocks/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            Shadowsocks原理详解
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/05/04/dubbo-hessian/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Java/">Java</a></p>
+                            <p class="item-title"><a href="/2018/05/04/dubbo-hessian/" class="title">Dubbo协议与Hessian序列化</a></p>
+                            <p class="item-date"><time datetime="2018-05-04T14:55:33.000Z" itemprop="datePublished">2018-05-04</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/21/innodb-index/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/mysql/mysql.png)" alt="Innodb索引原理" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Mysql/">Mysql</a></p>
+                            <p class="item-title"><a href="/2018/03/21/innodb-index/" class="title">Innodb索引原理</a></p>
+                            <p class="item-date"><time datetime="2018-03-21T14:41:25.000Z" itemprop="datePublished">2018-03-21</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/12/28/shadowsocks/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/shadowsocks.png)" alt="Shadowsocks原理详解" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Python/">Python</a></p>
+                            <p class="item-title"><a href="/2017/12/28/shadowsocks/" class="title">Shadowsocks原理详解</a></p>
+                            <p class="item-date"><time datetime="2017-12-28T14:37:56.000Z" itemprop="datePublished">2017-12-28</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/11/12/maven-introduction/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/maven.jpg)" alt="maven-introduction" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Java/">Java</a></p>
+                            <p class="item-title"><a href="/2016/11/12/maven-introduction/" class="title">maven-introduction</a></p>
+                            <p class="item-date"><time datetime="2016-11-12T14:25:44.000Z" itemprop="datePublished">2016-11-12</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mysql/">Mysql</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dubbo/">Dubbo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Maven/">Maven</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/">Mysql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shadowsocks/">Shadowsocks</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Dubbo/" style="font-size: 10px;">Dubbo</a> <a href="/tags/Maven/" style="font-size: 10px;">Maven</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 Peachey</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'peachey.blog/2016/11/12/maven-introduction/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
