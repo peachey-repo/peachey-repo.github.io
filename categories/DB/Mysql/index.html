@@ -3,13 +3,13 @@
 <head>
     <meta charset="utf-8">
     
-    <title>归档: 2017 | Peachey Blog</title>
+    <title>分类：: Mysql | Peachey Blog</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta property="og:type" content="website">
 <meta property="og:title" content="Peachey Blog">
-<meta property="og:url" content="peachey.blog/archives/2017/index.html">
+<meta property="og:url" content="peachey.blog/categories/DB/Mysql/index.html">
 <meta property="og:site_name" content="Peachey Blog">
 <meta property="og:locale" content="zh-CN">
 <meta name="twitter:card" content="summary">
@@ -128,7 +128,7 @@
                         <div class="main-body-header">
     <h1 class="header">
     
-    <i class="icon fa fa-archive"></i>归档: 2017
+    <i class="icon fa fa-folder-open"></i>分类：: <em class="page-title-link">Mysql</em>
     </h1>
 </div>
                         <div class="main-body-content">
@@ -140,7 +140,7 @@
         
         <section class="archives-wrap">
             <div class="archive-year-wrap">
-                <a href="/archives/2017" class="archive-year"><i class="icon fa fa-calendar-o"></i>2017</a>
+                <a href="/archives/2018" class="archive-year"><i class="icon fa fa-calendar-o"></i>2018</a>
             </div>
             <div class="archives">
     
@@ -151,17 +151,17 @@
         <article class="article article-summary">
     <div class="article-summary-inner">
         
-        <a href="/2017/12/28/shadowsocks/" class="thumbnail">
+        <a href="/2018/03/21/innodb-index/" class="thumbnail">
     
     
-        <span style="background-image:url(/img/shadowsocks.png)" alt="Shadowsocks原理详解" class="thumbnail-image"></span>
+        <span style="background-image:url(/img/mysql/mysql.png)" alt="Innodb索引原理" class="thumbnail-image"></span>
     
     
         
 <span class="comment-counter">
     <i class="fa fa-comments-o"></i>
     
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="peachey.blog/2017/12/28/shadowsocks/">0</span>
+        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="peachey.blog/2018/03/21/innodb-index/">0</span>
     
 </span>
 
@@ -172,21 +172,33 @@
         
         <div class="article-meta">
             <div class="category">
-            <a class="article-category-link" href="/categories/Python/">Python</a>
+            <a class="article-category-link" href="/categories/DB/">DB</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/DB/Mysql/">Mysql</a>
             </div>
-            <div class="date"><time datetime="2017-12-28T14:37:56.000Z" itemprop="datePublished">2017-12-28</time></div>
+            <div class="date"><time datetime="2018-03-21T14:41:25.000Z" itemprop="datePublished">2018-03-21</time></div>
         </div>
         
     
         <h1 class="article-title" itemprop="name">
-        <a href="/2017/12/28/shadowsocks/">Shadowsocks原理详解</a>
+        <a href="/2018/03/21/innodb-index/">Innodb索引原理</a>
         </h1>
     
 
         <p class="article-excerpt">
             
 
-Shadowsocks作为一个科学上网工具神器，它的出现极大的便利了Coder or else（本屌丝是这么认为的~）,此神器能够如此流行而又不倒自然是有原因的。Shadowsocks是一种基于Socks5代理方式的网络数据加密传输包，并采用Apache许可证、GPL、MIT许可证等多种自由软件许可协议开放源代码。shadowsocks分为服务器端和客户端，在使用之前，需要先将服务器端部署到服
+Innodb是Mysql最常用的存储引擎，了解Innodb存储引擎的索引对于日常工作有很大的益处，索引的存在便是为了加速数据库行记录的检索。以下是我对最近学习的知识的一些总结，以及对碰到的以及别人提到过的问题的一些分析，如有错误，请指正，我会及时更正。
+
+目录
+Innodb表结构
+B树与B+树
+聚簇索引和二级索引
+sql执行顺序
+sql优化建议
+一些问题分析
+参考资料
+
+
+1. Innodb表
         </p>
     </div>
 </article>
@@ -196,6 +208,7 @@ Shadowsocks作为一个科学上网工具神器，它的出现极大的便利了
 
 
     </div></section>
+
 
 
 
