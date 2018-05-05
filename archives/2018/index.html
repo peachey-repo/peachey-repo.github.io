@@ -161,8 +161,6 @@
 <span class="comment-counter">
     <i class="fa fa-comments-o"></i>
     
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="peachey.blog/2018/05/04/study-plan/">0</span>
-    
 </span>
 
 
@@ -179,7 +177,7 @@
         
     
         <h1 class="article-title" itemprop="name">
-        <a href="/2018/05/04/study-plan/">学习计划</a>
+        <a href="/2018/05/04/study-plan/">技术之路</a>
         </h1>
     
 
@@ -187,15 +185,15 @@
             
 根据目前的工作而言，个人总结了一下，大概需要掌握如下的知识面，有一些已经忘记了，有一些还没有看过，打算回炉重造一遍，总结的可能不全面，会不断的更新，并同步个人的学习进度，希望技术方面能够有一个大的飞跃。
 
-
-java1) jvm
-
-
+Javajvm
 jvm内存区域
 垃圾回收与内存分配
 jvm类加载
 jvm内存模型
-jvm性能优化参考：深入理解java虚拟机（此书为jdk1.7的，此书结合1.8官方文档）, ja
+jvm性能优化
+
+
+参考：深入理解java虚拟机（此书为jdk1.7的，此书结合1.8官方文档）, java性
         </p>
     </div>
 </article>
@@ -211,14 +209,12 @@ jvm性能优化参考：深入理解java虚拟机（此书为jdk1.7的，此书�
         <a href="/2018/05/04/dubbo-hessian/" class="thumbnail">
     
     
-        <span class="thumbnail-image thumbnail-none"></span>
+        <span style="background-image:url(/img/dubbo.jpeg)" alt="Dubbo协议与Hessian序列化" class="thumbnail-image"></span>
     
     
         
 <span class="comment-counter">
     <i class="fa fa-comments-o"></i>
-    
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="peachey.blog/2018/05/04/dubbo-hessian/">0</span>
     
 </span>
 
@@ -242,6 +238,7 @@ jvm性能优化参考：深入理解java虚拟机（此书为jdk1.7的，此书�
 
         <p class="article-excerpt">
             
+
         </p>
     </div>
 </article>
@@ -267,8 +264,6 @@ jvm性能优化参考：深入理解java虚拟机（此书为jdk1.7的，此书�
         
 <span class="comment-counter">
     <i class="fa fa-comments-o"></i>
-    
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="peachey.blog/2018/03/21/innodb-index/">0</span>
     
 </span>
 
@@ -404,7 +399,7 @@ sql优化建议
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/杂记/">杂记</a></p>
-                            <p class="item-title"><a href="/2018/05/04/study-plan/" class="title">学习计划</a></p>
+                            <p class="item-title"><a href="/2018/05/04/study-plan/" class="title">技术之路</a></p>
                             <p class="item-date"><time datetime="2018-05-04T15:14:41.000Z" itemprop="datePublished">2018-05-04</time></p>
                         </div>
                     </li>
@@ -415,7 +410,7 @@ sql优化建议
                             <a href="/2018/05/04/dubbo-hessian/" class="thumbnail">
     
     
-        <span class="thumbnail-image thumbnail-none"></span>
+        <span style="background-image:url(/img/dubbo.jpeg)" alt="Dubbo协议与Hessian序列化" class="thumbnail-image"></span>
     
     
 </a>
@@ -475,7 +470,7 @@ sql优化建议
                             <a href="/2016/11/12/maven-introduction/" class="thumbnail">
     
     
-        <span style="background-image:url(/img/maven.jpg)" alt="maven-introduction" class="thumbnail-image"></span>
+        <span style="background-image:url(/img/maven.jpg)" alt="Maven入门指南" class="thumbnail-image"></span>
     
     
 </a>
@@ -484,7 +479,7 @@ sql优化建议
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/Java/">Java</a></p>
-                            <p class="item-title"><a href="/2016/11/12/maven-introduction/" class="title">maven-introduction</a></p>
+                            <p class="item-title"><a href="/2016/11/12/maven-introduction/" class="title">Maven入门指南</a></p>
                             <p class="item-date"><time datetime="2016-11-12T14:25:44.000Z" itemprop="datePublished">2016-11-12</time></p>
                         </div>
                     </li>
@@ -568,17 +563,17 @@ sql优化建议
 </footer>
         
     
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//cdn.jsdelivr.net/gh/xcss/valine@v1.1.7-rc3/dist/Valine.min.js"></script>
     <script>
-    var disqus_shortname = 'hexo-theme-hueman';
-    
-    
-    (function() {
-    var dsq = document.createElement('script');
-    dsq.type = 'text/javascript';
-    dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
+        new Valine({
+            el: '#valine-thread' ,
+            notify:,
+            verify:,
+            app_id: '1NDGPleDcrdAwyhvucV7fTpq-gzGzoHsz',
+            app_key: 'hldcSHMuK87Fa2WiSGNedhA0',
+            placeholder: 'Just Do It'
+        });
     </script>
 
 
