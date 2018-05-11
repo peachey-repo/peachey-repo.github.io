@@ -3,26 +3,26 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Dubbo协议与Hessian Lite序列化 | Peachey Blog</title>
+    <title>al-two-plus | Peachey Blog</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-        <meta name="keywords" content="Dubbo" />
+        <meta name="keywords" content="LeetCode" />
     
-    <meta name="description" content="dubbo是一个专注于服务治理的高性能rpc框架，支持不同服务之间的远程调用时必然的，dubbo协议与序列化的存在是不同服务沟通的桥梁，以下是本人对dubbo协议与hessian序列化的一点研究心得，如有错误请指出。  目录 存在的意义 dubbo协议 hessian序列化 dubbo源码解析 参考   存在的意义dubbo协议作为其rpc通信的一种约定或者规则，rpc通信的双方必须遵守这一约">
-<meta name="keywords" content="Dubbo">
+    <meta name="description" content="题目1234567给定两个非空链表来表示两个非负整数。位数按照逆序方式存储，它们的每个节点只存储单个数字。将两数相加返回一个新的链表。你可以假设除了数字 0 之外，这两个数字都不会以零开头。示例：输入：(2 -&amp;gt; 4 -&amp;gt; 3) + (5 -&amp;gt; 6 -&amp;gt; 4)输出：7 -&amp;gt; 0 -&amp;gt; 8原因：342 + 465 = 807 我的解法 34ms  战胜96.11">
+<meta name="keywords" content="LeetCode">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Dubbo协议与Hessian Lite序列化">
-<meta property="og:url" content="peachey.blog/2018/05/04/dubbo-hessian/index.html">
+<meta property="og:title" content="al-two-plus">
+<meta property="og:url" content="peachey.blog/2018/05/11/al-two-plus/index.html">
 <meta property="og:site_name" content="Peachey Blog">
-<meta property="og:description" content="dubbo是一个专注于服务治理的高性能rpc框架，支持不同服务之间的远程调用时必然的，dubbo协议与序列化的存在是不同服务沟通的桥梁，以下是本人对dubbo协议与hessian序列化的一点研究心得，如有错误请指出。  目录 存在的意义 dubbo协议 hessian序列化 dubbo源码解析 参考   存在的意义dubbo协议作为其rpc通信的一种约定或者规则，rpc通信的双方必须遵守这一约">
+<meta property="og:description" content="题目1234567给定两个非空链表来表示两个非负整数。位数按照逆序方式存储，它们的每个节点只存储单个数字。将两数相加返回一个新的链表。你可以假设除了数字 0 之外，这两个数字都不会以零开头。示例：输入：(2 -&amp;gt; 4 -&amp;gt; 3) + (5 -&amp;gt; 6 -&amp;gt; 4)输出：7 -&amp;gt; 0 -&amp;gt; 8原因：342 + 465 = 807 我的解法 34ms  战胜96.11">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="/img/dubbo.png">
-<meta property="og:updated_time" content="2018-05-08T01:29:19.000Z">
+<meta property="og:image" content="/img/leetcode.jpg">
+<meta property="og:updated_time" content="2018-05-11T04:42:08.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Dubbo协议与Hessian Lite序列化">
-<meta name="twitter:description" content="dubbo是一个专注于服务治理的高性能rpc框架，支持不同服务之间的远程调用时必然的，dubbo协议与序列化的存在是不同服务沟通的桥梁，以下是本人对dubbo协议与hessian序列化的一点研究心得，如有错误请指出。  目录 存在的意义 dubbo协议 hessian序列化 dubbo源码解析 参考   存在的意义dubbo协议作为其rpc通信的一种约定或者规则，rpc通信的双方必须遵守这一约">
-<meta name="twitter:image" content="/img/dubbo.png">
+<meta name="twitter:title" content="al-two-plus">
+<meta name="twitter:description" content="题目1234567给定两个非空链表来表示两个非负整数。位数按照逆序方式存储，它们的每个节点只存储单个数字。将两数相加返回一个新的链表。你可以假设除了数字 0 之外，这两个数字都不会以零开头。示例：输入：(2 -&amp;gt; 4 -&amp;gt; 3) + (5 -&amp;gt; 6 -&amp;gt; 4)输出：7 -&amp;gt; 0 -&amp;gt; 8原因：342 + 465 = 807 我的解法 34ms  战胜96.11">
+<meta name="twitter:image" content="/img/leetcode.jpg">
     
 
     
@@ -137,18 +137,18 @@
                         <div class="main-body-header">
     <h1 class="header">
     
-    <a class="page-title-link" href="/categories/Java/">Java</a>
+    <a class="page-title-link" href="/categories/算法/">算法</a>
     </h1>
 </div>
                         <div class="main-body-content">
-                            <article id="post-dubbo-hessian" class="article article-single article-type-post" itemscope itemprop="blogPost">
+                            <article id="post-al-two-plus" class="article article-single article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
             <header class="article-header">
                 
     
         <h1 class="article-title" itemprop="name">
-        Dubbo协议与Hessian Lite序列化
+        al-two-plus
         </h1>
     
 
@@ -158,70 +158,30 @@
             <div class="article-meta">
                 
     <div class="article-date">
-        <a href="/2018/05/04/dubbo-hessian/" class="article-date">
-            <time datetime="2018-05-04T14:55:33.000Z" itemprop="datePublished">2018-05-04</time>
+        <a href="/2018/05/11/al-two-plus/" class="article-date">
+            <time datetime="2018-05-11T04:35:28.000Z" itemprop="datePublished">2018-05-11</time>
         </a>
     </div>
 
                 
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/Dubbo/">Dubbo</a>
+        <a class="tag-link" href="/tags/LeetCode/">LeetCode</a>
     </div>
 
             </div>
         
         
         <div class="article-entry" itemprop="articleBody">
-            <p><img src="/img/dubbo.png" alt=""></p>
-<blockquote>
-<p>dubbo是一个专注于服务治理的高性能rpc框架，支持不同服务之间的远程调用时必然的，dubbo协议与序列化的存在是不同服务沟通的桥梁，以下是本人对dubbo协议与hessian序列化的一点研究心得，如有错误请指出。</p>
-</blockquote>
-<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ol>
-<li><a href="#1">存在的意义</a></li>
-<li><a href="#2">dubbo协议</a></li>
-<li><a href="#3">hessian序列化</a></li>
-<li><a href="#4">dubbo源码解析</a></li>
-<li><a href="#5">参考</a></li>
-</ol>
-<p><span id="1"></span></p>
-<h3 id="存在的意义"><a href="#存在的意义" class="headerlink" title="存在的意义"></a>存在的意义</h3><p>dubbo协议作为其rpc通信的一种约定或者规则，rpc通信的双方必须遵守这一约定，来区分是请求、响应还是事件，同时还能表达一些行为特征，比如是单向的还是双向的等等，协议的存在便是定义规格。<br>协议只是定义了整体的通信信息框架，但是在具体的细节方面还需要一种方式来保证，也就是序列化，我的理解如下：</p>
-<ul>
-<li>语义定义：类似人与人之间进行交流，想把自己的意思传达给对方，需要一种双方都懂的语言，序列化的存在便是定义了一组语义，发送方利用特定的编码方式进行编码，接收方利用特定的解码方式可以得到正确的信息。</li>
-<li>安全性：序列化后的数据为一组二进制流，而非具体的字符串，没有正确的解码方式是无法获得正确信息的。</li>
-<li>性能：通信双方的通信方式是字节流而非字符流，性能显然要好的多。</li>
+            <p><img src="/img/leetcode.jpg" alt=""></p>
+<h4 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">给定两个非空链表来表示两个非负整数。位数按照逆序方式存储，它们的每个节点只存储单个数字。将两数相加返回一个新的链表。</span><br><span class="line">你可以假设除了数字 0 之外，这两个数字都不会以零开头。</span><br><span class="line"></span><br><span class="line">示例：</span><br><span class="line">输入：(2 -&gt; 4 -&gt; 3) + (5 -&gt; 6 -&gt; 4)</span><br><span class="line">输出：7 -&gt; 0 -&gt; 8</span><br><span class="line">原因：342 + 465 = 807</span><br></pre></td></tr></table></figure>
+<h4 id="我的解法-34ms-战胜96-11-的java-提交记录"><a href="#我的解法-34ms-战胜96-11-的java-提交记录" class="headerlink" title="我的解法 34ms  战胜96.11%的java 提交记录"></a>我的解法 <code>34ms</code>  战胜<code>96.11%</code>的java 提交记录</h4><h5 id="核心思路"><a href="#核心思路" class="headerlink" title="核心思路"></a>核心思路</h5><ul>
+<li>两个数与进位相加</li>
+<li>%10余数为当前节点值</li>
+<li>/10除数为进位值</li>
+<li>循环条件：两个链表一个不为空，或carry大于0遍</li>
 </ul>
-<p><span id="2"></span></p>
-<h3 id="dubbo协议"><a href="#dubbo协议" class="headerlink" title="dubbo协议"></a>dubbo协议</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">-----------------------------------------------------------------------------------------------</span><br><span class="line">| Bit offset |        0-7 |      8-15 |            16-20 |    21 |      22 |      23 |  24-31 |</span><br><span class="line">-----------------------------------------------------------------------------------------------</span><br><span class="line">|          0 | Magic High | Magic Low | Serialization id | event | Two way | Req/res | status |</span><br><span class="line">-----------------------------------------------------------------------------------------------</span><br><span class="line">|      32-95 | request id (long)                                                                      |</span><br><span class="line">-----------------------------------------------------------------------------------------------</span><br><span class="line">|     96-127 | data length                                                                    |</span><br><span class="line">-----------------------------------------------------------------------------------------------</span><br></pre></td></tr></table></figure>
-<p>以下来分别解释各个字段的含义：</p>
-<ul>
-<li>Magic High: dubbo协议的魔数高8位，固定为0xda,何为魔数，类似java类字节码的魔数，是一个标识符，说明这是dubbo协议。</li>
-<li>Magic Low: dubbo协议的魔数低8位，固定为0xbb</li>
-<li>Serialization id: 序列化类型，占用4位，dubbo支持类型：<br>2 hessian<br>3 java<br>4 compacted java<br>6 fastjson<br>7 native java<br>8 kryo<br>9 fst</li>
-<li>event: 表示该消息是否为事件，比如心跳事件，为1时候表示事件，占用1位</li>
-<li>Two way: 只在请求时有用，表示是否需要服务器返回response，为1时表示需要，占用1位</li>
-<li>Req/res:标识是请求还是响应，request: 1, response: 0，占用1位</li>
-<li>status: 仅对于response有意义，用于表示response的状态，占用1字节，具体含义如下：<br>20 OK<br>30 客户端超时<br>31 服务端超时<br>40 错误的请求<br>50 错误的响应<br>60 找不到服务<br>70 服务出错<br>80 服务器出错<br>90 客户端错误<br>100 线程池打满</li>
-<li>request id: 标识一个唯一的请求, 占用8个字节，响应此请求时也要利用相同的id</li>
-<li>data length:这个字段占用4个字节，意思很明显是数据体的长度，单位是字节</li>
-</ul>
-<blockquote>
-<p>native java: 原生java序列化实现<br>compacted Java：压缩java序列化，主要是在原生java序列化基础上，实现了自定义的类描述符写入和读取，写Object类型的类描述符只写入类名称，而不是类的完整信息。这样有很多Object类型的情况下可以减少序列化后的size。<br>java: 只是对原生java序列化和压缩java序列化的封装。<br>kryo,fst只是专门针对java语言的，相对与要比hessian性能高点（未实际测试过），但是hessian支持跨语言</p>
-</blockquote>
-<p><span id="3"></span></p>
-<h3 id="hessian-lite序列化"><a href="#hessian-lite序列化" class="headerlink" title="hessian lite序列化"></a>hessian lite序列化</h3><blockquote>
-<p>hessian lite并非是原生的hessian2序列化方式，而是经过阿里巴巴修改过的，是dubbo默认启用的序列化方式。</p>
-</blockquote>
-<p>由于java是强类型的语言，需要将每种类型都编码和解码，所以过程很复杂，可以分为如下类型：</p>
-<h4 id="基本类型"><a href="#基本类型" class="headerlink" title="基本类型"></a>基本类型</h4><h4 id="集合"><a href="#集合" class="headerlink" title="集合"></a>集合</h4><h4 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h4><h4 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h4><h4 id="日期"><a href="#日期" class="headerlink" title="日期"></a>日期</h4><p>#### </p>
-<p><span id="4"></span></p>
-<h3 id="dubbo源码解析"><a href="#dubbo源码解析" class="headerlink" title="dubbo源码解析"></a>dubbo源码解析</h3><p><span id="5"></span></p>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
-<li><a href="http://dubbo.apache.org/books/dubbo-dev-book/" target="_blank" rel="noopener">dubbo官方文档</a></li>
-<li><a href="http://hessian.caucho.com/doc/hessian-serialization.html" target="_blank" rel="noopener">hessian序列化协议</a></li>
-<li>dubbo源码</li>
-</ul>
-
+<h5 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Definition for singly-linked list.</span><br><span class="line"> * public class ListNode &#123;</span><br><span class="line"> *     int val;</span><br><span class="line"> *     ListNode next;</span><br><span class="line"> *     ListNode(int x) &#123; val = x; &#125;</span><br><span class="line"> * &#125;</span><br><span class="line"> */</span><br><span class="line">class Solution &#123;</span><br><span class="line">    public ListNode addTwoNumbers(ListNode l1, ListNode l2) &#123;</span><br><span class="line">  int num1 = l1.val;</span><br><span class="line">        int num2 = l2.val;</span><br><span class="line">        int result = num1 + num2;</span><br><span class="line">        int carry = result / 10;</span><br><span class="line">        ListNode head = new ListNode(result % 10);</span><br><span class="line">        ListNode point = head;</span><br><span class="line">        l1 = l1.next;</span><br><span class="line">        l2 = l2.next;</span><br><span class="line">        while (l1 != null || l2 != null || carry &gt; 0) &#123;</span><br><span class="line">            num1 = num2 = 0;</span><br><span class="line">            if (l1 != null) &#123;</span><br><span class="line">                num1 = l1.val;</span><br><span class="line">                l1 = l1.next;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            if (l2 != null) &#123;</span><br><span class="line">                num2 = l2.val;</span><br><span class="line">                l2 = l2.next;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            result = num1 + num2 + carry;</span><br><span class="line">            point.next = new ListNode(result % 10);</span><br><span class="line">            carry = result / 10;</span><br><span class="line">            point = point.next;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return head;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
         </div>
         <footer class="article-footer">
             
@@ -356,20 +316,10 @@
         
 <nav id="article-nav">
     
-        <a href="/2018/05/04/study-plan/" id="article-nav-newer" class="article-nav-link-wrap">
-        <strong class="article-nav-caption">下一篇</strong>
-        <p class="article-nav-title">
-        
-            技术之路
-        
-        </p>
-        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
-    </a>
     
-    
-        <a href="/2018/03/21/innodb-index/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2018/05/06/al-two-sum/" id="article-nav-older" class="article-nav-link-wrap">
         <strong class="article-nav-caption">上一篇</strong>
-        <p class="article-nav-title">Innodb索引原理</p>
+        <p class="article-nav-title">两数之和</p>
         <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
         </a>
     
