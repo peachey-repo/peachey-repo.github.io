@@ -9,19 +9,19 @@
     
         <meta name="keywords" content="LeetCode" />
     
-    <meta name="description" content="题目1234567给定两个非空链表来表示两个非负整数。位数按照逆序方式存储，它们的每个节点只存储单个数字。将两数相加返回一个新的链表。你可以假设除了数字 0 之外，这两个数字都不会以零开头。示例：输入：(2 -&amp;gt; 4 -&amp;gt; 3) + (5 -&amp;gt; 6 -&amp;gt; 4)输出：7 -&amp;gt; 0 -&amp;gt; 8原因：342 + 465 = 807 我的解法 34ms  战胜96.11">
+    <meta name="description" content="题目给定两个非空链表来表示两个非负整数。位数按照逆序方式存储，它们的每个节点只存储单个数字。将两数相加返回一个新的链表。你可以假设除了数字 0 之外，这两个数字都不会以零开头。 示例：输入：(2 -&amp;gt; 4 -&amp;gt; 3) + (5 -&amp;gt; 6 -&amp;gt; 4)输出：7 -&amp;gt; 0 -&amp;gt; 8原因：342 + 465 = 807 我的解法 34ms  战胜96.11%的java">
 <meta name="keywords" content="LeetCode">
 <meta property="og:type" content="article">
 <meta property="og:title" content="两数相加">
 <meta property="og:url" content="peachey.blog/2018/05/11/al-two-plus/index.html">
 <meta property="og:site_name" content="Peachey Blog">
-<meta property="og:description" content="题目1234567给定两个非空链表来表示两个非负整数。位数按照逆序方式存储，它们的每个节点只存储单个数字。将两数相加返回一个新的链表。你可以假设除了数字 0 之外，这两个数字都不会以零开头。示例：输入：(2 -&amp;gt; 4 -&amp;gt; 3) + (5 -&amp;gt; 6 -&amp;gt; 4)输出：7 -&amp;gt; 0 -&amp;gt; 8原因：342 + 465 = 807 我的解法 34ms  战胜96.11">
+<meta property="og:description" content="题目给定两个非空链表来表示两个非负整数。位数按照逆序方式存储，它们的每个节点只存储单个数字。将两数相加返回一个新的链表。你可以假设除了数字 0 之外，这两个数字都不会以零开头。 示例：输入：(2 -&amp;gt; 4 -&amp;gt; 3) + (5 -&amp;gt; 6 -&amp;gt; 4)输出：7 -&amp;gt; 0 -&amp;gt; 8原因：342 + 465 = 807 我的解法 34ms  战胜96.11%的java">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="/img/leetcode.jpg">
-<meta property="og:updated_time" content="2018-05-11T04:43:00.000Z">
+<meta property="og:updated_time" content="2018-05-16T11:06:33.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="两数相加">
-<meta name="twitter:description" content="题目1234567给定两个非空链表来表示两个非负整数。位数按照逆序方式存储，它们的每个节点只存储单个数字。将两数相加返回一个新的链表。你可以假设除了数字 0 之外，这两个数字都不会以零开头。示例：输入：(2 -&amp;gt; 4 -&amp;gt; 3) + (5 -&amp;gt; 6 -&amp;gt; 4)输出：7 -&amp;gt; 0 -&amp;gt; 8原因：342 + 465 = 807 我的解法 34ms  战胜96.11">
+<meta name="twitter:description" content="题目给定两个非空链表来表示两个非负整数。位数按照逆序方式存储，它们的每个节点只存储单个数字。将两数相加返回一个新的链表。你可以假设除了数字 0 之外，这两个数字都不会以零开头。 示例：输入：(2 -&amp;gt; 4 -&amp;gt; 3) + (5 -&amp;gt; 6 -&amp;gt; 4)输出：7 -&amp;gt; 0 -&amp;gt; 8原因：342 + 465 = 807 我的解法 34ms  战胜96.11%的java">
 <meta name="twitter:image" content="/img/leetcode.jpg">
     
 
@@ -174,7 +174,8 @@
         
         <div class="article-entry" itemprop="articleBody">
             <p><img src="/img/leetcode.jpg" alt=""></p>
-<h4 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">给定两个非空链表来表示两个非负整数。位数按照逆序方式存储，它们的每个节点只存储单个数字。将两数相加返回一个新的链表。</span><br><span class="line">你可以假设除了数字 0 之外，这两个数字都不会以零开头。</span><br><span class="line"></span><br><span class="line">示例：</span><br><span class="line">输入：(2 -&gt; 4 -&gt; 3) + (5 -&gt; 6 -&gt; 4)</span><br><span class="line">输出：7 -&gt; 0 -&gt; 8</span><br><span class="line">原因：342 + 465 = 807</span><br></pre></td></tr></table></figure>
+<h4 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h4><p>给定两个非空链表来表示两个非负整数。位数按照逆序方式存储，它们的每个节点只存储单个数字。将两数相加返回一个新的链表。<br>你可以假设除了数字 0 之外，这两个数字都不会以零开头。</p>
+<p>示例：<br>输入：(2 -&gt; 4 -&gt; 3) + (5 -&gt; 6 -&gt; 4)<br>输出：7 -&gt; 0 -&gt; 8<br>原因：342 + 465 = 807</p>
 <h4 id="我的解法-34ms-战胜96-11-的java-提交记录"><a href="#我的解法-34ms-战胜96-11-的java-提交记录" class="headerlink" title="我的解法 34ms  战胜96.11%的java 提交记录"></a>我的解法 <code>34ms</code>  战胜<code>96.11%</code>的java 提交记录</h4><h5 id="核心思路"><a href="#核心思路" class="headerlink" title="核心思路"></a>核心思路</h5><ul>
 <li>两个数与进位相加</li>
 <li>%10余数为当前节点值</li>

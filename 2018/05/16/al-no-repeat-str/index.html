@@ -9,19 +9,19 @@
     
         <meta name="keywords" content="LeetCode" />
     
-    <meta name="description" content="题目123456给定一个字符串，找出不含有重复字符的最长子串的长度。示例：给定 &quot;abcabcbb&quot; ，没有重复字符的最长子串是 &quot;abc&quot; ，那么长度就是3。给定 &quot;bbbbb&quot; ，最长的子串就是 &quot;b&quot; ，长度是1。给定 &quot;pwwkew&quot; ，最长子串是 &quot;wke&quot; ，长度是3。请注意答案必须是一个子串，&quot;pwke&quot; 是 子序列  而不是子串。 思路 用两个指针，一个指定开始位置，另外一个作为">
+    <meta name="description" content="题目给定一个字符串，找出不含有重复字符的最长子串的长度。 示例：给定 “abcabcbb” ，没有重复字符的最长子串是 “abc” ，那么长度就是3。给定 “bbbbb” ，最长的子串就是 “b” ，长度是1。给定 “pwwkew” ，最长子串是 “wke” ，长度是3。请注意答案必须是一个子串，”pwke” 是 子序列  而不是子串。 思路 用两个指针，一个指定开始位置，另外一个作为游标 利用">
 <meta name="keywords" content="LeetCode">
 <meta property="og:type" content="article">
 <meta property="og:title" content="无重复字符的最长子串">
 <meta property="og:url" content="peachey.blog/2018/05/16/al-no-repeat-str/index.html">
 <meta property="og:site_name" content="Peachey Blog">
-<meta property="og:description" content="题目123456给定一个字符串，找出不含有重复字符的最长子串的长度。示例：给定 &quot;abcabcbb&quot; ，没有重复字符的最长子串是 &quot;abc&quot; ，那么长度就是3。给定 &quot;bbbbb&quot; ，最长的子串就是 &quot;b&quot; ，长度是1。给定 &quot;pwwkew&quot; ，最长子串是 &quot;wke&quot; ，长度是3。请注意答案必须是一个子串，&quot;pwke&quot; 是 子序列  而不是子串。 思路 用两个指针，一个指定开始位置，另外一个作为">
+<meta property="og:description" content="题目给定一个字符串，找出不含有重复字符的最长子串的长度。 示例：给定 “abcabcbb” ，没有重复字符的最长子串是 “abc” ，那么长度就是3。给定 “bbbbb” ，最长的子串就是 “b” ，长度是1。给定 “pwwkew” ，最长子串是 “wke” ，长度是3。请注意答案必须是一个子串，”pwke” 是 子序列  而不是子串。 思路 用两个指针，一个指定开始位置，另外一个作为游标 利用">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="/img/leetcode.jpg">
-<meta property="og:updated_time" content="2018-05-16T10:59:56.000Z">
+<meta property="og:updated_time" content="2018-05-16T11:06:23.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="无重复字符的最长子串">
-<meta name="twitter:description" content="题目123456给定一个字符串，找出不含有重复字符的最长子串的长度。示例：给定 &quot;abcabcbb&quot; ，没有重复字符的最长子串是 &quot;abc&quot; ，那么长度就是3。给定 &quot;bbbbb&quot; ，最长的子串就是 &quot;b&quot; ，长度是1。给定 &quot;pwwkew&quot; ，最长子串是 &quot;wke&quot; ，长度是3。请注意答案必须是一个子串，&quot;pwke&quot; 是 子序列  而不是子串。 思路 用两个指针，一个指定开始位置，另外一个作为">
+<meta name="twitter:description" content="题目给定一个字符串，找出不含有重复字符的最长子串的长度。 示例：给定 “abcabcbb” ，没有重复字符的最长子串是 “abc” ，那么长度就是3。给定 “bbbbb” ，最长的子串就是 “b” ，长度是1。给定 “pwwkew” ，最长子串是 “wke” ，长度是3。请注意答案必须是一个子串，”pwke” 是 子序列  而不是子串。 思路 用两个指针，一个指定开始位置，另外一个作为游标 利用">
 <meta name="twitter:image" content="/img/leetcode.jpg">
     
 
@@ -174,7 +174,8 @@
         
         <div class="article-entry" itemprop="articleBody">
             <p><img src="/img/leetcode.jpg" alt=""></p>
-<h4 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">给定一个字符串，找出不含有重复字符的最长子串的长度。</span><br><span class="line"></span><br><span class="line">示例：</span><br><span class="line">给定 <span class="string">"abcabcbb"</span> ，没有重复字符的最长子串是 <span class="string">"abc"</span> ，那么长度就是<span class="number">3</span>。</span><br><span class="line">给定 <span class="string">"bbbbb"</span> ，最长的子串就是 <span class="string">"b"</span> ，长度是<span class="number">1</span>。</span><br><span class="line">给定 <span class="string">"pwwkew"</span> ，最长子串是 <span class="string">"wke"</span> ，长度是<span class="number">3</span>。请注意答案必须是一个子串，<span class="string">"pwke"</span> 是 子序列  而不是子串。</span><br></pre></td></tr></table></figure>
+<h4 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h4><p>给定一个字符串，找出不含有重复字符的最长子串的长度。</p>
+<p>示例：<br>给定 “abcabcbb” ，没有重复字符的最长子串是 “abc” ，那么长度就是3。<br>给定 “bbbbb” ，最长的子串就是 “b” ，长度是1。<br>给定 “pwwkew” ，最长子串是 “wke” ，长度是3。请注意答案必须是一个子串，”pwke” 是 子序列  而不是子串。</p>
 <h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><ul>
 <li>用两个指针，一个指定开始位置，另外一个作为游标</li>
 <li>利用一个数组来确定游标指向的字符，是否之前出现过，数组元素的初始值为-1，数组的下标表示字符的ascii码,数组下标的值为字符在字符串中的位置</li>
