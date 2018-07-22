@@ -3,26 +3,26 @@
 <head>
     <meta charset="utf-8">
     
-    <title>无重复字符的最长子串 | Peachey Blog</title>
+    <title>单例模式完全解析 | Peachey Blog</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-        <meta name="keywords" content="LeetCode" />
+        <meta name="keywords" content="Java,设计模式" />
     
-    <meta name="description" content="题目给定一个字符串，找出不含有重复字符的最长子串的长度。 示例：给定 “abcabcbb” ，没有重复字符的最长子串是 “abc” ，那么长度就是3。给定 “bbbbb” ，最长的子串就是 “b” ，长度是1。给定 “pwwkew” ，最长子串是 “wke” ，长度是3。请注意答案必须是一个子串，”pwke” 是 子序列  而不是子串。 思路 用两个指针，一个指定开始位置，另外一个作为游标 利用">
-<meta name="keywords" content="LeetCode">
+    <meta name="description" content="在天天的劳民伤财的搬砖工作中，每天不是和产品讨论需求，然后就是在苦逼的看着交互，琢磨如何来实现这个需求，某天我翻起tomcat源码，看着main函数中的那个synchronized锁，我懵了，为啥这里要加锁呢？怎么看的这代码似曾相识，这不是失传江湖已久的单例模式么！但标准的不都是双重判断么？这里少了一次哎~真是工作时间长了，连我爸妈都不记得长什么样了！  单例模式的前世今生单例模式是设计模式中">
+<meta name="keywords" content="Java,设计模式">
 <meta property="og:type" content="article">
-<meta property="og:title" content="无重复字符的最长子串">
-<meta property="og:url" content="peachey.blog/2018/05/16/al-no-repeat-str/index.html">
+<meta property="og:title" content="单例模式完全解析">
+<meta property="og:url" content="peachey.blog/2018/07/21/java-singleton-pattern/index.html">
 <meta property="og:site_name" content="Peachey Blog">
-<meta property="og:description" content="题目给定一个字符串，找出不含有重复字符的最长子串的长度。 示例：给定 “abcabcbb” ，没有重复字符的最长子串是 “abc” ，那么长度就是3。给定 “bbbbb” ，最长的子串就是 “b” ，长度是1。给定 “pwwkew” ，最长子串是 “wke” ，长度是3。请注意答案必须是一个子串，”pwke” 是 子序列  而不是子串。 思路 用两个指针，一个指定开始位置，另外一个作为游标 利用">
+<meta property="og:description" content="在天天的劳民伤财的搬砖工作中，每天不是和产品讨论需求，然后就是在苦逼的看着交互，琢磨如何来实现这个需求，某天我翻起tomcat源码，看着main函数中的那个synchronized锁，我懵了，为啥这里要加锁呢？怎么看的这代码似曾相识，这不是失传江湖已久的单例模式么！但标准的不都是双重判断么？这里少了一次哎~真是工作时间长了，连我爸妈都不记得长什么样了！  单例模式的前世今生单例模式是设计模式中">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="/img/leetcode.jpg">
-<meta property="og:updated_time" content="2018-05-16T11:06:23.000Z">
+<meta property="og:image" content="/img/design-pattern.jpeg">
+<meta property="og:updated_time" content="2018-07-22T08:06:06.313Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="无重复字符的最长子串">
-<meta name="twitter:description" content="题目给定一个字符串，找出不含有重复字符的最长子串的长度。 示例：给定 “abcabcbb” ，没有重复字符的最长子串是 “abc” ，那么长度就是3。给定 “bbbbb” ，最长的子串就是 “b” ，长度是1。给定 “pwwkew” ，最长子串是 “wke” ，长度是3。请注意答案必须是一个子串，”pwke” 是 子序列  而不是子串。 思路 用两个指针，一个指定开始位置，另外一个作为游标 利用">
-<meta name="twitter:image" content="/img/leetcode.jpg">
+<meta name="twitter:title" content="单例模式完全解析">
+<meta name="twitter:description" content="在天天的劳民伤财的搬砖工作中，每天不是和产品讨论需求，然后就是在苦逼的看着交互，琢磨如何来实现这个需求，某天我翻起tomcat源码，看着main函数中的那个synchronized锁，我懵了，为啥这里要加锁呢？怎么看的这代码似曾相识，这不是失传江湖已久的单例模式么！但标准的不都是双重判断么？这里少了一次哎~真是工作时间长了，连我爸妈都不记得长什么样了！  单例模式的前世今生单例模式是设计模式中">
+<meta name="twitter:image" content="/img/design-pattern.jpeg">
     
 
     
@@ -137,18 +137,18 @@
                         <div class="main-body-header">
     <h1 class="header">
     
-    <a class="page-title-link" href="/categories/算法/">算法</a>
+    <a class="page-title-link" href="/categories/Java/">Java</a>
     </h1>
 </div>
                         <div class="main-body-content">
-                            <article id="post-al-no-repeat-str" class="article article-single article-type-post" itemscope itemprop="blogPost">
+                            <article id="post-java-singleton-pattern" class="article article-single article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
             <header class="article-header">
                 
     
         <h1 class="article-title" itemprop="name">
-        无重复字符的最长子串
+        单例模式完全解析
         </h1>
     
 
@@ -158,30 +158,53 @@
             <div class="article-meta">
                 
     <div class="article-date">
-        <a href="/2018/05/16/al-no-repeat-str/" class="article-date">
-            <time datetime="2018-05-16T10:47:17.000Z" itemprop="datePublished">2018-05-16</time>
+        <a href="/2018/07/21/java-singleton-pattern/" class="article-date">
+            <time datetime="2018-07-21T07:39:16.000Z" itemprop="datePublished">2018-07-21</time>
         </a>
     </div>
 
                 
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/LeetCode/">LeetCode</a>
+        <a class="tag-link" href="/tags/Java/">Java</a>, <a class="tag-link" href="/tags/设计模式/">设计模式</a>
     </div>
 
             </div>
         
         
         <div class="article-entry" itemprop="articleBody">
-            <p><img src="/img/leetcode.jpg" alt=""></p>
-<h4 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h4><p>给定一个字符串，找出不含有重复字符的最长子串的长度。</p>
-<p>示例：<br>给定 “abcabcbb” ，没有重复字符的最长子串是 “abc” ，那么长度就是3。<br>给定 “bbbbb” ，最长的子串就是 “b” ，长度是1。<br>给定 “pwwkew” ，最长子串是 “wke” ，长度是3。请注意答案必须是一个子串，”pwke” 是 子序列  而不是子串。</p>
-<h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><ul>
-<li>用两个指针，一个指定开始位置，另外一个作为游标</li>
-<li>利用一个数组来确定游标指向的字符，是否之前出现过，数组元素的初始值为-1，数组的下标表示字符的ascii码,数组下标的值为字符在字符串中的位置</li>
-<li>遍历字符串时，判断该字符在数组中对应的值若不为-1，则之前出现过，然后计算游标与开始间的距离，若大于max，则作为最大值，重新初始化数组，如此循环</li>
+            <p><img src="/img/design-pattern.jpeg" alt=""></p>
+<blockquote>
+<p>在天天的劳民伤财的搬砖工作中，每天不是和产品讨论需求，然后就是在苦逼的看着交互，琢磨如何来实现这个需求，某天我翻起tomcat源码，看着main函数中的那个<code>synchronized</code>锁，我懵了，为啥这里要加锁呢？怎么看的这代码似曾相识，这不是失传江湖已久的单例模式么！但标准的不都是双重判断么？这里少了一次哎~真是工作时间长了，连我爸妈都不记得长什么样了！</p>
+</blockquote>
+<h4 id="单例模式的前世今生"><a href="#单例模式的前世今生" class="headerlink" title="单例模式的前世今生"></a>单例模式的前世今生</h4><p>单例模式是设计模式中算是最简单、最易懂的设计模式之一了，简单来说，单例模式就是无论什么时候来调用、无论谁来调用，返回的始终是同一个实例，没有其他，于是这就产生了一系列的问题。比如如何保证单例的唯一性，有人会说加锁啊！是的加锁可以在一定程度上解决这个问题，那在高并发的场景下加锁是不是自杀呢？有人说用双重判断咯，不对整个函数加锁啊！那我用序列化和反序列化来替换你的实例，那算不算破坏单例模式呢？以下老司机带你来感受以下单例模式的各种写法</p>
+<h4 id="无锁、线程不安全的、最初级写法的懒汉式"><a href="#无锁、线程不安全的、最初级写法的懒汉式" class="headerlink" title="无锁、线程不安全的、最初级写法的懒汉式"></a>无锁、线程不安全的、最初级写法的懒汉式</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span> <span class="params">()</span></span>&#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    	<span class="keyword">if</span> (instance == <span class="keyword">null</span>) &#123;</span><br><span class="line">    		instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">    	&#125;</span><br><span class="line">    	<span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此种写法只能保证单线程下为单例模式，如果是web请求，一次请求起一个线程的话，那手动连续点两次就可能创建两个实例，所以基本上也没有人这么写。虽然如此，但是这种写法的也体现了单例模式的几点特性：</p>
+<ul>
+<li>用静态变量来声明单例：可以保证全局就一个引用</li>
+<li>私有的构造方法：防止外部new新对象</li>
+<li>判断instace为空：防止获取实例每次都创建新的对象</li>
 </ul>
-<h4 id="代码-34-ms-战胜94-34-java提交记录"><a href="#代码-34-ms-战胜94-34-java提交记录" class="headerlink" title="代码 34 ms 战胜94.34%java提交记录"></a>代码 <code>34 ms</code> 战胜<code>94.34%</code>java提交记录</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">lengthOfLongestSubstring</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> start = <span class="number">0</span>, point = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> max = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span>[] position = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">128</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; position.length; i++) &#123;</span><br><span class="line">            position[i] = -<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span> (point &lt; s.length()) &#123;</span><br><span class="line">            <span class="keyword">if</span> (position[s.charAt(point)] == -<span class="number">1</span>) &#123;</span><br><span class="line">                position[s.charAt(point)] = point;</span><br><span class="line">                point++;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> ((point - start) &gt; max) &#123;</span><br><span class="line">                    max = point == s.length() - <span class="number">1</span> &amp;&amp; position[s.charAt(point)] == -<span class="number">1</span> ? point - start + <span class="number">1</span> : point - start;</span><br><span class="line">                &#125;</span><br><span class="line">                start = position[s.charAt(point)] + <span class="number">1</span>;</span><br><span class="line">                point = start;</span><br><span class="line">                <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i&lt;<span class="number">128</span>; i++)&#123;</span><br><span class="line">                    position[i] = -<span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> ((point - start) &gt; max) &#123;</span><br><span class="line">            max = point == s.length() - <span class="number">1</span> &amp;&amp; position[s.charAt(point)] == -<span class="number">1</span> ? point - start + <span class="number">1</span> : point - start;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> max;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="同步函数，线程安全，懒汉式"><a href="#同步函数，线程安全，懒汉式" class="headerlink" title="同步函数，线程安全，懒汉式"></a>同步函数，线程安全，懒汉式</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (instance == <span class="keyword">null</span>) &#123;</span><br><span class="line">            instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此种写法简单粗暴的对整个函数加锁，这种方式虽然达到了并发获取实例时保证单例的目的，但是也导致了一个问题，每次请求都会执行到<code>synchronized</code>锁，相较而言性能上有损失。</p>
+<h4 id="双检锁，线程安全，懒汉式"><a href="#双检锁，线程安全，懒汉式" class="headerlink" title="双检锁，线程安全，懒汉式"></a>双检锁，线程安全，懒汉式</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">static</span> Singleton instance;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (instance == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">synchronized</span>(<span class="keyword">this</span>)&#123;</span><br><span class="line">                <span class="keyword">if</span>(instance == <span class="keyword">null</span>)&#123;</span><br><span class="line">                    instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此种写法算是一种比较合理的写法，将同步函数换成同步代码块，并且进行两次判空，保证每次执行都不一定执行到同步锁，从而可以很有效的提升性能。同时与以上不同的是，实例的声明多加了个字段<code>volatile</code>,原因在于<code>instance=new Singleton()</code>是一个非原子的操作，这条语句完成了如下几件事情：</p>
+<ul>
+<li>为对象分配内存空间</li>
+<li>生成Singleton对象</li>
+<li>将instance引用指向内存空间</li>
+</ul>
+<p>由于Jvm存在指令重排序情况，这样会导致以上的几个步骤并非是按照顺序依次执行，比如：当线程1刚好将instance指向内存空间，但是还未进行对象的初始化，这个时候线程2正好进行第一重判断，发现不为空，然后直接返回instance，这时候线程2取到的实例必然是有问题的。<br>因此<code>volatile</code>的一个特性便是禁止指令重排序，从而避免上述问题的发生，其实这个应该说是在jdk1.5以后才完全实现的，因为在<code>volatile</code>变量前后的语句也存在指令重排序的问题，具体细节待探究。</p>
+<h4 id="简单粗暴，饿汉式"><a href="#简单粗暴，饿汉式" class="headerlink" title="简单粗暴，饿汉式"></a>简单粗暴，饿汉式</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">    	<span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此种写法是利用了类加载器的机制避免了多线程的同步问题，简单粗暴，但是也存在缺点，便是非懒加载，当初始化对象很复杂时候需要消耗系统很多资源。</p>
+<h4 id="静态内部类方式"><a href="#静态内部类方式" class="headerlink" title="静态内部类方式"></a>静态内部类方式</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> SingletonHolder&#123;</span><br><span class="line">		<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Singleton instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> Singleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> SingletonHolder.instance;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此种写法利用一个静态内部类来持有实例，同样是利用了类加载器机制来避免了多线程同步的问题，相较饿汉式，此种写法支持懒加载，原因在于<code>SingleHolder</code>并未被显示被装载，只有首次调用时候才会显式的装载<code>SingletonHolder</code>并创建Singleton对象，从而达到懒加载的效果，具体细节待探究。</p>
+<h4 id="枚举方式"><a href="#枚举方式" class="headerlink" title="枚举方式"></a>枚举方式</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> Singleton&#123;</span><br><span class="line">	Instance;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以上的各种写法其实还存在一个问题，便是利用序列化和反序列化来进行实例的替换（前提是实例实现了<code>serializable</code>），此种写法利用了枚举的特性，防止利用序列化方式来多次创建实例。</p>
+<blockquote>
+<p>当前各种写法都是有问题的，因为可以利用cglib/java assist等方式修改字节码，从而达到目的，所以各种写法的优劣也是建立在一定的理想基础之上的，仁者见仁，智者见智。</p>
+</blockquote>
+
         </div>
         <footer class="article-footer">
             
@@ -316,20 +339,10 @@
         
 <nav id="article-nav">
     
-        <a href="/2018/05/16/al-median/" id="article-nav-newer" class="article-nav-link-wrap">
-        <strong class="article-nav-caption">下一篇</strong>
-        <p class="article-nav-title">
-        
-            两个排序数组的中位数
-        
-        </p>
-        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
-    </a>
     
-    
-        <a href="/2018/05/11/al-two-plus/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2018/07/05/java-mybatis-paging-interceptor/" id="article-nav-older" class="article-nav-link-wrap">
         <strong class="article-nav-caption">上一篇</strong>
-        <p class="article-nav-title">两数相加</p>
+        <p class="article-nav-title">基于Mybatis的注解式分页插件</p>
         <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
         </a>
     
