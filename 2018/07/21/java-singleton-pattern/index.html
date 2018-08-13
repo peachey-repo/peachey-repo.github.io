@@ -18,7 +18,7 @@
 <meta property="og:description" content="在天天的劳民伤财的搬砖工作中，每天不是和产品讨论需求，然后就是在苦逼的看着交互，琢磨如何来实现这个需求，某天我翻起tomcat源码，看着main函数中的那个synchronized锁，我懵了，为啥这里要加锁呢？怎么看的这代码似曾相识，这不是失传江湖已久的单例模式么！但标准的不都是双重判断么？这里少了一次哎~真是工作时间长了，连我爸妈都不记得长什么样了！  单例模式的前世今生单例模式是设计模式中">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="/img/design-pattern.jpeg">
-<meta property="og:updated_time" content="2018-07-22T08:06:06.313Z">
+<meta property="og:updated_time" content="2018-07-23T15:59:43.731Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="单例模式完全解析">
 <meta name="twitter:description" content="在天天的劳民伤财的搬砖工作中，每天不是和产品讨论需求，然后就是在苦逼的看着交互，琢磨如何来实现这个需求，某天我翻起tomcat源码，看着main函数中的那个synchronized锁，我懵了，为啥这里要加锁呢？怎么看的这代码似曾相识，这不是失传江湖已久的单例模式么！但标准的不都是双重判断么？这里少了一次哎~真是工作时间长了，连我爸妈都不记得长什么样了！  单例模式的前世今生单例模式是设计模式中">
@@ -200,9 +200,10 @@
 <h4 id="静态内部类方式"><a href="#静态内部类方式" class="headerlink" title="静态内部类方式"></a>静态内部类方式</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> SingletonHolder&#123;</span><br><span class="line">		<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Singleton instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> Singleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> SingletonHolder.instance;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>此种写法利用一个静态内部类来持有实例，同样是利用了类加载器机制来避免了多线程同步的问题，相较饿汉式，此种写法支持懒加载，原因在于<code>SingleHolder</code>并未被显示被装载，只有首次调用时候才会显式的装载<code>SingletonHolder</code>并创建Singleton对象，从而达到懒加载的效果，具体细节待探究。</p>
 <h4 id="枚举方式"><a href="#枚举方式" class="headerlink" title="枚举方式"></a>枚举方式</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> Singleton&#123;</span><br><span class="line">	Instance;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>以上的各种写法其实还存在一个问题，便是利用序列化和反序列化来进行实例的替换（前提是实例实现了<code>serializable</code>），此种写法利用了枚举的特性，防止利用序列化方式来多次创建实例。</p>
+<p>此种写法利用枚举的特性，可以完全的达到单例，在不使用发射的前提下，而且此种写法简单易懂，但是目前的这种使用方式不多。</p>
+<h4 id="浅谈关于单例的序列化"><a href="#浅谈关于单例的序列化" class="headerlink" title="浅谈关于单例的序列化"></a>浅谈关于单例的序列化</h4><p>在很多场景下，返回的实例都是实现了<code>Serializable</code>, 这就存在让人利用序列化/反序列化的方式来替换实例，以达到攻击或者其他目的。既然我们在代码中采用单例模式，初衷便是不希望有使用者能够通过某种方式来进行攻击和破坏，为了应对这种问题，可以在对象中实现<code>readResolve</code>方法，此方法的作用便是在反序列化的到一个对象时，会判断该对象有没有实现该方法，如果存在该方法的话，便会调用该方法返回一个对象，强制将反序列化后得到的对象引用指向<code>readResolve</code>的对象，从而使反序列化得到的对象成为垃圾对象，被收集器回收。<br>但是此种方法必须用于辅助的一个手段，便是将包含实例对象类型的变量全部声明为<code>transient</code>,否则还是可以收到一种很复杂的攻击，即在<code>readResolve</code>方法运行之前，攻击者将实例的一个引用放到静态域来保护该非法引用，从而使得在反序列化后依然能够生成一个新的实例，从而破坏单例模式，上述所说的枚举方式是可以完全避免此种攻击方式（详细可以参见【effective java的76条】）。</p>
 <blockquote>
-<p>当前各种写法都是有问题的，因为可以利用cglib/java assist等方式修改字节码，从而达到目的，所以各种写法的优劣也是建立在一定的理想基础之上的，仁者见仁，智者见智。</p>
+<p>即使完全的能够屏蔽反序列化的攻击方式，但是这都是建立在不使用反射的前提之下，也就是说不可能绝对的安全。因为完全可以利用反射将实例的访问权限改变，从而粗暴的破坏单例模式。对于单例模式的使用而言，是根据不同的场景和不同的需求来进行选择不同的实现方式，没有绝对安全的编码，同时这也是仁者见仁智者见智。</p>
 </blockquote>
 
         </div>
