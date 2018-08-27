@@ -3,13 +3,13 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Peachey Blog</title>
+    <title>归档: 2018 | Peachey Blog</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta property="og:type" content="website">
 <meta property="og:title" content="Peachey Blog">
-<meta property="og:url" content="peachey.blog/index.html">
+<meta property="og:url" content="peachey.blog/archives/2018/page/2/index.html">
 <meta property="og:site_name" content="Peachey Blog">
 <meta property="og:locale" content="zh-CN">
 <meta name="twitter:card" content="summary">
@@ -128,7 +128,7 @@
                         <div class="main-body-header">
     <h1 class="header">
     
-    <em class="page-title-link" data-url="home">主页</em>
+    <i class="icon fa fa-archive"></i>归档: 2018
     </h1>
 </div>
                         <div class="main-body-content">
@@ -151,55 +151,10 @@
         <article class="article article-summary">
     <div class="article-summary-inner">
         
-        <a href="/2018/08/27/java-dubbo-exchange/" class="thumbnail">
+        <a href="/2018/03/21/db-innodb-index/" class="thumbnail">
     
     
-        <span style="background-image:url(/img/dubbo.png)" alt="dubbo通信源码解析" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/Java/">Java</a>
-            </div>
-            <div class="date"><time datetime="2018-08-27T12:03:44.000Z" itemprop="datePublished">2018-08-27</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2018/08/27/java-dubbo-exchange/">dubbo通信源码解析</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            
-4.1 编码流程4.1.1 编码请求（request）编码dubbo协议头1234567891011121314151617/** * com.alibaba.dubbo.remoting.exchange.codec.ExchangeCodec#encodeRequest */// 获取序列化器方式，默认获取的是com.alibaba.dubbo.common.serialize.hessia
-        </p>
-    </div>
-</article>
-    
-
-    
-    
-    
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2018/08/15/java-hessian-hashmap-cast-exception/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/img/dubbo.png)" alt="Hessian反序列化无法将HashMap转换为对象异常小解" class="thumbnail-image"></span>
+        <span style="background-image:url(/img/mysql/mysql.png)" alt="Innodb索引原理" class="thumbnail-image"></span>
     
     
         
@@ -215,422 +170,33 @@
         
         <div class="article-meta">
             <div class="category">
-            <a class="article-category-link" href="/categories/Java/">Java</a>
+            <a class="article-category-link" href="/categories/DB/">DB</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/DB/Mysql/">Mysql</a>
             </div>
-            <div class="date"><time datetime="2018-08-14T16:54:21.000Z" itemprop="datePublished">2018-08-15</time></div>
+            <div class="date"><time datetime="2018-03-21T14:41:25.000Z" itemprop="datePublished">2018-03-21</time></div>
         </div>
         
     
         <h1 class="article-title" itemprop="name">
-        <a href="/2018/08/15/java-hessian-hashmap-cast-exception/">Hessian反序列化无法将HashMap转换为对象异常小解</a>
+        <a href="/2018/03/21/db-innodb-index/">Innodb索引原理</a>
         </h1>
     
 
         <p class="article-excerpt">
             
 
-        </p>
-    </div>
-</article>
-    
-        </div>
-    
+Innodb是Mysql最常用的存储引擎，了解Innodb存储引擎的索引对于日常工作有很大的益处，索引的存在便是为了加速数据库行记录的检索。以下是我对最近学习的知识的一些总结，以及对碰到的以及别人提到过的问题的一些分析，如有错误，请指正，我会及时更正。
 
-    
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2018/07/21/java-singleton-pattern/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/img/design-pattern.jpeg)" alt="单例模式完全解析" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-</span>
+目录
+Innodb表结构
+B树与B+树
+聚簇索引和二级索引
+sql执行顺序
+sql优化建议
+一些问题分析
+参考资料
 
 
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/Java/">Java</a>
-            </div>
-            <div class="date"><time datetime="2018-07-21T07:39:16.000Z" itemprop="datePublished">2018-07-21</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2018/07/21/java-singleton-pattern/">单例模式完全解析</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            
-
-在天天的劳民伤财的搬砖工作中，每天不是和产品讨论需求，然后就是在苦逼的看着交互，琢磨如何来实现这个需求，某天我翻起tomcat源码，看着main函数中的那个synchronized锁，我懵了，为啥这里要加锁呢？怎么看的这代码似曾相识，这不是失传江湖已久的单例模式么！但标准的不都是双重判断么？这里少了一次哎~真是工作时间长了，连我爸妈都不记得长什么样了！
-
-单例模式的前世今生单例模式是设计模式中
-        </p>
-    </div>
-</article>
-    
-
-    
-    
-    
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2018/07/05/java-mybatis-paging-interceptor/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/img/mybatis.jpg)" alt="基于Mybatis的注解式分页插件" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/Java/">Java</a>
-            </div>
-            <div class="date"><time datetime="2018-07-05T08:52:06.000Z" itemprop="datePublished">2018-07-05</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2018/07/05/java-mybatis-paging-interceptor/">基于Mybatis的注解式分页插件</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            
-
-        </p>
-    </div>
-</article>
-    
-        </div>
-    
-
-    
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2018/05/16/al-median/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/img/leetcode.jpg)" alt="两个排序数组的中位数" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/算法/">算法</a>
-            </div>
-            <div class="date"><time datetime="2018-05-16T14:23:28.000Z" itemprop="datePublished">2018-05-16</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2018/05/16/al-median/">两个排序数组的中位数</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            
-题目给定两个大小为 m 和 n 的有序数组 nums1 和 nums2 。请找出这两个有序数组的中位数。要求算法的时间复杂度为 O(log (m+n)) 。
-示例 1:1234nums1 = [1, 3]nums2 = [2]中位数是 2.0
-示例 2:1234nums1 = [1, 2]nums2 = [3, 4]中位数是 (2 + 3)/2 = 2.5
-思路
-两个数组长度之和为奇数，则取中间
-        </p>
-    </div>
-</article>
-    
-
-    
-    
-    
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2018/05/16/al-no-repeat-str/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/img/leetcode.jpg)" alt="无重复字符的最长子串" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/算法/">算法</a>
-            </div>
-            <div class="date"><time datetime="2018-05-16T10:47:17.000Z" itemprop="datePublished">2018-05-16</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2018/05/16/al-no-repeat-str/">无重复字符的最长子串</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            
-题目给定一个字符串，找出不含有重复字符的最长子串的长度。
-示例：给定 “abcabcbb” ，没有重复字符的最长子串是 “abc” ，那么长度就是3。给定 “bbbbb” ，最长的子串就是 “b” ，长度是1。给定 “pwwkew” ，最长子串是 “wke” ，长度是3。请注意答案必须是一个子串，”pwke” 是 子序列  而不是子串。
-思路
-用两个指针，一个指定开始位置，另外一个作为游标
-利用
-        </p>
-    </div>
-</article>
-    
-        </div>
-    
-
-    
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2018/05/11/al-two-plus/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/img/leetcode.jpg)" alt="两数相加" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/算法/">算法</a>
-            </div>
-            <div class="date"><time datetime="2018-05-11T04:35:28.000Z" itemprop="datePublished">2018-05-11</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2018/05/11/al-two-plus/">两数相加</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            
-题目给定两个非空链表来表示两个非负整数。位数按照逆序方式存储，它们的每个节点只存储单个数字。将两数相加返回一个新的链表。你可以假设除了数字 0 之外，这两个数字都不会以零开头。
-示例：输入：(2 -&gt; 4 -&gt; 3) + (5 -&gt; 6 -&gt; 4)输出：7 -&gt; 0 -&gt; 8原因：342 + 465 = 807
-我的解法 34ms  战胜96.11%的java
-        </p>
-    </div>
-</article>
-    
-
-    
-    
-    
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2018/05/06/al-two-sum/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/img/leetcode.jpg)" alt="两数之和" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/算法/">算法</a>
-            </div>
-            <div class="date"><time datetime="2018-05-06T14:24:29.000Z" itemprop="datePublished">2018-05-06</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2018/05/06/al-two-sum/">两数之和</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            
-题目给定一个整数数组和一个目标值，找出数组中和为目标值的两个数。你可以假设每个输入只对应一种答案，且同样的元素不能被重复利用。
-示例:给定 nums = [2, 7, 11, 15], target = 9因为 nums[0] + nums[1] = 2 + 7 = 9所以返回 [0, 1]
-我的解法 33ms 战胜56.94%Java提交123456789101112class Solutio
-        </p>
-    </div>
-</article>
-    
-        </div>
-    
-
-    
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2018/05/04/study-plan/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/杂记/">杂记</a>
-            </div>
-            <div class="date"><time datetime="2018-05-04T15:14:41.000Z" itemprop="datePublished">2018-05-04</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2018/05/04/study-plan/">技术之路</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            
-根据目前的工作而言，个人总结了一下，大概需要掌握如下的知识面，有一些已经忘记了，有一些还没有看过，打算回炉重造一遍，总结的可能不全面，会不断的更新，并同步个人的学习进度，希望技术方面能够有一个大的飞跃。
-
-Javajvm
-jvm内存区域
-垃圾回收与内存分配
-jvm类加载
-jvm内存模型
-jvm性能优化
-
-
-参考：深入理解java虚拟机（此书为jdk1.7的，此书结合1.8官方文档）, java性
-        </p>
-    </div>
-</article>
-    
-
-    
-    
-    
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2018/05/04/java-dubbo-hessian/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/img/dubbo.png)" alt="Dubbo协议与Hessian2序列化简析" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/Java/">Java</a>
-            </div>
-            <div class="date"><time datetime="2018-05-04T14:55:33.000Z" itemprop="datePublished">2018-05-04</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2018/05/04/java-dubbo-hessian/">Dubbo协议与Hessian2序列化简析</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            
-
-dubbo是一个专注于服务治理的高性能rpc框架，支持不同服务之间的远程调用时必然的，dubbo协议与序列化的存在是不同服务沟通的桥梁，dubbo协议作为其rpc通信的一种约定或者规则，rpc通信的双方必须遵守这一约定，来区分是请求、响应还是事件，同时还能表达一些行为特征，本文的主题便是dubbo提供方是如何编码，以及dubbo消费方如何解码，以下是本人阅读各种资料以及源码，对dubbo协议与
+1. Innodb表
         </p>
     </div>
 </article>
@@ -643,8 +209,8 @@ dubbo是一个专注于服务治理的高性能rpc框架，支持不同服务之
 
 
     <nav id="page-nav">
-        <span class="pages">第 1 页，共 2 页</span>
-        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">&raquo;</a>
+        <span class="pages">第 2 页，共 2 页</span>
+        <a class="extend prev" rel="prev" href="/archives/2018/">&laquo;</a><a class="page-number" href="/archives/2018/">1</a><span class="page-number current">2</span>
     </nav>
 
 

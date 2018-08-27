@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>dubbo通信源码解析 | Peachey Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="Dubbo" />
+    
+    <meta name="description" content="4.1 编码流程4.1.1 编码请求（request）编码dubbo协议头1234567891011121314151617/** * com.alibaba.dubbo.remoting.exchange.codec.ExchangeCodec#encodeRequest */// 获取序列化器方式，默认获取的是com.alibaba.dubbo.common.serialize.hessia">
+<meta name="keywords" content="Dubbo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="dubbo通信源码解析">
+<meta property="og:url" content="peachey.blog/2018/08/27/java-dubbo-exchange/index.html">
+<meta property="og:site_name" content="Peachey Blog">
+<meta property="og:description" content="4.1 编码流程4.1.1 编码请求（request）编码dubbo协议头1234567891011121314151617/** * com.alibaba.dubbo.remoting.exchange.codec.ExchangeCodec#encodeRequest */// 获取序列化器方式，默认获取的是com.alibaba.dubbo.common.serialize.hessia">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="/img/dubbo.png">
+<meta property="og:updated_time" content="2018-08-27T18:22:05.586Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="dubbo通信源码解析">
+<meta name="twitter:description" content="4.1 编码流程4.1.1 编码请求（request）编码dubbo协议头1234567891011121314151617/** * com.alibaba.dubbo.remoting.exchange.codec.ExchangeCodec#encodeRequest */// 获取序列化器方式，默认获取的是com.alibaba.dubbo.common.serialize.hessia">
+<meta name="twitter:image" content="/img/dubbo.png">
+    
+
+    
+        <link rel="alternate" href="/" title="Peachey Blog" type="application/atom+xml" />
+    
+
+    
+        <link rel="icon" href="/css/images/favicon.ico" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">Never Give Up</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/DB/">DB</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/DB/Mysql/">Mysql</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Java/">Java</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Python/">Python</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/杂记/">杂记</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/算法/">算法</a></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/Java/">Java</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-java-dubbo-exchange" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        dubbo通信源码解析
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2018/08/27/java-dubbo-exchange/" class="article-date">
+            <time datetime="2018-08-27T12:03:44.000Z" itemprop="datePublished">2018-08-27</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Dubbo/">Dubbo</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p><img src="/img/dubbo.png" alt=""></p>
+<h4 id="4-1-编码流程"><a href="#4-1-编码流程" class="headerlink" title="4.1 编码流程"></a>4.1 编码流程</h4><h5 id="4-1-1-编码请求（request）"><a href="#4-1-1-编码请求（request）" class="headerlink" title="4.1.1 编码请求（request）"></a>4.1.1 编码请求（request）</h5><h6 id="编码dubbo协议头"><a href="#编码dubbo协议头" class="headerlink" title="编码dubbo协议头"></a>编码dubbo协议头</h6><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * com.alibaba.dubbo.remoting.exchange.codec.ExchangeCodec#encodeRequest</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="comment">// 获取序列化器方式，默认获取的是com.alibaba.dubbo.common.serialize.hessian2.Hessian2Serialization</span></span><br><span class="line">Serialization serialization = getSerialization(channel);</span><br><span class="line"><span class="comment">// 创建dubbo协议头，16字节</span></span><br><span class="line"><span class="keyword">byte</span>[] header = <span class="keyword">new</span> <span class="keyword">byte</span>[HEADER_LENGTH];</span><br><span class="line"><span class="comment">// 设置魔数，两个字节</span></span><br><span class="line">Bytes.short2bytes(MAGIC, header);</span><br><span class="line"><span class="comment">// FLAG_REQUEST=0x80 相当于将字节第2位 置为1, serialization.getContentTypeId()即为序列化类型，hessian固定为2</span></span><br><span class="line">header[<span class="number">2</span>] = (<span class="keyword">byte</span>) (FLAG_REQUEST | serialization.getContentTypeId());</span><br><span class="line"><span class="comment">// FLAG_TWOWAY=0x40 相当于将字节第2位 置为1</span></span><br><span class="line"><span class="keyword">if</span> (req.isTwoWay()) header[<span class="number">2</span>] |= FLAG_TWOWAY;</span><br><span class="line"><span class="comment">// FLAG_EVENT=0x20 相当于将字节第3位 置为1</span></span><br><span class="line"><span class="keyword">if</span> (req.isEvent()) header[<span class="number">2</span>] |= FLAG_EVENT;</span><br><span class="line"><span class="comment">// 设置请求的id 唯一</span></span><br><span class="line">Bytes.long2bytes(req.getId(), header, <span class="number">4</span>);</span><br></pre></td></tr></table></figure>
+<h6 id="更新游标"><a href="#更新游标" class="headerlink" title="更新游标"></a>更新游标</h6><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> savedWriteIndex = buffer.writerIndex();</span><br><span class="line">buffer.writerIndex(savedWriteIndex + HEADER_LENGTH);</span><br></pre></td></tr></table></figure>
+<h6 id="编码数据体"><a href="#编码数据体" class="headerlink" title="编码数据体"></a>编码数据体</h6><p>编码数据体分为事件数据或请求数据，事件数据直接编码，请求的话还有一些特殊处理。</p>
+<ul>
+<li>编码请求</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * com.alibaba.dubbo.rpc.protocol.dubbo.DubboCodec#encodeRequestData</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">RpcInvocation inv = (RpcInvocation) data;</span><br><span class="line"><span class="comment">//编码dubbo版本，默认是2.0.0</span></span><br><span class="line">out.writeUTF(inv.getAttachment(Constants.DUBBO_VERSION_KEY, DUBBO_VERSION));</span><br><span class="line"><span class="comment">//编码全类名</span></span><br><span class="line">out.writeUTF(inv.getAttachment(Constants.PATH_KEY));</span><br><span class="line"><span class="comment">//编码接口版本</span></span><br><span class="line">out.writeUTF(inv.getAttachment(Constants.VERSION_KEY));</span><br><span class="line"><span class="comment">//编码方法名称</span></span><br><span class="line">out.writeUTF(inv.getMethodName());</span><br><span class="line"><span class="comment">//编码形参类型</span></span><br><span class="line">out.writeUTF(ReflectUtils.getDesc(inv.getParameterTypes()));</span><br><span class="line"><span class="comment">//编码实参</span></span><br><span class="line">Object[] args = inv.getArguments();</span><br><span class="line"><span class="keyword">if</span> (args != <span class="keyword">null</span>)</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; args.length; i++) &#123;</span><br><span class="line">        out.writeObject(encodeInvocationArgument(channel, inv, i));</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">//编码隐式参数</span></span><br><span class="line">out.writeObject(inv.getAttachments());</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>writeUTF</code>实际上是对字符串类型的序列化,并进行UTF-8编码, <code>writeObject</code>实际是序列化的一个入口;<br>   可以通过 <code>RpcContext</code> 上的 <code>setAttachment</code> 和 <code>getAttachment</code> 在服务消费方和提供方之间进行参数的隐式传递。完成一次<code>setAttachment</code>/<code>getAttachment</code>远程调用会被清空，即多次远程调用要多次设置,注意<code>path</code>, <code>group</code>, <code>version</code>, <code>dubbo</code>, <code>token</code>, <code>timeout</code> 几个 key 是保留字段</p>
+</blockquote>
+<ul>
+<li>获取类型描述</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * com.alibaba.dubbo.common.utils.ReflectUtils#getDesc(java.lang.Class&lt;?&gt;)</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">if</span> (c.isPrimitive()) &#123;</span><br><span class="line">	<span class="comment">// 获取原始类型描述</span></span><br><span class="line">    String t = c.getName();</span><br><span class="line">    <span class="keyword">if</span> (<span class="string">"void"</span>.equals(t)) ret.append(JVM_VOID);</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (<span class="string">"boolean"</span>.equals(t)) ret.append(JVM_BOOLEAN);</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (<span class="string">"byte"</span>.equals(t)) ret.append(JVM_BYTE);</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (<span class="string">"char"</span>.equals(t)) ret.append(JVM_CHAR);</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (<span class="string">"double"</span>.equals(t)) ret.append(JVM_DOUBLE);</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (<span class="string">"float"</span>.equals(t)) ret.append(JVM_FLOAT);</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (<span class="string">"int"</span>.equals(t)) ret.append(JVM_INT);</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (<span class="string">"long"</span>.equals(t)) ret.append(JVM_LONG);</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (<span class="string">"short"</span>.equals(t)) ret.append(JVM_SHORT);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">	<span class="comment">// 获取非原始类型描述</span></span><br><span class="line">    ret.append(`L`);</span><br><span class="line">    ret.append(c.getName().replace(`.`, `/`));</span><br><span class="line">    ret.append(`;`);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>获取类型描述的时候，分为原始类型和对象</p>
+<ul>
+<li>原始类型：<code>void</code>:<code>V</code>, <code>boolean</code>:<code>Z</code>, <code>byte</code>:<code>B</code>, <code>char</code>:<code>C</code>, <code>double</code>:<code>D</code>, <code>float</code>:<code>F</code>, <code>int</code>:<code>I</code>,<code>long</code>:<code>J</code>,<code>short</code>:<code>S</code>;</li>
+<li>对象类型：会将全类名转换得到类型描述，比如<code>java.lang.String</code>:<code>Ljava/lang/String;</code></li>
+</ul>
+</blockquote>
+<ul>
+<li>writeObject</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * com.alibaba.com.caucho.hessian.io.Hessian2Output#writeObject</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">serializer = findSerializerFactory().getSerializer(object.getClass());</span><br><span class="line">serializer.writeObject(object, <span class="keyword">this</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * com.alibaba.com.caucho.hessian.io.Hessian2Output</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">addBasic(<span class="keyword">void</span>.class, <span class="string">"void"</span>, BasicSerializer.NULL);</span><br><span class="line">addBasic(Boolean.class, <span class="string">"boolean"</span>, BasicSerializer.BOOLEAN);</span><br><span class="line">addBasic(Byte.class, <span class="string">"byte"</span>, BasicSerializer.BYTE);</span><br><span class="line">addBasic(Short.class, <span class="string">"short"</span>, BasicSerializer.SHORT);</span><br><span class="line">addBasic(Integer.class, <span class="string">"int"</span>, BasicSerializer.INTEGER);</span><br><span class="line">addBasic(Long.class, <span class="string">"long"</span>, BasicSerializer.LONG);</span><br><span class="line">addBasic(Float.class, <span class="string">"float"</span>, BasicSerializer.FLOAT);</span><br><span class="line">addBasic(Double.class, <span class="string">"double"</span>, BasicSerializer.DOUBLE);</span><br><span class="line">addBasic(Character.class, <span class="string">"char"</span>, BasicSerializer.CHARACTER_OBJECT);</span><br><span class="line">addBasic(String.class, <span class="string">"string"</span>, BasicSerializer.STRING);</span><br><span class="line">addBasic(Object.class, <span class="string">"object"</span>, BasicSerializer.OBJECT);</span><br><span class="line">addBasic(java.util.Date.class, <span class="string">"date"</span>, BasicSerializer.DATE);</span><br><span class="line"></span><br><span class="line">addBasic(<span class="keyword">boolean</span>.class, <span class="string">"boolean"</span>, BasicSerializer.BOOLEAN);</span><br><span class="line">addBasic(<span class="keyword">byte</span>.class, <span class="string">"byte"</span>, BasicSerializer.BYTE);</span><br><span class="line">addBasic(<span class="keyword">short</span>.class, <span class="string">"short"</span>, BasicSerializer.SHORT);</span><br><span class="line">addBasic(<span class="keyword">int</span>.class, <span class="string">"int"</span>, BasicSerializer.INTEGER);</span><br><span class="line">addBasic(<span class="keyword">long</span>.class, <span class="string">"long"</span>, BasicSerializer.LONG);</span><br><span class="line">addBasic(<span class="keyword">float</span>.class, <span class="string">"float"</span>, BasicSerializer.FLOAT);</span><br><span class="line">addBasic(<span class="keyword">double</span>.class, <span class="string">"double"</span>, BasicSerializer.DOUBLE);</span><br><span class="line">addBasic(<span class="keyword">char</span>.class, <span class="string">"char"</span>, BasicSerializer.CHARACTER);</span><br><span class="line"></span><br><span class="line">addBasic(<span class="keyword">boolean</span>[].class, <span class="string">"[boolean"</span>, BasicSerializer.BOOLEAN_ARRAY);</span><br><span class="line">addBasic(<span class="keyword">byte</span>[].class, <span class="string">"[byte"</span>, BasicSerializer.BYTE_ARRAY);</span><br><span class="line">addBasic(<span class="keyword">short</span>[].class, <span class="string">"[short"</span>, BasicSerializer.SHORT_ARRAY);</span><br><span class="line">addBasic(<span class="keyword">int</span>[].class, <span class="string">"[int"</span>, BasicSerializer.INTEGER_ARRAY);</span><br><span class="line">addBasic(<span class="keyword">long</span>[].class, <span class="string">"[long"</span>, BasicSerializer.LONG_ARRAY);</span><br><span class="line">addBasic(<span class="keyword">float</span>[].class, <span class="string">"[float"</span>, BasicSerializer.FLOAT_ARRAY);</span><br><span class="line">addBasic(<span class="keyword">double</span>[].class, <span class="string">"[double"</span>, BasicSerializer.DOUBLE_ARRAY);</span><br><span class="line">addBasic(<span class="keyword">char</span>[].class, <span class="string">"[char"</span>, BasicSerializer.CHARACTER_ARRAY);</span><br><span class="line">addBasic(String[].class, <span class="string">"[string"</span>, BasicSerializer.STRING_ARRAY);</span><br><span class="line">addBasic(Object[].class, <span class="string">"[object"</span>, BasicSerializer.OBJECT_ARRAY);</span><br><span class="line"></span><br><span class="line">_staticSerializerMap.put(Class.class, <span class="keyword">new</span> ClassSerializer());</span><br><span class="line">_staticDeserializerMap.put(Number.class, <span class="keyword">new</span> BasicDeserializer(BasicSerializer.NUMBER));</span><br><span class="line">_staticSerializerMap.put(BigDecimal.class, <span class="keyword">new</span> StringValueSerializer());</span><br><span class="line">_staticDeserializerMap.put(BigDecimal.class, <span class="keyword">new</span> StringValueDeserializer(BigDecimal.class));</span><br><span class="line">_staticDeserializerMap.put(BigInteger.class, <span class="keyword">new</span> BigIntegerDeserializer());</span><br><span class="line">_staticSerializerMap.put(File.class, <span class="keyword">new</span> StringValueSerializer());</span><br><span class="line">_staticDeserializerMap.put(File.class, <span class="keyword">new</span> StringValueDeserializer(File.class));</span><br><span class="line">_staticSerializerMap.put(ObjectName.class, <span class="keyword">new</span> StringValueSerializer());</span><br><span class="line">_staticDeserializerMap.put(ObjectName.class, <span class="keyword">new</span> StringValueDeserializer(ObjectName.class));</span><br><span class="line">_staticSerializerMap.put(java.sql.Date.class, <span class="keyword">new</span> SqlDateSerializer());</span><br><span class="line">_staticSerializerMap.put(java.sql.Time.class, <span class="keyword">new</span> SqlDateSerializer());</span><br><span class="line">_staticSerializerMap.put(java.sql.Timestamp.class, <span class="keyword">new</span> SqlDateSerializer());</span><br><span class="line">_staticSerializerMap.put(java.io.InputStream.class, <span class="keyword">new</span> InputStreamSerializer());</span><br><span class="line">_staticDeserializerMap.put(java.io.InputStream.class, <span class="keyword">new</span> InputStreamDeserializer());</span><br><span class="line">_staticDeserializerMap.put(java.sql.Date.class, <span class="keyword">new</span> SqlDateDeserializer(java.sql.Date.class));</span><br><span class="line">_staticDeserializerMap.put(java.sql.Time.class, <span class="keyword">new</span> SqlDateDeserializer(java.sql.Time.class));</span><br><span class="line">_staticDeserializerMap.put(java.sql.Timestamp.class, <span class="keyword">new</span> SqlDateDeserializer(java.sql.Timestamp.class));</span><br><span class="line">_staticDeserializerMap.put(StackTraceElement.class, <span class="keyword">new</span> StackTraceElementDeserializer());</span><br><span class="line"><span class="comment">//Java 8</span></span><br><span class="line">_staticSerializerMap.put(Class.forName(<span class="string">"java.time.LocalTime"</span>), create(LocalTimeHandle.class));</span><br><span class="line">_staticSerializerMap.put(Class.forName(<span class="string">"java.time.LocalDate"</span>), create(LocalDateHandle.class));</span><br><span class="line">_staticSerializerMap.put(Class.forName(<span class="string">"java.time.LocalDateTime"</span>), create(LocalDateTimeHandle.class));</span><br><span class="line">_staticSerializerMap.put(Class.forName(<span class="string">"java.time.Instant"</span>), create(InstantHandle.class));</span><br><span class="line">_staticSerializerMap.put(Class.forName(<span class="string">"java.time.Duration"</span>), create(DurationHandle.class));</span><br><span class="line">_staticSerializerMap.put(Class.forName(<span class="string">"java.time.Period"</span>), create(PeriodHandle.class));</span><br><span class="line">_staticSerializerMap.put(Class.forName(<span class="string">"java.time.Year"</span>), create(YearHandle.class));</span><br><span class="line">_staticSerializerMap.put(Class.forName(<span class="string">"java.time.YearMonth"</span>), create(YearMonthHandle.class));</span><br><span class="line">_staticSerializerMap.put(Class.forName(<span class="string">"java.time.MonthDay"</span>), create(MonthDayHandle.class));</span><br><span class="line">_staticSerializerMap.put(Class.forName(<span class="string">"java.time.OffsetDateTime"</span>), create(OffsetDateTimeHandle.class));</span><br><span class="line">_staticSerializerMap.put(Class.forName(<span class="string">"java.time.ZoneOffset"</span>), create(ZoneOffsetHandle.class));</span><br><span class="line">_staticSerializerMap.put(Class.forName(<span class="string">"java.time.OffsetTime"</span>), create(OffsetTimeHandle.class));</span><br><span class="line">_staticSerializerMap.put(Class.forName(<span class="string">"java.time.ZonedDateTime"</span>), create(ZonedDateTimeHandle.class));</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>在执行<code>writeObject</code>时，会寻找对应的序列化器，有三个Map来存储序列化器, 具体如何序列化某种类型参见<a href="#3.3">3.3 序列化详述</a>：</p>
+<ul>
+<li><code>_staticSerializerMap</code>: 存放序列化器，key是class, value是对象</li>
+<li><code>_staticDeserializerMap</code>: 存放反序列化器，key是class, value是对象</li>
+<li><code>_staticTypeMap</code>: 存放反序列化器，key是类型字符串，value是对象</li>
+</ul>
+</blockquote>
+<h6 id="检查size"><a href="#检查size" class="headerlink" title="检查size"></a>检查size</h6><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * com.alibaba.dubbo.remoting.transport.AbstractCodec#checkPayload</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">int</span> payload = Constants.DEFAULT_PAYLOAD;</span><br><span class="line"><span class="keyword">if</span> (channel != <span class="keyword">null</span> &amp;&amp; channel.getUrl() != <span class="keyword">null</span>) &#123;</span><br><span class="line">    <span class="comment">//会从xml配置文件中取值payload，没有配置默认8M</span></span><br><span class="line">    payload = channel.getUrl().getParameter(Constants.PAYLOAD_KEY, Constants.DEFAULT_PAYLOAD);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (payload &gt; <span class="number">0</span> &amp;&amp; size &gt; payload) &#123;</span><br><span class="line">    ExceedPayloadLimitException e = <span class="keyword">new</span> ExceedPayloadLimitException(<span class="string">"Data length too large: "</span> + size + <span class="string">", max payload: "</span> + payload + <span class="string">", channel: "</span> + channel);</span><br><span class="line">    logger.error(e);</span><br><span class="line">    <span class="keyword">throw</span> e;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>8M的异常就在这里抛出来的,可以通过为接口配置payload字段来改变传输size, 可以全局配置，也可以指定接口配置，但是增大的同时，会有如下问题：</p>
+<ul>
+<li>序列化大量数据性能很差</li>
+<li>服务调用可能会超时，导致调用失败</li>
+<li>传输大量数据会占用带宽，可能会影响其他服务调用</li>
+</ul>
+</blockquote>
+<h6 id="写数据，更新游标"><a href="#写数据，更新游标" class="headerlink" title="写数据，更新游标"></a>写数据，更新游标</h6><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 一个很奇怪的地方，写数据时候是先把header的地方空出来，先写body，最后再写header，没想明白</span></span><br><span class="line">buffer.writerIndex(savedWriteIndex);</span><br><span class="line">buffer.writeBytes(header); <span class="comment">// write header.</span></span><br><span class="line">buffer.writerIndex(savedWriteIndex + HEADER_LENGTH + len);</span><br></pre></td></tr></table></figure>
+<h5 id="4-1-2-编码响应（response）"><a href="#4-1-2-编码响应（response）" class="headerlink" title="4.1.2 编码响应（response）"></a>4.1.2 编码响应（response）</h5>
+        </div>
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="valine-thread"></div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="/" target="_blank">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="/" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="/" target="_blank">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/ppoffice/hexo-theme-hueman" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="/" target="_blank">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/" target="_blank">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2018/08/15/java-hessian-hashmap-cast-exception/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">Hessian反序列化无法将HashMap转换为对象异常小解</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/08/27/java-dubbo-exchange/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/dubbo.png)" alt="dubbo通信源码解析" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Java/">Java</a></p>
+                            <p class="item-title"><a href="/2018/08/27/java-dubbo-exchange/" class="title">dubbo通信源码解析</a></p>
+                            <p class="item-date"><time datetime="2018-08-27T12:03:44.000Z" itemprop="datePublished">2018-08-27</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/08/15/java-hessian-hashmap-cast-exception/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/dubbo.png)" alt="Hessian反序列化无法将HashMap转换为对象异常小解" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Java/">Java</a></p>
+                            <p class="item-title"><a href="/2018/08/15/java-hessian-hashmap-cast-exception/" class="title">Hessian反序列化无法将HashMap转换为对象异常小解</a></p>
+                            <p class="item-date"><time datetime="2018-08-14T16:54:21.000Z" itemprop="datePublished">2018-08-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/07/21/java-singleton-pattern/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/design-pattern.jpeg)" alt="单例模式完全解析" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Java/">Java</a></p>
+                            <p class="item-title"><a href="/2018/07/21/java-singleton-pattern/" class="title">单例模式完全解析</a></p>
+                            <p class="item-date"><time datetime="2018-07-21T07:39:16.000Z" itemprop="datePublished">2018-07-21</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/07/05/java-mybatis-paging-interceptor/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/mybatis.jpg)" alt="基于Mybatis的注解式分页插件" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Java/">Java</a></p>
+                            <p class="item-title"><a href="/2018/07/05/java-mybatis-paging-interceptor/" class="title">基于Mybatis的注解式分页插件</a></p>
+                            <p class="item-date"><time datetime="2018-07-05T08:52:06.000Z" itemprop="datePublished">2018-07-05</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/05/16/al-median/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/leetcode.jpg)" alt="两个排序数组的中位数" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/算法/">算法</a></p>
+                            <p class="item-title"><a href="/2018/05/16/al-median/" class="title">两个排序数组的中位数</a></p>
+                            <p class="item-date"><time datetime="2018-05-16T14:23:28.000Z" itemprop="datePublished">2018-05-16</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/DB/">DB</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/DB/Mysql/">Mysql</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/杂记/">杂记</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a><span class="category-list-count">4</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dubbo/">Dubbo</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hessian/">Hessian</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LeetCode/">LeetCode</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Maven/">Maven</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mybatis/">Mybatis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/">Mysql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shadowsocks/">Shadowsocks</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Dubbo/" style="font-size: 16.67px;">Dubbo</a> <a href="/tags/Hessian/" style="font-size: 10px;">Hessian</a> <a href="/tags/Java/" style="font-size: 13.33px;">Java</a> <a href="/tags/LeetCode/" style="font-size: 20px;">LeetCode</a> <a href="/tags/Maven/" style="font-size: 10px;">Maven</a> <a href="/tags/Mybatis/" style="font-size: 10px;">Mybatis</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/设计模式/" style="font-size: 10px;">设计模式</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 Peachey</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//cdn.jsdelivr.net/gh/xcss/valine@v1.1.7-rc3/dist/Valine.min.js"></script>
+    <script>
+        new Valine({
+            el: '#valine-thread' ,
+            notify:false,
+            verify:true,
+            app_id: 'm643zV6fkatNCTYrsSGVp9t7-gzGzoHsz',
+            app_key: 'D2IHXCDEAUsrUI29D0U4CvYD',
+            placeholder: '可以发表下你的看法~'
+        });
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
