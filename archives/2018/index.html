@@ -183,7 +183,62 @@
 
         <p class="article-excerpt">
             
-4.1 编码流程4.1.1 编码请求（request）编码dubbo协议头1234567891011121314151617/** * com.alibaba.dubbo.remoting.exchange.codec.ExchangeCodec#encodeRequest */// 获取序列化器方式，默认获取的是com.alibaba.dubbo.common.serialize.hessia
+
+1. 网络协议模型
+此部分为前提，可能大家都清楚，但是为了理解方便，此小节为基础知识，作为分享dubbo协议与hessian序列化的先导。
+
+OSI与TCP/IP
+
+
+TCP/IP模型
+
+
+
+
+应用层
+
+
+传输层
+
+
+网络层
+
+
+链路层
+
+
+
+
+
+
+OSI模型
+
+
+
+
+应用层
+
+
+展示层
+
+
+会话层
+
+
+传输层
+
+
+网络层
+
+
+数据链路层
+
+
+物理层
+
+
+
+如上是网络协议通讯模型，其中OSI模
         </p>
     </div>
 </article>
@@ -192,55 +247,6 @@
     
     
     
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2018/08/15/java-hessian-hashmap-cast-exception/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/img/dubbo.png)" alt="Hessian反序列化无法将HashMap转换为对象异常小解" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/Java/">Java</a>
-            </div>
-            <div class="date"><time datetime="2018-08-14T16:54:21.000Z" itemprop="datePublished">2018-08-15</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2018/08/15/java-hessian-hashmap-cast-exception/">Hessian反序列化无法将HashMap转换为对象异常小解</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            
-
-        </p>
-    </div>
-</article>
-    
-        </div>
-    
-
-    
-    
-    
-    
-        <div class="article-row">
     
         <article class="article article-summary">
     <div class="article-summary-inner">
@@ -285,10 +291,14 @@
     </div>
 </article>
     
+        </div>
+    
 
     
     
     
+    
+        <div class="article-row">
     
         <article class="article article-summary">
     <div class="article-summary-inner">
@@ -330,14 +340,10 @@
     </div>
 </article>
     
-        </div>
-    
 
     
     
     
-    
-        <div class="article-row">
     
         <article class="article article-summary">
     <div class="article-summary-inner">
@@ -383,10 +389,14 @@
     </div>
 </article>
     
+        </div>
+    
 
     
     
     
+    
+        <div class="article-row">
     
         <article class="article article-summary">
     <div class="article-summary-inner">
@@ -432,14 +442,10 @@
     </div>
 </article>
     
-        </div>
-    
 
     
     
     
-    
-        <div class="article-row">
     
         <article class="article article-summary">
     <div class="article-summary-inner">
@@ -483,10 +489,14 @@
     </div>
 </article>
     
+        </div>
+    
 
     
     
     
+    
+        <div class="article-row">
     
         <article class="article article-summary">
     <div class="article-summary-inner">
@@ -530,14 +540,10 @@
     </div>
 </article>
     
-        </div>
-    
 
     
     
     
-    
-        <div class="article-row">
     
         <article class="article article-summary">
     <div class="article-summary-inner">
@@ -545,7 +551,7 @@
         <a href="/2018/05/04/study-plan/" class="thumbnail">
     
     
-        <span class="thumbnail-image thumbnail-none"></span>
+        <span style="background-image:url(/img/tech.jpeg)" alt="技术之路" class="thumbnail-image"></span>
     
     
         
@@ -574,6 +580,7 @@
 
         <p class="article-excerpt">
             
+
 根据目前的工作而言，个人总结了一下，大概需要掌握如下的知识面，有一些已经忘记了，有一些还没有看过，打算回炉重造一遍，总结的可能不全面，会不断的更新，并同步个人的学习进度，希望技术方面能够有一个大的飞跃。
 
 Javajvm
@@ -584,15 +591,19 @@ jvm内存模型
 jvm性能优化
 
 
-参考：深入理解java虚拟机（此书为jdk1.7的，此书结合1.8官方文档）, java性
+参考：深入理解java虚拟机（此书为jdk1.7的，此书结合1.8官方文档）, java
         </p>
     </div>
 </article>
+    
+        </div>
     
 
     
     
     
+    
+        <div class="article-row">
     
         <article class="article article-summary">
     <div class="article-summary-inner">
@@ -600,7 +611,7 @@ jvm性能优化
         <a href="/2018/05/04/java-dubbo-hessian/" class="thumbnail">
     
     
-        <span style="background-image:url(/img/dubbo.png)" alt="Dubbo协议与Hessian2序列化简析" class="thumbnail-image"></span>
+        <span style="background-image:url(/img/dubbo.png)" alt="Hessian2序列化简析" class="thumbnail-image"></span>
     
     
         
@@ -623,14 +634,82 @@ jvm性能优化
         
     
         <h1 class="article-title" itemprop="name">
-        <a href="/2018/05/04/java-dubbo-hessian/">Dubbo协议与Hessian2序列化简析</a>
+        <a href="/2018/05/04/java-dubbo-hessian/">Hessian2序列化简析</a>
         </h1>
     
 
         <p class="article-excerpt">
             
 
-dubbo是一个专注于服务治理的高性能rpc框架，支持不同服务之间的远程调用时必然的，dubbo协议与序列化的存在是不同服务沟通的桥梁，dubbo协议作为其rpc通信的一种约定或者规则，rpc通信的双方必须遵守这一约定，来区分是请求、响应还是事件，同时还能表达一些行为特征，本文的主题便是dubbo提供方是如何编码，以及dubbo消费方如何解码，以下是本人阅读各种资料以及源码，对dubbo协议与
+dubbo是一个专注于服务治理的高性能rpc框架，支持服务之间的远程调用，Hessian序列化的存在是服务间沟通的桥梁，以下是本人阅读各种资料以及源码，对hessian序列化的一点整理与理解，如有错误请指出。
+
+目录
+Hessian2序列化简介
+Dubbo Hessian2源码解析
+Hessian2序列化详述
+序列化协议对比
+参考
+
+
+1. Hessian2序列化hessian是一个动态类型,
+        </p>
+    </div>
+</article>
+    
+
+    
+    
+    
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2018/03/21/db-innodb-index/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/mysql/mysql.png)" alt="Innodb索引原理" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+</span>
+
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/DB/">DB</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/DB/Mysql/">Mysql</a>
+            </div>
+            <div class="date"><time datetime="2018-03-21T14:41:25.000Z" itemprop="datePublished">2018-03-21</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2018/03/21/db-innodb-index/">Innodb索引原理</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            
+
+Innodb是Mysql最常用的存储引擎，了解Innodb存储引擎的索引对于日常工作有很大的益处，索引的存在便是为了加速数据库行记录的检索。以下是我对最近学习的知识的一些总结，以及对碰到的以及别人提到过的问题的一些分析，如有错误，请指正，我会及时更正。
+
+目录
+Innodb表结构
+B树与B+树
+聚簇索引和二级索引
+sql执行顺序
+sql优化建议
+一些问题分析
+参考资料
+
+
+1. Innodb表
         </p>
     </div>
 </article>
@@ -641,11 +720,6 @@ dubbo是一个专注于服务治理的高性能rpc框架，支持不同服务之
 
     </div></section>
 
-
-    <nav id="page-nav">
-        <span class="pages">第 1 页，共 2 页</span>
-        <span class="page-number current">1</span><a class="page-number" href="/archives/2018/page/2/">2</a><a class="extend next" rel="next" href="/archives/2018/page/2/">&raquo;</a>
-    </nav>
 
 
                         </div>
@@ -742,26 +816,6 @@ dubbo是一个专注于服务治理的高性能rpc框架，支持不同服务之
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/08/15/java-hessian-hashmap-cast-exception/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/img/dubbo.png)" alt="Hessian反序列化无法将HashMap转换为对象异常小解" class="thumbnail-image"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/Java/">Java</a></p>
-                            <p class="item-title"><a href="/2018/08/15/java-hessian-hashmap-cast-exception/" class="title">Hessian反序列化无法将HashMap转换为对象异常小解</a></p>
-                            <p class="item-date"><time datetime="2018-08-14T16:54:21.000Z" itemprop="datePublished">2018-08-15</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
                             <a href="/2018/07/21/java-singleton-pattern/" class="thumbnail">
     
     
@@ -819,6 +873,26 @@ dubbo是一个专注于服务治理的高性能rpc框架，支持不同服务之
                         </div>
                     </li>
                 
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/05/16/al-no-repeat-str/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/leetcode.jpg)" alt="无重复字符的最长子串" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/算法/">算法</a></p>
+                            <p class="item-title"><a href="/2018/05/16/al-no-repeat-str/" class="title">无重复字符的最长子串</a></p>
+                            <p class="item-date"><time datetime="2018-05-16T10:47:17.000Z" itemprop="datePublished">2018-05-16</time></p>
+                        </div>
+                    </li>
+                
             </ul>
         </div>
     </div>
@@ -828,7 +902,7 @@ dubbo是一个专注于服务治理的高性能rpc框架，支持不同服务之
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/DB/">DB</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/DB/Mysql/">Mysql</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/杂记/">杂记</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a><span class="category-list-count">4</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/DB/">DB</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/DB/Mysql/">Mysql</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/杂记/">杂记</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a><span class="category-list-count">4</span></li></ul>
         </div>
     </div>
 
@@ -838,7 +912,7 @@ dubbo是一个专注于服务治理的高性能rpc框架，支持不同服务之
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -848,7 +922,7 @@ dubbo是一个专注于服务治理的高性能rpc框架，支持不同服务之
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">标签</h3>
         <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dubbo/">Dubbo</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hessian/">Hessian</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LeetCode/">LeetCode</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Maven/">Maven</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mybatis/">Mybatis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/">Mysql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shadowsocks/">Shadowsocks</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">1</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dubbo/">Dubbo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LeetCode/">LeetCode</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Maven/">Maven</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mybatis/">Mybatis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/">Mysql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shadowsocks/">Shadowsocks</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -858,7 +932,7 @@ dubbo是一个专注于服务治理的高性能rpc框架，支持不同服务之
     <div class="widget-wrap widget-float">
         <h3 class="widget-title">标签云</h3>
         <div class="widget tagcloud">
-            <a href="/tags/Dubbo/" style="font-size: 16.67px;">Dubbo</a> <a href="/tags/Hessian/" style="font-size: 10px;">Hessian</a> <a href="/tags/Java/" style="font-size: 13.33px;">Java</a> <a href="/tags/LeetCode/" style="font-size: 20px;">LeetCode</a> <a href="/tags/Maven/" style="font-size: 10px;">Maven</a> <a href="/tags/Mybatis/" style="font-size: 10px;">Mybatis</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/设计模式/" style="font-size: 10px;">设计模式</a>
+            <a href="/tags/Dubbo/" style="font-size: 15px;">Dubbo</a> <a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/LeetCode/" style="font-size: 20px;">LeetCode</a> <a href="/tags/Maven/" style="font-size: 10px;">Maven</a> <a href="/tags/Mybatis/" style="font-size: 10px;">Mybatis</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/设计模式/" style="font-size: 10px;">设计模式</a>
         </div>
     </div>
 
