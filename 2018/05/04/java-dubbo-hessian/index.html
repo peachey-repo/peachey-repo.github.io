@@ -3,25 +3,25 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Hessian2序列化简析 | Peachey Blog</title>
+    <title>Hessian Lite序列化简析 | Peachey Blog</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
         <meta name="keywords" content="Dubbo" />
     
-    <meta name="description" content="dubbo是一个专注于服务治理的高性能rpc框架，支持服务之间的远程调用，Hessian序列化的存在是服务间沟通的桥梁，以下是本人阅读各种资料以及源码，对hessian序列化的一点整理与理解，如有错误请指出。  目录 Hessian2序列化简介 Dubbo Hessian2源码解析 Hessian2序列化详述 序列化协议对比 参考   1. Hessian2序列化hessian是一个动态类型,">
+    <meta name="description" content="dubbo是一个专注于服务治理的高性能rpc框架，支持服务之间的远程调用，Hessian序列化的存在是服务间沟通的桥梁，以下是本人阅读各种资料以及源码，对hessian序列化的一点整理与理解，如有错误请指出。  目录 Hessian Lite序列化简介 Dubbo Hessian Lite源码解析2.1 Hessian Lite类结构2.2 Dubbo Hessian Lite源码解析2.3">
 <meta name="keywords" content="Dubbo">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hessian2序列化简析">
+<meta property="og:title" content="Hessian Lite序列化简析">
 <meta property="og:url" content="peachey.blog/2018/05/04/java-dubbo-hessian/index.html">
 <meta property="og:site_name" content="Peachey Blog">
-<meta property="og:description" content="dubbo是一个专注于服务治理的高性能rpc框架，支持服务之间的远程调用，Hessian序列化的存在是服务间沟通的桥梁，以下是本人阅读各种资料以及源码，对hessian序列化的一点整理与理解，如有错误请指出。  目录 Hessian2序列化简介 Dubbo Hessian2源码解析 Hessian2序列化详述 序列化协议对比 参考   1. Hessian2序列化hessian是一个动态类型,">
+<meta property="og:description" content="dubbo是一个专注于服务治理的高性能rpc框架，支持服务之间的远程调用，Hessian序列化的存在是服务间沟通的桥梁，以下是本人阅读各种资料以及源码，对hessian序列化的一点整理与理解，如有错误请指出。  目录 Hessian Lite序列化简介 Dubbo Hessian Lite源码解析2.1 Hessian Lite类结构2.2 Dubbo Hessian Lite源码解析2.3">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="/img/dubbo.png">
-<meta property="og:updated_time" content="2018-09-09T12:05:06.880Z">
+<meta property="og:updated_time" content="2018-09-09T18:38:49.233Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hessian2序列化简析">
-<meta name="twitter:description" content="dubbo是一个专注于服务治理的高性能rpc框架，支持服务之间的远程调用，Hessian序列化的存在是服务间沟通的桥梁，以下是本人阅读各种资料以及源码，对hessian序列化的一点整理与理解，如有错误请指出。  目录 Hessian2序列化简介 Dubbo Hessian2源码解析 Hessian2序列化详述 序列化协议对比 参考   1. Hessian2序列化hessian是一个动态类型,">
+<meta name="twitter:title" content="Hessian Lite序列化简析">
+<meta name="twitter:description" content="dubbo是一个专注于服务治理的高性能rpc框架，支持服务之间的远程调用，Hessian序列化的存在是服务间沟通的桥梁，以下是本人阅读各种资料以及源码，对hessian序列化的一点整理与理解，如有错误请指出。  目录 Hessian Lite序列化简介 Dubbo Hessian Lite源码解析2.1 Hessian Lite类结构2.2 Dubbo Hessian Lite源码解析2.3">
 <meta name="twitter:image" content="/img/dubbo.png">
     
 
@@ -148,7 +148,7 @@
                 
     
         <h1 class="article-title" itemprop="name">
-        Hessian2序列化简析
+        Hessian Lite序列化简析
         </h1>
     
 
@@ -178,9 +178,9 @@
 <p>dubbo是一个专注于服务治理的高性能rpc框架，支持服务之间的远程调用，Hessian序列化的存在是服务间沟通的桥梁，以下是本人阅读各种资料以及源码，对hessian序列化的一点整理与理解，如有错误请指出。</p>
 </blockquote>
 <h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ol>
-<li><a href="#1">Hessian2序列化简介</a></li>
-<li><a href="#2">Dubbo Hessian2源码解析</a></li>
-<li><a href="#3">Hessian2序列化详述</a></li>
+<li><a href="#1">Hessian Lite序列化简介</a></li>
+<li><a href="#2">Dubbo Hessian Lite源码解析</a><br>2.1 <a href="#2.1">Hessian Lite类结构</a><br>2.2 <a href="#2.2">Dubbo Hessian Lite源码解析</a><br>2.3 <a href="#2.3">序列化器和反序列化器</a></li>
+<li><a href="#3">Hessian Lite序列化详述</a><br>3.1 <a href="#3.1">序列化类型</a><br>3.2 <a href="#3.2">序列化详述</a></li>
 <li><a href="#4">序列化协议对比</a></li>
 <li><a href="#5">参考</a></li>
 </ol>
@@ -194,12 +194,13 @@
 <li>它必须是简单的，它可以有效地测试和实施;</li>
 <li>尽可能的快;</li>
 <li>必须要支持Unicode编码;</li>
-<li>它必须支持八位二进制数据；</li>
+<li>它必须支持八位二进制数据;</li>
 <li>它必须支持加密,压缩,签名,还有事务的上下文。</li>
 </ul>
 <p>Hessian是二进制传输协议，不需要其他的附加信息，因此是一种很好的能够支持跨语言特性，但是不同的语言需要一套Hessian的实现。</p>
-<p><span id="3"></span></p>
-<h3 id="3-Dubbo-Hessian2源码解析"><a href="#3-Dubbo-Hessian2源码解析" class="headerlink" title="3. Dubbo Hessian2源码解析"></a>3. Dubbo Hessian2源码解析</h3><h4 id="3-1-Hessian2类结构"><a href="#3-1-Hessian2类结构" class="headerlink" title="3.1 Hessian2类结构"></a>3.1 Hessian2类结构</h4><p><img src="/img/java/dubbo-hessian2-class.jpg" alt="Dubbo Hessian2类图"></p>
+<p><span id="2"></span></p>
+<h3 id="2-Dubbo-Hessian-Lite源码解析"><a href="#2-Dubbo-Hessian-Lite源码解析" class="headerlink" title="2. Dubbo Hessian Lite源码解析"></a>2. Dubbo Hessian Lite源码解析</h3><p><span id="2.1"></span></p>
+<h4 id="2-1-Hessian-Lite类结构"><a href="#2-1-Hessian-Lite类结构" class="headerlink" title="2.1 Hessian Lite类结构"></a>2.1 Hessian Lite类结构</h4><p><img src="/img/java/dubbo-hessian2-class.jpg" alt="Dubbo Hessian Lite类图"></p>
 <p>以上类图是Dubbo Hessian序列化的类结构图，以下对核心类进行讲解：</p>
 <ul>
 <li><p><code>Serialization</code>:此接口定义了序列化方式的规格，Dubbo中每种序列化方式都需要实现此接口定义的方式，此接口持有四个方法：<code>getContentTypeId</code>是获取序列化类型id,此值在dubbo协议头里边也会用到; <code>getContentType</code>此方法是获取序列化类型，一种定义的字符串，比如Hessian是<code>x-application/hessian2</code>,在框架中也没有具体的调用地方; <code>serialize</code>此方法用于序列化; <code>deserialize</code>此方法用于反序列化。</p>
@@ -213,26 +214,25 @@
 <li><p><code>AbstractSerializer</code>/<code>AbstractDeserializer</code>: 这两个类分别实现了<code>Serializer</code>和<code>Deserializer</code>，是具体的序列化器和反序列化器的父抽象类，从此类衍生出了很多具体类型的序列化器和反序列化器，类图中未完全给出，包括一些java 8类型的序列化器和反序列化器。</p>
 </li>
 </ul>
-<blockquote>
-<p>//todo 低版本dubbo不支持api为jdk 1.8的包版本，和hessian序列化不支持Java8新类型有一定的关系</p>
-</blockquote>
-<h4 id="3-2-Hessian2序列化和反序列化流程"><a href="#3-2-Hessian2序列化和反序列化流程" class="headerlink" title="3.2 Hessian2序列化和反序列化流程"></a>3.2 Hessian2序列化和反序列化流程</h4><p><img src="/img/java/hessian-serialize.jpg" alt="Hessian2序列化流程"></p>
+<p><span id="2.2"></span></p>
+<h4 id="2-2-Hessian-Lite序列化和反序列化流程"><a href="#2-2-Hessian-Lite序列化和反序列化流程" class="headerlink" title="2.2 Hessian Lite序列化和反序列化流程"></a>2.2 Hessian Lite序列化和反序列化流程</h4><p><img src="/img/java/hessian-serialize.jpg" alt="Hessian Lite序列化流程"></p>
 <ul>
-<li><p>Hessian2序列化流程如上时序图所述，之前的类图上没有加入<code>DubboCodec</code>，是因为这个不是本文所要分享的内容，与dubbo的rpc通信相关；时序图中描述序列化对象，对象只是一个抽象的称呼，可以是<code>Object</code>、<code>List</code>、<code>Map</code>等等,<code>DubboCodec</code>是对<code>ExchangeCodec</code>的一个继承，并重写了部分方法，其中对于协议头的序列化实现在<code>ExchangeCodec</code>中完成的，<code>DubboCodec</code>中会序列化一些附加信息；</p>
+<li><p>Hessian Lite序列化流程如上时序图所述，之前的类图上没有加入<code>DubboCodec</code>，是因为这个不是本文所要分享的内容，与dubbo的rpc通信相关；时序图中描述序列化对象，对象只是一个抽象的称呼，可以是<code>Object</code>、<code>List</code>、<code>Map</code>等等,<code>DubboCodec</code>是对<code>ExchangeCodec</code>的一个继承，并重写了部分方法，其中对于协议头的序列化实现在<code>ExchangeCodec</code>中完成的，<code>DubboCodec</code>中会序列化一些附加信息；</p>
 </li>
 <li><p>通过<code>Hessian2Serialization</code>获取一个<code>Hessian2ObjectOutput</code>对象，并利用<code>Hessian2ObjectOutput</code>执行序列化操作，<code>Hessian2ObjectOutput</code>内部持有一个<code>Hessian2Objectput</code>变量，具体的序列化操作是实现在<code>Hessian2Objectput</code>, <code>Hessian2Objectput</code>是序列化的核心调度类，其内部会根据具体的类型通过<code>Hessian2SerializerFactory</code>选择相应的序列化器来完成Java对象到二进制数据的转化，二进制数据会保存在<code>Hessian2Objectput</code>内部的buffer中。</p>
 </li>
 </ul>
-<p><img src="/img/java/hessian-deserialize.jpg" alt="Hessian2反序列化流程"></p>
+<p><img src="/img/java/hessian-deserialize.jpg" alt="Hessian Lite反序列化流程"></p>
 <ul>
-<li><p>Hessian2反序列化流程如上时序图所述，<code>DubboCodec</code>需要区分是请求还是响应，对于请求利用<code>DecodeableRpcInvocation</code>来做处理，对于响应利用<code>DecodeableRpcResult</code>来做处理，其实序列化也是区分响应还是请求的，对于序列化<code>DubboCodec</code>是通过两个不同的函数实现的；</p>
+<li><p>Hessian Lite反序列化流程如上时序图所述，<code>DubboCodec</code>需要区分是请求还是响应，对于请求利用<code>DecodeableRpcInvocation</code>来做处理，对于响应利用<code>DecodeableRpcResult</code>来做处理，其实序列化也是区分响应还是请求的，对于序列化<code>DubboCodec</code>是通过两个不同的函数实现的；</p>
 </li>
 <li><p>在<code>DecodeableRpcInvocation</code>或<code>DecodeableRpcResult</code>中还是一样的，获取到<code>Hessian2ObjectInput</code>, 通过<code>Hessian2ObjectInput</code>内部持有的<code>Hessian2Input</code>完成序列化， <code>Hessian2Input</code>是Hessian2反序列化的一个核心调度类，其内部会根据具体的类型通过<code>Hessian2SerializerFactory</code>选择相应的反序列化器来进行反序列化的，<code>DubboCodec</code>最后会将<code>DecodeableRpcInvocation</code>或<code>DecodeableRpcResult</code>放入向上返回的<code>Request</code>或者<code>Response</code>中；</p>
 </li>
 <li><p>有必要提一下无论是序列化还是反序列化获取<code>ObjectOutput</code>或<code>ObejctInput</code>都是通过一个<code>CodecSupport</code>的工具类完成的，<code>CodecSupport</code>先确定<code>Serialization</code>（hessian或者其他），然后再通过<code>Serialization</code>来获取<code>ObjectOutput</code>或<code>ObejctInput</code>。</p>
 </li>
 </ul>
-<h4 id="3-3-序列化器和反序列化器"><a href="#3-3-序列化器和反序列化器" class="headerlink" title="3.3 序列化器和反序列化器"></a>3.3 序列化器和反序列化器</h4><h5 id="3-3-1-选择序列化器或反序列化器"><a href="#3-3-1-选择序列化器或反序列化器" class="headerlink" title="3.3.1 选择序列化器或反序列化器"></a>3.3.1 选择序列化器或反序列化器</h5><p>当序列化或反序列化的时候会选择与该类型匹配的序列化器，此过程主要是在<code>SerializerFactory</code>该类中完成，此类继承抽象类<code>AbstractSerializerFactory</code>,对外有两个方法<code>getSerializer</code>和<code>getDeserializer</code>，此二方法的作用是通过<code>Class&lt;?&gt;</code>来获取相应的序列化器或反序列化器, 流程如下，此流程只是图形化一下Dubbo中的代码逻辑，并非一定要按照如此优先级进行。</p>
+<p><span id="2.3"></span></p>
+<h4 id="2-3-序列化器和反序列化器"><a href="#2-3-序列化器和反序列化器" class="headerlink" title="2.3 序列化器和反序列化器"></a>2.3 序列化器和反序列化器</h4><h5 id="2-3-1-选择序列化器或反序列化器"><a href="#2-3-1-选择序列化器或反序列化器" class="headerlink" title="2.3.1 选择序列化器或反序列化器"></a>2.3.1 选择序列化器或反序列化器</h5><p>当序列化或反序列化的时候会选择与该类型匹配的序列化器，此过程主要是在<code>SerializerFactory</code>该类中完成，此类继承抽象类<code>AbstractSerializerFactory</code>,对外有两个方法<code>getSerializer</code>和<code>getDeserializer</code>，此二方法的作用是通过<code>Class&lt;?&gt;</code>来获取相应的序列化器或反序列化器, 流程如下，此流程只是图形化一下Dubbo中的代码逻辑，并非一定要按照如此优先级进行。</p>
 <p><img src="/img/java/find-serializer.jpg" alt="选择序列化器"></p>
 <ul>
 <li><p>静态Map在类初始化时，以<code>Class</code>为key,<code>Serializer</code>为value,进行了一系列的<code>put</code>操作,其中涉及类型<code>void</code>,<code>Boolean</code>,<code>Byte</code>,<code>Short</code>,<code>Integer</code>,<code>Long</code>,<code>Float</code>,<code>Double</code>,<code>Character</code>, <code>String</code>, <code>Object</code>, <code>java.util.Date</code>, <code>boolean</code>, <code>byte</code>, <code>short</code>, <code>int</code>, <code>long</code>, <code>float</code>, <code>double</code>, <code>char</code>, <code>boolean</code>, <code>byte</code>, <code>short</code>, <code>int</code>, <code>long</code>, <code>float</code>, <code>double</code>, <code>char</code>, <code>String</code>, <code>Object</code>, <code>Class</code>, <code>BigDecimal</code>, <code>File</code>, <code>ObjectName</code>, <code>java.sql.Date</code>, <code>java.sql.Time</code>, <code>java.sql.Timestamp</code> , <code>java.io.InputStream</code>, <code>java.time.LocalTime</code>, <code>java.time.LocalDate</code>, <code>java.time.LocalDateTime</code>, <code>java.time.Instant</code>, <code>java.time.Duration</code>, <code>java.time.Period</code>, <code>java.time.Year</code>, <code>java.time.YearMonth</code>, <code>java.time.MonthDay</code>, <code>java.time.OffsetDateTime</code>, <code>java.time.ZoneOffset</code>, <code>java.time.OffsetTime</code>, <code>java.time.ZonedDateTime</code>,此步操作是通过具体类型来获取序列化器；</p>
@@ -252,12 +252,22 @@
 <ul>
 <li>选择反序列化器之前的步骤和上述差不多，值得一提的反序列化<code>Class</code>类型时为何不将之放入静态Map当中，是因为改反序列化器需要获取当前的类加载器，而且在流程中还少了一些类型，是因为在初始化静态Map时，将其及其子类已经放入了静态Map当中。</li>
 </ul>
-<h5 id="3-3-2-序列化器和反序列化器介绍"><a href="#3-3-2-序列化器和反序列化器介绍" class="headerlink" title="3.3.2 序列化器和反序列化器介绍"></a>3.3.2 序列化器和反序列化器介绍</h5><h6 id="BasicSerializer-BasicSerializer"><a href="#BasicSerializer-BasicSerializer" class="headerlink" title="BasicSerializer/BasicSerializer"></a>BasicSerializer/BasicSerializer</h6><p>该序列化器和反序列化器负责序列化的类型是：<code>null</code>, <code>Boolean/boolean</code>, <code>byte/Byte</code>, <code>short/Short</code>, <code>int/Integer</code>, <code>long/Long</code>, <code>float/Float</code>, <code>double/Double</code>, <code>char/Character</code>, <code>String</code>, 以上类型的数组，<code>Number</code>, <code>Object</code>, <code>Date</code>等，其中<code>byte/Byte</code>, <code>short/Short</code>, <code>int/Integer</code>都是按照整型来序列化与反序列化，<code>float/Float</code>, <code>double/Double</code>都是按照双精度浮点型来序列化与反序列化。</p>
+<blockquote>
+<p>详细实现请参见：com.alibaba.com.caucho.hessian.io.SerializerFactory</p>
+</blockquote>
+<h5 id="2-3-2-部分序列化器和反序列化器介绍"><a href="#2-3-2-部分序列化器和反序列化器介绍" class="headerlink" title="2.3.2 部分序列化器和反序列化器介绍"></a>2.3.2 部分序列化器和反序列化器介绍</h5><h6 id="BasicSerializer-BasicSerializer"><a href="#BasicSerializer-BasicSerializer" class="headerlink" title="BasicSerializer/BasicSerializer"></a>BasicSerializer/BasicSerializer</h6><p>该序列化器和反序列化器负责序列化的类型是：<code>null</code>, <code>Boolean/boolean</code>, <code>byte/Byte</code>, <code>short/Short</code>, <code>int/Integer</code>, <code>long/Long</code>, <code>float/Float</code>, <code>double/Double</code>, <code>char/Character</code>, <code>String</code>, 以上类型的数组，<code>Number</code>, <code>Object</code>, <code>Date</code>等，其中<code>byte/Byte</code>, <code>short/Short</code>, <code>int/Integer</code>都是按照整型来序列化与反序列化，<code>float/Float</code>, <code>double/Double</code>都是按照双精度浮点型来序列化与反序列化。</p>
 <h6 id="ClassDeserializer-ClassSerializer"><a href="#ClassDeserializer-ClassSerializer" class="headerlink" title="ClassDeserializer/ClassSerializer"></a>ClassDeserializer/ClassSerializer</h6><p>该序列化器和反序列化器负责序列化的类型是:<code>Class</code>, 对此执行序列化时，是将<code>java.lang.Class</code>以及对象的全类名以字符串的序列化，当反序列化时会根据类的全类名利用<code>Class.forName</code>来加载Class。</p>
-<h6 id="StringValueSerializer-StringValueDeserializer"><a href="#StringValueSerializer-StringValueDeserializer" class="headerlink" title="StringValueSerializer/StringValueDeserializer"></a>StringValueSerializer/StringValueDeserializer</h6><p>该序列化器和反序列化器负责序列化的类型是:<code>BigDecimal</code>, <code>ObjectName</code>, 执行序列化时，会将<code>BigDecimal</code>格式化成字符串, 反序列化时再将字符串格式化成<code>BigDecimal</code>，<code>ObjectName</code>是JMX MBean要注册的对象名称，此处不做过多介绍。</p>
+<h6 id="StringValueSerializer-StringValueDeserializer"><a href="#StringValueSerializer-StringValueDeserializer" class="headerlink" title="StringValueSerializer/StringValueDeserializer"></a>StringValueSerializer/StringValueDeserializer</h6><p>该序列化器和反序列化器负责序列化的类型是:<code>BigDecimal</code>, <code>ObjectName</code>, 执行序列化时，会将<code>BigDecimal</code>格式化成字符串, 反序列化时再将字符串格式化成<code>BigDecimal</code>，这也是<code>BigDecimal</code>序列化精度不丢失的原因，不过相对而言序列化性能会稍微差点，<code>ObjectName</code>是JMX MBean要注册的对象名称，此处不做过多介绍。</p>
 <h6 id="SqlDateSerializer-SqlDateDeserializer"><a href="#SqlDateSerializer-SqlDateDeserializer" class="headerlink" title="SqlDateSerializer/SqlDateDeserializer"></a>SqlDateSerializer/SqlDateDeserializer</h6><p>该序列化器和反序列化器负责序列化的类型是:<code>java.sql.Date</code>, 与<code>Date</code>序列化一样，会将通过long型时间戳作为中间变量进行序列化和反序列化。</p>
-<h6 id="InputStreamSerializer-InputStreamDeserializer"><a href="#InputStreamSerializer-InputStreamDeserializer" class="headerlink" title="InputStreamSerializer/InputStreamDeserializer"></a>InputStreamSerializer/InputStreamDeserializer</h6><h6 id="StackTraceElementDeserializer"><a href="#StackTraceElementDeserializer" class="headerlink" title="StackTraceElementDeserializer"></a>StackTraceElementDeserializer</h6><h6 id="Java8TimeSerializer-反序列化"><a href="#Java8TimeSerializer-反序列化" class="headerlink" title="Java8TimeSerializer/反序列化"></a>Java8TimeSerializer/反序列化</h6><h6 id="CollectionSerializer-CollectionDeserializer"><a href="#CollectionSerializer-CollectionDeserializer" class="headerlink" title="CollectionSerializer/CollectionDeserializer"></a>CollectionSerializer/CollectionDeserializer</h6><h6 id="MapSerializer-MapDeserializer"><a href="#MapSerializer-MapDeserializer" class="headerlink" title="MapSerializer/MapDeserializer"></a>MapSerializer/MapDeserializer</h6><h6 id="ArraySerializer-ArrayDeserializer"><a href="#ArraySerializer-ArrayDeserializer" class="headerlink" title="ArraySerializer/ArrayDeserializer"></a>ArraySerializer/ArrayDeserializer</h6><h6 id="ThrowableSerializer-BasicSerializer"><a href="#ThrowableSerializer-BasicSerializer" class="headerlink" title="ThrowableSerializer/BasicSerializer"></a>ThrowableSerializer/BasicSerializer</h6><h6 id="IteratorSerializer-BasicSerializer"><a href="#IteratorSerializer-BasicSerializer" class="headerlink" title="IteratorSerializer/BasicSerializer"></a>IteratorSerializer/BasicSerializer</h6><h6 id="EnumerationSerializer-EnumerationDeserializer"><a href="#EnumerationSerializer-EnumerationDeserializer" class="headerlink" title="EnumerationSerializer/EnumerationDeserializer"></a>EnumerationSerializer/EnumerationDeserializer</h6><h6 id="CalendarSerializer-BasicSerializer"><a href="#CalendarSerializer-BasicSerializer" class="headerlink" title="CalendarSerializer/BasicSerializer"></a>CalendarSerializer/BasicSerializer</h6><h6 id="LocaleSerializer-BasicSerializer"><a href="#LocaleSerializer-BasicSerializer" class="headerlink" title="LocaleSerializer/BasicSerializer"></a>LocaleSerializer/BasicSerializer</h6><h6 id="EnumSerializer-EnumDeserializer"><a href="#EnumSerializer-EnumDeserializer" class="headerlink" title="EnumSerializer/EnumDeserializer"></a>EnumSerializer/EnumDeserializer</h6><h6 id="JavaSerializer-JavaDeserializer"><a href="#JavaSerializer-JavaDeserializer" class="headerlink" title="JavaSerializer/JavaDeserializer"></a>JavaSerializer/JavaDeserializer</h6><p><span id="4"></span></p>
-<h3 id="4-Hessian2序列化详述"><a href="#4-Hessian2序列化详述" class="headerlink" title="4 Hessian2序列化详述"></a>4 Hessian2序列化详述</h3><h4 id="4-1-序列化类型"><a href="#4-1-序列化类型" class="headerlink" title="4.1 序列化类型"></a>4.1 序列化类型</h4><p>hessian对象序列化有8个基本类型：</p>
+<h6 id="InputStreamSerializer-InputStreamDeserializer"><a href="#InputStreamSerializer-InputStreamDeserializer" class="headerlink" title="InputStreamSerializer/InputStreamDeserializer"></a>InputStreamSerializer/InputStreamDeserializer</h6><p>该序列化器和反序列化器负责序列化的类型是:<code>InputStream</code>, 具体的序列化过程是将<code>InputStream</code>中分块将写入<code>Hessian2Output</code>中的buffer当中，在反序列化时候再分块读取。</p>
+<h6 id="MapSerializer-MapDeserializer"><a href="#MapSerializer-MapDeserializer" class="headerlink" title="MapSerializer/MapDeserializer"></a>MapSerializer/MapDeserializer</h6><p>该序列化器和反序列化器负责序列化的类型是:<code>Map</code>及其子类, 具体序列化时候会写入<code>Map</code>头，有类型的写入标识<code>M</code>, 无类型的写入标识<code>H</code>，然后再迭代序列化每个对象，最后再<code>Map</code>的尾标识<code>Z</code>。</p>
+<h6 id="CollectionSerializer-CollectionDeserializer"><a href="#CollectionSerializer-CollectionDeserializer" class="headerlink" title="CollectionSerializer/CollectionDeserializer"></a>CollectionSerializer/CollectionDeserializer</h6><p>该序列化器和反序列化器负责序列化的类型是:<code>Collection</code>及其子类, 比如<code>List</code>、<code>Set</code>等等，具体序列化时候会写入<code>Collection</code>头标识，然后再迭代序列化每个对象，最后再<code>Collection</code>的尾标识，具体序列化细节会在下边详述。</p>
+<h6 id="EnumSerializer-EnumDeserializer"><a href="#EnumSerializer-EnumDeserializer" class="headerlink" title="EnumSerializer/EnumDeserializer"></a>EnumSerializer/EnumDeserializer</h6><p>该序列化器和反序列化器负责序列化的类型是:<code>Enum</code>及其子类，具体序列化过程会将枚举类全类名以及枚举值以字符串形式序列化，在反序列化过程中会用反射的方式来构建枚举对象。</p>
+<h6 id="ArraySerializer-ArrayDeserializer"><a href="#ArraySerializer-ArrayDeserializer" class="headerlink" title="ArraySerializer/ArrayDeserializer"></a>ArraySerializer/ArrayDeserializer</h6><p>该序列化器和反序列化器负责序列化数组类型，其序列化过程是<code>Collection</code>序列化的一种情况，是按照定长列表形式来序列化的。</p>
+<h6 id="JavaSerializer-JavaDeserializer"><a href="#JavaSerializer-JavaDeserializer" class="headerlink" title="JavaSerializer/JavaDeserializer"></a>JavaSerializer/JavaDeserializer</h6><p>该序列化器和反序列化器是默认的，负责序列化的类型是:自定义的对象类型、异常类型等等，其内部持有相应的<code>FieldSerializer</code>数组用来序列化对象中的基本类型字段，每种<code>FieldSerializer</code>内部序列化以及其他对象类型还是调用<code>Hessian2Output</code>相应的序列化方法，反序列化也有类似的过程。</p>
+<p><span id="3"></span></p>
+<h3 id="3-Hessian-Lite序列化详述"><a href="#3-Hessian-Lite序列化详述" class="headerlink" title="3 Hessian Lite序列化详述"></a>3 Hessian Lite序列化详述</h3><p><span id="3.1"></span></p>
+<h4 id="3-1-序列化类型"><a href="#3-1-序列化类型" class="headerlink" title="3.1 序列化类型"></a>3.1 序列化类型</h4><p>hessian对象序列化有8个基本类型：</p>
 <ul>
 <li>原始二进制数据</li>
 <li>布尔</li>
@@ -280,33 +290,34 @@
 <li>类定义引用映射</li>
 <li>类型引用映射（类名）</li>
 </ul>
-<h4 id="4-2-序列化详述"><a href="#4-2-序列化详述" class="headerlink" title="4.2 序列化详述"></a>4.2 序列化详述</h4><blockquote>
+<p><span id="3.2"></span></p>
+<h4 id="3-2-序列化详述"><a href="#3-2-序列化详述" class="headerlink" title="3.2 序列化详述"></a>3.2 序列化详述</h4><blockquote>
 <p>语法是hessian标准的语法</p>
 </blockquote>
-<h5 id="4-2-1-二进制数据（byte-array）"><a href="#4-2-1-二进制数据（byte-array）" class="headerlink" title="4.2.1 二进制数据（byte array）"></a>4.2.1 二进制数据（byte array）</h5><h6 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">binary ::= b b1 b0 &lt;binary-data&gt; binary</span><br><span class="line">       ::= B b1 b0 &lt;binary-data&gt;</span><br><span class="line">       ::= [x20-x2f] &lt;binary-data&gt;</span><br></pre></td></tr></table></figure>
-<h6 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h6><p>二进制数据是以块进行编码的，<code>B</code>表示最后一块，<code>b</code>表示非最后一块：</p>
+<h5 id="二进制数据（byte-array）"><a href="#二进制数据（byte-array）" class="headerlink" title="二进制数据（byte array）"></a>二进制数据（byte array）</h5><h6 id="Hessian2语法"><a href="#Hessian2语法" class="headerlink" title="Hessian2语法"></a>Hessian2语法</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">binary ::= b b1 b0 &lt;binary-data&gt; binary</span><br><span class="line">       ::= B b1 b0 &lt;binary-data&gt;</span><br><span class="line">       ::= [x20-x2f] &lt;binary-data&gt;</span><br></pre></td></tr></table></figure>
+<h6 id="Hessian-Lite"><a href="#Hessian-Lite" class="headerlink" title="Hessian Lite"></a>Hessian Lite</h6><p>二进制数据是以块进行编码的，<code>B</code>表示最后一块，<code>b</code>表示非最后一块，b1表示长度的高八位，b0表示长度的第八位, 长度为一个字节是用l表示：</p>
 <ul>
 <li>非最后一块：利用<code>A</code>标识，<strong>这是dubbo与标准不同的地方</strong>，并用两个字节表示长度, 占用3个字节.</li>
 <li>最后一块: 利用<code>B</code>标识，并用两个字节表示长度，占用3个字节.</li>
-<li>[0, 0x0f]: 当前非最后一块切分剩下的部分的长度在此范围内，长度形式为<code>0x20+len</code>，占用一个字节</li>
-<li>[0x10, 0x3ff]: 当前非最后一块切分剩下的部分的长度在此范围内，长度形式为<code>0x34+len&gt;&gt;8 len</code>，占用两个字节</li>
+<li>[0, 0x0f]: 当前非最后一块切分剩下的部分的长度在此范围内，长度形式为<code>0x20+b0</code>，占用一个字节</li>
+<li>[0x10, 0x3ff]: 当前非最后一块切分剩下的部分的长度在此范围内，长度形式为<code>0x34+b1 b0</code>，占用两个字节</li>
 </ul>
 <blockquote>
 <p>序列化实现详细代码请阅读com.alibaba.com.caucho.hessian.io.Hessian2Output#writeBytes(byte[], int, int)</p>
 </blockquote>
-<h5 id="4-2-2-布尔"><a href="#4-2-2-布尔" class="headerlink" title="4.2.2 布尔"></a>4.2.2 布尔</h5><h6 id="语法-1"><a href="#语法-1" class="headerlink" title="语法"></a>语法</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">boolean ::= T</span><br><span class="line">        ::= F</span><br></pre></td></tr></table></figure>
-<h6 id="注释-1"><a href="#注释-1" class="headerlink" title="注释"></a>注释</h6><p><code>F</code>表示<code>false</code>, <code>T</code>表示<code>true</code>，直接利用字节序列化.</p>
+<h5 id="布尔"><a href="#布尔" class="headerlink" title="布尔"></a>布尔</h5><h6 id="Hessian2语法-1"><a href="#Hessian2语法-1" class="headerlink" title="Hessian2语法"></a>Hessian2语法</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">boolean ::= T</span><br><span class="line">        ::= F</span><br></pre></td></tr></table></figure>
+<h6 id="Hessian-Lite-1"><a href="#Hessian-Lite-1" class="headerlink" title="Hessian Lite"></a>Hessian Lite</h6><p><code>F</code>表示<code>false</code>, <code>T</code>表示<code>true</code>，直接利用字节序列化.</p>
 <blockquote>
 <p>序列化实现详细代码请阅读com.alibaba.com.caucho.hessian.io.Hessian2Output#writeBoolean</p>
 </blockquote>
-<h5 id="4-2-3-日期"><a href="#4-2-3-日期" class="headerlink" title="4.2.3 日期"></a>4.2.3 日期</h5><h6 id="语法-2"><a href="#语法-2" class="headerlink" title="语法"></a>语法</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">date ::= x4a b7 b6 b5 b4 b3 b2 b1 b0</span><br><span class="line">     ::= x4b b4 b3 b2 b1 b0</span><br></pre></td></tr></table></figure>
+<h5 id="日期"><a href="#日期" class="headerlink" title="日期"></a>日期</h5><h6 id="Hessian2语法-2"><a href="#Hessian2语法-2" class="headerlink" title="Hessian2语法"></a>Hessian2语法</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">date ::= x4a b7 b6 b5 b4 b3 b2 b1 b0</span><br><span class="line">     ::= x4b b4 b3 b2 b1 b0</span><br></pre></td></tr></table></figure>
 <p>用距离<code>1970-01-01 00:00:00</code>的一个64位长的毫秒值来表示日期</p>
-<h6 id="注释-2"><a href="#注释-2" class="headerlink" title="注释"></a>注释</h6><p>日期的序列化方式有两种，如果能够精确到分，可以用32位整型来表示，否则只能用64位整型来表示，<code>0x4b</code>表示32位形式，<code>0x4a</code>表示64位形式, 然后将值移位序列化为二进制.</p>
+<h6 id="Hessian-Lite-2"><a href="#Hessian-Lite-2" class="headerlink" title="Hessian Lite"></a>Hessian Lite</h6><p>日期的序列化方式有两种，如果能够精确到分，可以用32位整型来表示，否则只能用64位整型来表示，<code>0x4b</code>表示32位形式，<code>0x4a</code>表示64位形式, 然后将值移位序列化为二进制.</p>
 <blockquote>
 <p>序列化实现详细代码请阅读com.alibaba.com.caucho.hessian.io.Hessian2Output#writeUTCDate</p>
 </blockquote>
-<h5 id="4-2-4-Double"><a href="#4-2-4-Double" class="headerlink" title="4.2.4 Double"></a>4.2.4 Double</h5><h6 id="语法-3"><a href="#语法-3" class="headerlink" title="语法"></a>语法</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">double ::= D b7 b6 b5 b4 b3 b2 b1 b0</span><br><span class="line">       ::= x5b</span><br><span class="line">       ::= x5c</span><br><span class="line">       ::= x5d b0</span><br><span class="line">       ::= x5e b1 b0</span><br><span class="line">       ::= x5f b3 b2 b1 b0</span><br></pre></td></tr></table></figure>
-<h6 id="注释-3"><a href="#注释-3" class="headerlink" title="注释"></a>注释</h6><p>在序列化Double时，是分了几种类型，每种序列化的方式都是要将Double转成整型，然后利用移位填充每个字节：</p>
+<h5 id="Double"><a href="#Double" class="headerlink" title="Double"></a>Double</h5><h6 id="Hessian2语法-3"><a href="#Hessian2语法-3" class="headerlink" title="Hessian2语法"></a>Hessian2语法</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">double ::= D b7 b6 b5 b4 b3 b2 b1 b0</span><br><span class="line">       ::= x5b</span><br><span class="line">       ::= x5c</span><br><span class="line">       ::= x5d b0</span><br><span class="line">       ::= x5e b1 b0</span><br><span class="line">       ::= x5f b3 b2 b1 b0</span><br></pre></td></tr></table></figure>
+<h6 id="Hessian-Lite-3"><a href="#Hessian-Lite-3" class="headerlink" title="Hessian Lite"></a>Hessian Lite</h6><p>在序列化Double时，是分了几种类型，每种序列化的方式都是要将Double转成整型，然后利用移位填充每个字节：</p>
 <ul>
 <li>0x5b代表<code>Double.Zero</code></li>
 <li>0x5c代表<code>Double.One</code></li>
@@ -335,57 +346,57 @@
 <blockquote>
 <p>还有一些特殊形式，比如<code>+0</code>,<code>-0</code>,<code>NaN</code>等，此处不做多讲述，想了解的可以戳小标题（维基百科，需要翻墙）</p>
 </blockquote>
-<h5 id="4-2-5-整型（int）"><a href="#4-2-5-整型（int）" class="headerlink" title="4.2.5 整型（int）"></a>4.2.5 整型（int）</h5><h6 id="语法-4"><a href="#语法-4" class="headerlink" title="语法"></a>语法</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">int ::= &apos;I&apos; b3 b2 b1 b0</span><br><span class="line">    ::= [x80-xbf]</span><br><span class="line">    ::= [xc0-xcf] b0</span><br><span class="line">    ::= [xd0-xd7] b1 b0</span><br></pre></td></tr></table></figure>
-<h6 id="注释-4"><a href="#注释-4" class="headerlink" title="注释"></a>注释</h6><p>为了提高序列化效率，整型分类几种类型去处理, 用<code>v</code>来表示要序列化的值, 形式并按字节顺序排列：</p>
+<h5 id="整型（int）"><a href="#整型（int）" class="headerlink" title="整型（int）"></a>整型（int）</h5><h6 id="Hessian2语法-4"><a href="#Hessian2语法-4" class="headerlink" title="Hessian2语法"></a>Hessian2语法</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">int ::= &apos;I&apos; b3 b2 b1 b0</span><br><span class="line">    ::= [x80-xbf]</span><br><span class="line">    ::= [xc0-xcf] b0</span><br><span class="line">    ::= [xd0-xd7] b1 b0</span><br></pre></td></tr></table></figure>
+<h6 id="Hessian-Lite-4"><a href="#Hessian-Lite-4" class="headerlink" title="Hessian Lite"></a>Hessian Lite</h6><p>为了提高序列化效率，整型分类几种类型去处理, 用<code>v</code>来表示要序列化的值, 形式并按字节顺序排列, b3, b2, b1, b0分别表示长度的各个8位：</p>
 <ul>
-<li>[-0x10, 0x2f]: 如果值大小位于此区间，占用1个字节，形式为<code>v+0x90</code>, 因此其16字节取值范围为[x80-xbf].</li>
-<li>[-0x800, 0x7ff]: 如果值大小位于此区间，占用2个字节，形式为<code>v&gt;&gt;8+0xc8 v</code>, 左起第一个字节范围为[xc0-xcf]，v的低八位可以看作为<code>b0</code>.</li>
-<li>[-0x40000, 0x3ffff]: 如果值大小位于此区间，占用3个字节, 形式为<code>v&gt;&gt;16+0xd4 v&gt;&gt;8 v</code>, 左起第一个字节范围为[xd0-xd7], v的中8位可以看作<code>b1</code>, v的低八位可以看作<code>b0</code>.</li>
-<li>除上述以上情况外，序列化需要占用9个字节，形式<code>I v&gt;&gt;56 v&gt;&gt;48 v&gt;&gt;40 v&gt;&gt;32 v&gt;&gt;24 v&gt;&gt;16 v&gt;&gt;8 v</code>, <code>I</code>是整型的标识.</li>
+<li>[-0x10, 0x2f]: 如果值大小位于此区间，占用1个字节，形式为<code>b0+0x90</code>.</li>
+<li>[-0x800, 0x7ff]: 如果值大小位于此区间，占用2个字节，形式为<code>b1+0xc8 b0</code>.</li>
+<li>[-0x40000, 0x3ffff]: 如果值大小位于此区间，占用3个字节, 形式为<code>b2+0xd4 b1 b0</code>.</li>
+<li>除上述以上情况外，序列化需要占用9个字节，形式<code>I b3 b2 b1 b0</code>, <code>I</code>是整型的标识.</li>
 </ul>
 <blockquote>
 <p>dubbo中byte,short类型利用序列化整型处理，序列化实现详细代码请阅读com.alibaba.com.caucho.hessian.io.Hessian2Output#writeInt</p>
 </blockquote>
-<h5 id="4-2-6-长整型（long）"><a href="#4-2-6-长整型（long）" class="headerlink" title="4.2.6 长整型（long）"></a>4.2.6 长整型（long）</h5><h6 id="语法-5"><a href="#语法-5" class="headerlink" title="语法"></a>语法</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">long ::= L b7 b6 b5 b4 b3 b2 b1 b0</span><br><span class="line">     ::= [xd8-xef]</span><br><span class="line">     ::= [xf0-xff] b0</span><br><span class="line">     ::= [x38-x3f] b1 b0</span><br><span class="line">     ::= x4c b3 b2 b1 b0</span><br></pre></td></tr></table></figure>
-<h6 id="注释-5"><a href="#注释-5" class="headerlink" title="注释"></a>注释</h6><p>长整型在序列化时候与双精度浮点型类似，为了提高序列化效率，也是分类几种类型去处理, 用<code>v</code>来表示要序列化的值, 形式并按字节顺序排列：</p>
+<h5 id="长整型（long）"><a href="#长整型（long）" class="headerlink" title="长整型（long）"></a>长整型（long）</h5><h6 id="Hessian2语法-5"><a href="#Hessian2语法-5" class="headerlink" title="Hessian2语法"></a>Hessian2语法</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">long ::= L b7 b6 b5 b4 b3 b2 b1 b0</span><br><span class="line">     ::= [xd8-xef]</span><br><span class="line">     ::= [xf0-xff] b0</span><br><span class="line">     ::= [x38-x3f] b1 b0</span><br><span class="line">     ::= x4c b3 b2 b1 b0</span><br></pre></td></tr></table></figure>
+<h6 id="Hessian-Lite-5"><a href="#Hessian-Lite-5" class="headerlink" title="Hessian Lite"></a>Hessian Lite</h6><p>长整型在序列化时候与双精度浮点型类似，为了提高序列化效率，也是分类几种类型去处理, b7, b6, b5, b4, b3, b2, b1, b0分别表示长度的各个8位：</p>
 <ul>
-<li>[-0x08, 0x0f]: 如果值大小位于此区间，占用1个字节，形式为<code>v+0xe0</code>,类似0xe0可以看做对数字进行了简单的加密.</li>
-<li>[-0x800, 0x7ff]: 如果值大小位于此区间，占用2个字节，形式为<code>v&gt;&gt;8+0xf8 v</code>，可以看做是<code>v</code>的高8位加0xf8并拼接<code>v</code>的低8位, 左起第一个字节范围为[xf0-xff]，v的低八位可以看作为<code>b0</code>.</li>
-<li>[-0x40000, 0x3ffff]: 如果值大小位于此区间，占用3个字节, 形式为<code>v&gt;&gt;16+0x3c v&gt;&gt;8 v</code>, 左起第一个字节范围为[x38-x3f], v的中8位可以看作<code>b1</code>, v的低八位可以看作<code>b0</code>.</li>
-<li>[-0x80000000, 0x7fffffff]: 如果值大小位于此区间，占用5个字节，形式<code>0x59 v&gt;&gt;24 v&gt;&gt;16 v&gt;&gt;8 v</code> , <strong>此处的前缀<code>0x59</code>是dubbo与标准hessian的一个区别</strong></li>
-<li>除上述以上情况外，序列化需要占用9个字节，形式<code>L v&gt;&gt;56 v&gt;&gt;48 v&gt;&gt;40 v&gt;&gt;32 v&gt;&gt;24 v&gt;&gt;16 v&gt;&gt;8 v</code>, <code>L</code>是长整型的标识.</li>
+<li>[-0x08, 0x0f]: 如果值大小位于此区间，占用1个字节，形式为<code>b0+0xe0</code>.</li>
+<li>[-0x800, 0x7ff]: 如果值大小位于此区间，占用2个字节，形式为<code>b1+0xf8 b0</code>.</li>
+<li>[-0x40000, 0x3ffff]: 如果值大小位于此区间，占用3个字节, 形式为<code>b2+0x3c b1 b0</code>.</li>
+<li>[-0x80000000, 0x7fffffff]: 如果值大小位于此区间，占用5个字节，形式<code>0x59 b3 b2 b1 b0</code> , <strong>此处的前缀<code>0x59</code>是dubbo与标准hessian的一个区别</strong></li>
+<li>除上述以上情况外，序列化需要占用9个字节，形式<code>L b7 b6 b5 b4 b3 b2 b1 b0</code>, <code>L</code>是长整型的标识.</li>
 </ul>
 <blockquote>
 <p>序列化实现详细代码请阅读com.alibaba.com.caucho.hessian.io.Hessian2Output#writeLong</p>
 </blockquote>
-<h5 id="4-2-7-null"><a href="#4-2-7-null" class="headerlink" title="4.2.7 null"></a>4.2.7 null</h5><h6 id="语法-6"><a href="#语法-6" class="headerlink" title="语法"></a>语法</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">null ::= N</span><br></pre></td></tr></table></figure>
-<h6 id="注释-6"><a href="#注释-6" class="headerlink" title="注释"></a>注释</h6><p><code>null</code>的语法与<code>boolean</code>都很简单利用字符<code>N</code>占用一个字节来表示.</p>
+<h5 id="null"><a href="#null" class="headerlink" title="null"></a>null</h5><h6 id="Hessian2语法-6"><a href="#Hessian2语法-6" class="headerlink" title="Hessian2语法"></a>Hessian2语法</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">null ::= N</span><br></pre></td></tr></table></figure>
+<h6 id="Hessian-Lite-6"><a href="#Hessian-Lite-6" class="headerlink" title="Hessian Lite"></a>Hessian Lite</h6><p><code>null</code>的语法与<code>boolean</code>都很简单利用字符<code>N</code>占用一个字节来表示.</p>
 <blockquote>
 <p>序列化实现详细代码请阅读com.alibaba.com.caucho.hessian.io.Hessian2Output#writeNull</p>
 </blockquote>
-<h5 id="4-2-8-UTF-8编码的字符串"><a href="#4-2-8-UTF-8编码的字符串" class="headerlink" title="4.2.8 UTF-8编码的字符串"></a>4.2.8 UTF-8编码的字符串</h5><h6 id="语法-7"><a href="#语法-7" class="headerlink" title="语法"></a>语法</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">string ::= x52 b1 b0 &lt;utf8-data&gt; string</span><br><span class="line">       ::= S b1 b0 &lt;utf8-data&gt;</span><br><span class="line">       ::= [x00-x1f] &lt;utf8-data&gt;</span><br><span class="line">       ::= [x30-x33] b0 &lt;utf8-data&gt;</span><br></pre></td></tr></table></figure>
-<h6 id="注释-7"><a href="#注释-7" class="headerlink" title="注释"></a>注释</h6><p>字符串会按照块来序列化，如果是最后一块用<code>S</code>来标识，如果不是最后一块利用<code>R</code>来标识：</p>
+<h5 id="UTF-8编码的字符串"><a href="#UTF-8编码的字符串" class="headerlink" title="UTF-8编码的字符串"></a>UTF-8编码的字符串</h5><h6 id="Hessian2语法-7"><a href="#Hessian2语法-7" class="headerlink" title="Hessian2语法"></a>Hessian2语法</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">string ::= x52 b1 b0 &lt;utf8-data&gt; string</span><br><span class="line">       ::= S b1 b0 &lt;utf8-data&gt;</span><br><span class="line">       ::= [x00-x1f] &lt;utf8-data&gt;</span><br><span class="line">       ::= [x30-x33] b0 &lt;utf8-data&gt;</span><br></pre></td></tr></table></figure>
+<h6 id="Hessian-Lite-7"><a href="#Hessian-Lite-7" class="headerlink" title="Hessian Lite"></a>Hessian Lite</h6><p>字符串会按照块来序列化，如果是最后一块用<code>S</code>来标识，如果不是最后一块利用<code>R</code>来标识, b1, b0分表表示长度高低8位：</p>
 <ul>
 <li>非最后一块：利用<code>R</code>标识，并用两个字节来表示长度</li>
 <li>[0x00-0x1f]: 如果划分完所有的非最后一块，剩下的部分长度在此范围值内，则不用<code>S</code>来标识，而是直接序列化长度值.</li>
-<li>[0x20-0x3ff]: 如果划分完所有的非最后一块，剩下的部分长度在此范围值内，则不用<code>S</code>来标识， 序列化形式为<code>0x30+len&gt;&gt;8 len</code>,所以长度第一个字节范围[x30-x33]</li>
+<li>[0x20-0x3ff]: 如果划分完所有的非最后一块，剩下的部分长度在此范围值内，则不用<code>S</code>来标识， 序列化形式为<code>0x30+b1 b0</code>,所以长度第一个字节范围[x30-x33]</li>
 <li>否则序列化利用<code>S</code>来标识最后一块，并用两个字节来标识长度</li>
 </ul>
 <blockquote>
 <p>dubbo中char类型利用序列化字符串方式来处理，序列化实现详细代码请阅读com.alibaba.com.caucho.hessian.io.Hessian2Output#writeString(java.lang.String)</p>
 </blockquote>
-<h5 id="4-2-9-列表-List"><a href="#4-2-9-列表-List" class="headerlink" title="4.2.9 列表(List)"></a>4.2.9 列表(List)</h5><h6 id="语法-8"><a href="#语法-8" class="headerlink" title="语法"></a>语法</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">list ::= x55 type value* &apos;Z&apos;   # variable-length list</span><br><span class="line">     ::= &apos;V&apos; type int value*   # fixed-length list</span><br><span class="line">     ::= x57 value* &apos;Z&apos;        # variable-length untyped list</span><br><span class="line">     ::= x58 int value*        # fixed-length untyped list</span><br><span class="line">     ::= [x70-77] type value*  # fixed-length typed list</span><br><span class="line">     ::= [x78-7f] value*       # fixed-length untyped list</span><br></pre></td></tr></table></figure>
-<h6 id="注释-8"><a href="#注释-8" class="headerlink" title="注释"></a>注释</h6><blockquote>
+<h5 id="列表-List"><a href="#列表-List" class="headerlink" title="列表(List)"></a>列表(List)</h5><h6 id="Hessian2语法-8"><a href="#Hessian2语法-8" class="headerlink" title="Hessian2语法"></a>Hessian2语法</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">list ::= x55 type value* &apos;Z&apos;   # variable-length list</span><br><span class="line">     ::= &apos;V&apos; type int value*   # fixed-length list</span><br><span class="line">     ::= x57 value* &apos;Z&apos;        # variable-length untyped list</span><br><span class="line">     ::= x58 int value*        # fixed-length untyped list</span><br><span class="line">     ::= [x70-77] type value*  # fixed-length typed list</span><br><span class="line">     ::= [x78-7f] value*       # fixed-length untyped list</span><br></pre></td></tr></table></figure>
+<h6 id="Hessian-Lite-8"><a href="#Hessian-Lite-8" class="headerlink" title="Hessian Lite"></a>Hessian Lite</h6><blockquote>
 <p>详细代码请阅读</p>
 </blockquote>
-<h5 id="4-2-10-映射-Map"><a href="#4-2-10-映射-Map" class="headerlink" title="4.2.10 映射(Map)"></a>4.2.10 映射(Map)</h5><h6 id="语法-9"><a href="#语法-9" class="headerlink" title="语法"></a>语法</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">map  ::= M type (value value)* Z</span><br></pre></td></tr></table></figure>
-<h6 id="注释-9"><a href="#注释-9" class="headerlink" title="注释"></a>注释</h6><h5 id="4-2-11-对象-Object"><a href="#4-2-11-对象-Object" class="headerlink" title="4.2.11 对象(Object)"></a>4.2.11 对象(Object)</h5><h6 id="语法-10"><a href="#语法-10" class="headerlink" title="语法"></a>语法</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">class-def  ::= &apos;C&apos; string int string*</span><br><span class="line"></span><br><span class="line">object     ::= &apos;O&apos; int value*</span><br><span class="line">           ::= [x60-x6f] value*</span><br></pre></td></tr></table></figure>
-<h6 id="注释-10"><a href="#注释-10" class="headerlink" title="注释"></a>注释</h6><h5 id="4-2-12-引用"><a href="#4-2-12-引用" class="headerlink" title="4.2.12 引用"></a>4.2.12 引用</h5><h6 id="语法-11"><a href="#语法-11" class="headerlink" title="语法"></a>语法</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ref ::= x51 int</span><br></pre></td></tr></table></figure>
-<h6 id="注释-11"><a href="#注释-11" class="headerlink" title="注释"></a>注释</h6><blockquote>
+<h5 id="映射-Map"><a href="#映射-Map" class="headerlink" title="映射(Map)"></a>映射(Map)</h5><h6 id="Hessian2语法-9"><a href="#Hessian2语法-9" class="headerlink" title="Hessian2语法"></a>Hessian2语法</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">map  ::= M type (value value)* Z</span><br></pre></td></tr></table></figure>
+<h6 id="Hessian-Lite-9"><a href="#Hessian-Lite-9" class="headerlink" title="Hessian Lite"></a>Hessian Lite</h6><h5 id="对象-Object"><a href="#对象-Object" class="headerlink" title="对象(Object)"></a>对象(Object)</h5><h6 id="Hessian2语法-10"><a href="#Hessian2语法-10" class="headerlink" title="Hessian2语法"></a>Hessian2语法</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">class-def  ::= &apos;C&apos; string int string*</span><br><span class="line"></span><br><span class="line">object     ::= &apos;O&apos; int value*</span><br><span class="line">           ::= [x60-x6f] value*</span><br></pre></td></tr></table></figure>
+<h6 id="Hessian-Lite-10"><a href="#Hessian-Lite-10" class="headerlink" title="Hessian Lite"></a>Hessian Lite</h6><h5 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h5><h6 id="Hessian2语法-11"><a href="#Hessian2语法-11" class="headerlink" title="Hessian2语法"></a>Hessian2语法</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ref ::= x51 int</span><br></pre></td></tr></table></figure>
+<h6 id="Hessian-Lite-11"><a href="#Hessian-Lite-11" class="headerlink" title="Hessian Lite"></a>Hessian Lite</h6><blockquote>
 <p>详细代码请阅读</p>
 </blockquote>
-<p><span id="5"></span></p>
-<h3 id="序列化协议对比"><a href="#序列化协议对比" class="headerlink" title="序列化协议对比"></a>序列化协议对比</h3><p><span id="6"></span></p>
+<p><span id="4"></span></p>
+<h3 id="序列化协议对比"><a href="#序列化协议对比" class="headerlink" title="序列化协议对比"></a>序列化协议对比</h3><p><span id="5"></span></p>
 <h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
 <li><a href="http://dubbo.apache.org/books/dubbo-dev-book/" target="_blank" rel="noopener">dubbo官方文档</a></li>
 <li><a href="http://hessian.caucho.com/doc/hessian-serialization.html" target="_blank" rel="noopener">hessian序列化协议</a></li>
