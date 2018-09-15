@@ -18,7 +18,7 @@
 <meta property="og:description" content="dubbo是一个专注于服务治理的高性能rpc框架，支持服务之间的远程调用，Hessian序列化的存在是服务间沟通的桥梁，以下是本人阅读各种资料以及源码，对hessian序列化的一点整理与理解，如有错误请指出。  目录 Hessian Lite序列化简介 Dubbo Hessian Lite源码解析2.1 Hessian Lite类结构2.2 Dubbo Hessian Lite源码解析2.3">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="/img/java/dubbo.png">
-<meta property="og:updated_time" content="2018-09-15T16:30:26.095Z">
+<meta property="og:updated_time" content="2018-09-15T16:39:42.897Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hessian Lite序列化简析">
 <meta name="twitter:description" content="dubbo是一个专注于服务治理的高性能rpc框架，支持服务之间的远程调用，Hessian序列化的存在是服务间沟通的桥梁，以下是本人阅读各种资料以及源码，对hessian序列化的一点整理与理解，如有错误请指出。  目录 Hessian Lite序列化简介 Dubbo Hessian Lite源码解析2.1 Hessian Lite类结构2.2 Dubbo Hessian Lite源码解析2.3">
@@ -245,7 +245,7 @@
 </li>
 <li><p>后续的其他类型会判断传入的类型是否为与其类型一致，或者为其子类，来获取相应的序列化器。</p>
 </li>
-<li><p>默认的序列化器<code>JavaSerializer</code>是用以处理以上类型未包含的类型，比如自定义的对象类型，这个官方的Hessian有点区别，官方的Hessian的默认序列化器是<code>UnsafeSerializer</code>,这个与<code>JavaSerializer</code>的区别是先将对象序列化成<code>Map</code>,同样反序列化时候<code>UnsafeDeserializer</code>先将二进制数据序列化成Map，然后再将Map转化成对象，而<code>JavaDeserializer</code>会新建一个对象然后再把属性设置进去。</p>
+<li><p>默认的序列化器<code>JavaSerializer</code>是用以处理以上类型未包含的类型，比如自定义的对象类型，这个官方的Hessian有点区别，官方的Hessian的默认序列化器是<code>UnsafeSerializer</code>(具体的类不包含<code>writeReplace</code>方法),这个与<code>JavaSerializer</code>的区别是先将对象序列化成<code>Map</code>,同样反序列化时候<code>UnsafeDeserializer</code>先将二进制数据序列化成Map，然后再将Map转化成对象，而<code>JavaDeserializer</code>会新建一个对象然后再把属性设置进去。</p>
 </li>
 </ul>
 <p><img src="/img/java/find-deserializer.jpg" alt="选择反序列化器"></p>
