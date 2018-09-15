@@ -18,7 +18,7 @@
 <meta property="og:description" content="dubbo是一个专注于服务治理的高性能rpc框架，支持服务之间的远程调用，Hessian序列化的存在是服务间沟通的桥梁，以下是本人阅读各种资料以及源码，对hessian序列化的一点整理与理解，如有错误请指出。  目录 Hessian Lite序列化简介 Dubbo Hessian Lite源码解析2.1 Hessian Lite类结构2.2 Dubbo Hessian Lite源码解析2.3">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="/img/java/dubbo.png">
-<meta property="og:updated_time" content="2018-09-13T17:18:14.712Z">
+<meta property="og:updated_time" content="2018-09-15T16:30:26.095Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hessian Lite序列化简析">
 <meta name="twitter:description" content="dubbo是一个专注于服务治理的高性能rpc框架，支持服务之间的远程调用，Hessian序列化的存在是服务间沟通的桥梁，以下是本人阅读各种资料以及源码，对hessian序列化的一点整理与理解，如有错误请指出。  目录 Hessian Lite序列化简介 Dubbo Hessian Lite源码解析2.1 Hessian Lite类结构2.2 Dubbo Hessian Lite源码解析2.3">
@@ -405,16 +405,58 @@
 <p>详细代码请阅读com.alibaba.com.caucho.hessian.io.CollectionSerializer</p>
 </blockquote>
 <h5 id="映射-Map"><a href="#映射-Map" class="headerlink" title="映射(Map)"></a>映射(Map)</h5><h6 id="Hessian2语法-9"><a href="#Hessian2语法-9" class="headerlink" title="Hessian2语法"></a>Hessian2语法</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">map  ::= M type (value value)* Z</span><br></pre></td></tr></table></figure>
-<h6 id="Hessian-Lite-9"><a href="#Hessian-Lite-9" class="headerlink" title="Hessian Lite"></a>Hessian Lite</h6><h5 id="对象-Object"><a href="#对象-Object" class="headerlink" title="对象(Object)"></a>对象(Object)</h5><h6 id="Hessian2语法-10"><a href="#Hessian2语法-10" class="headerlink" title="Hessian2语法"></a>Hessian2语法</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">class-def  ::= &apos;C&apos; string int string*</span><br><span class="line"></span><br><span class="line">object     ::= &apos;O&apos; int value*</span><br><span class="line">           ::= [x60-x6f] value*</span><br></pre></td></tr></table></figure>
-<h6 id="Hessian-Lite-10"><a href="#Hessian-Lite-10" class="headerlink" title="Hessian Lite"></a>Hessian Lite</h6><h5 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h5><h6 id="Hessian2语法-11"><a href="#Hessian2语法-11" class="headerlink" title="Hessian2语法"></a>Hessian2语法</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ref ::= x51 int</span><br></pre></td></tr></table></figure>
-<h6 id="Hessian-Lite-11"><a href="#Hessian-Lite-11" class="headerlink" title="Hessian Lite"></a>Hessian Lite</h6><blockquote>
-<p>详细代码请阅读</p>
+<h6 id="Hessian-Lite-9"><a href="#Hessian-Lite-9" class="headerlink" title="Hessian Lite"></a>Hessian Lite</h6><p><code>Map</code>的序列化要相对简单一些，序列化过程如下：</p>
+<ul>
+<li>写入开始标识，分为两种类型<ul>
+<li>确定类型为<code>M</code>,不确定类型为<code>H</code></li>
+</ul>
+</li>
+<li>循环写入key和value</li>
+<li>写入结束标识<code>Z</code></li>
+</ul>
+<blockquote>
+<p>详细代码请阅读 com.alibaba.com.caucho.hessian.io.MapSerializer#writeObject</p>
 </blockquote>
+<h5 id="对象-Object"><a href="#对象-Object" class="headerlink" title="对象(Object)"></a>对象(Object)</h5><h6 id="Hessian2语法-10"><a href="#Hessian2语法-10" class="headerlink" title="Hessian2语法"></a>Hessian2语法</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">class-def  ::= &apos;C&apos; string int string*</span><br><span class="line"></span><br><span class="line">object     ::= &apos;O&apos; int value*</span><br><span class="line">           ::= [x60-x6f] value*</span><br></pre></td></tr></table></figure>
+<h6 id="Hessian-Lite-10"><a href="#Hessian-Lite-10" class="headerlink" title="Hessian Lite"></a>Hessian Lite</h6><p>序列化对象过程如下：</p>
+<ul>
+<li>写入开始标识，分以下几种类型<ul>
+<li>如果之前已经写入该对象了，此时不会再次序列化类名称，会以类名引用方式写入，目的还是减小序列化size, 如果存放引用的列表size小于等于15，则标识为0x60+列表size; 否则标识为<code>O</code>,并接着写入列表size;</li>
+<li>如果之前没有写入该对象，则标识为’C’,并接着写入全类名;</li>
+</ul>
+</li>
+<li>分别序列化各个字段，虽然基本类型JavaSerializer中会持有<code>FieldSerilizer</code>,但序列化各个字段具体还是会调用<code>Hessian2Output</code>中的各个方法。</li>
+</ul>
+<blockquote>
+<p>详细代码请阅读 com.alibaba.com.caucho.hessian.io.JavaSerializer#writeObject</p>
+</blockquote>
+<h5 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h5><h6 id="Hessian2语法-11"><a href="#Hessian2语法-11" class="headerlink" title="Hessian2语法"></a>Hessian2语法</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ref ::= x51 int</span><br></pre></td></tr></table></figure>
+<h6 id="Hessian-Lite-11"><a href="#Hessian-Lite-11" class="headerlink" title="Hessian Lite"></a>Hessian Lite</h6><p>对于引用类型有三种，分别为<code>Object/Collection/Map</code>的值引用，类定义的引用（类定义是指全类名以及类字段的名称），全类名的引用，主要目的是复用，用以提高序列化的效率；引用主要是在调用方完成，先把之前读取的缓存起来，提供方会按照顺序写入引用标识以及顺序值，调用方在遇到引用标识后会根据顺序值从相应列表中读取来完成。</p>
 <p><span id="4"></span></p>
-<h3 id="序列化协议对比"><a href="#序列化协议对比" class="headerlink" title="序列化协议对比"></a>序列化协议对比</h3><p><span id="5"></span></p>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
+<h3 id="4-序列化协议对比"><a href="#4-序列化协议对比" class="headerlink" title="4. 序列化协议对比"></a>4. 序列化协议对比</h3><blockquote>
+<p>此部分是参考论文Smart Grid Serialization Comparison，其中一些图也是源于此paper。</p>
+</blockquote>
+<p>本部分将要对比的涉及26中序列化协议，以下对此26中序列化协议进行简单介绍,对比的标准如下：</p>
+<ul>
+<li>序列化时间</li>
+<li>反序列化时间</li>
+<li>压缩时间</li>
+<li>解压缩时间</li>
+<li>序列化使用内存</li>
+<li>压缩使用内存</li>
+<li>序列化后的Size</li>
+<li>压缩后的Size</li>
+</ul>
+<p>为了保证对比的合理性，对时间的取值为1000次的平均值，对于内存的取值为1000次垃圾回收器消耗的内存平均值，对于Size是对<a href="https://en.wikipedia.org/wiki/IEC_61850" target="_blank" rel="noopener">IEC-61850</a>数据模型类进行操作，用于合理准确的评估，测试机器配置：Win10，Jdk-1.8 64位，CPU i7-4600U，8GB内存，具体对比如下图：</p>
+<p><img src="/img/java/serialize-process-time.jpg" alt="运行时间对比"></p>
+<p><img src="/img/java/serialize-memory-consumption.jpg" alt="内存消耗对比"></p>
+<p><img src="/img/java/serialize-message-size.jpg" alt="消息Size对比"></p>
+<p>根据对比结果可知，protobuf性能已经达到令人发指的碾压程度，如果dubbo能够支持protobuf的话，序列化性能能够提升两倍。</p>
+<p><span id="5"></span></p>
+<h3 id="5-参考"><a href="#5-参考" class="headerlink" title="5. 参考"></a>5. 参考</h3><ul>
 <li><a href="http://dubbo.apache.org/books/dubbo-dev-book/" target="_blank" rel="noopener">dubbo官方文档</a></li>
 <li><a href="http://hessian.caucho.com/doc/hessian-serialization.html" target="_blank" rel="noopener">hessian序列化协议</a></li>
+<li><a href="http://orbit.dtu.dk/ws/files/127962965/Smart_Grid_Serialization_Comparision.pdf" target="_blank" rel="noopener">论文-Smart Grid Serialization Comparison</a></li>
 <li>dubbo源码</li>
 </ul>
 
