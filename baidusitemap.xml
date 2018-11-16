@@ -4,8 +4,68 @@
 
     
   <url>
+    <loc>peachey.blog/2018/11/16/java-art-code-segment/</loc>
+    <lastmod>2018-11-16T08:55:42.328Z</lastmod>
+    <data>
+        <display>
+        <title>精巧的代码片段设计</title>
+        <pubTime>2018-11-16T08:49:14.000Z</pubTime>
+        
+        <tag>Clean Code</tag>
+         
+         
+           
+             
+              <breadCrumb title="Java" url="peachey.blog/categories/Java/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>peachey.blog/2018/11/14/java-nio-overview/</loc>
+    <lastmod>2018-11-13T16:54:16.954Z</lastmod>
+    <data>
+        <display>
+        <title>一篇读懂NIO</title>
+        <pubTime>2018-11-13T16:37:57.000Z</pubTime>
+        
+        <tag>Nio</tag>
+         
+         
+           
+             
+              <breadCrumb title="Java" url="peachey.blog/categories/Java/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>peachey.blog/2018/09/10/netty-overview/</loc>
+    <lastmod>2018-09-17T06:06:41.328Z</lastmod>
+    <data>
+        <display>
+        <title>Netty面观</title>
+        <pubTime>2018-09-09T18:44:06.000Z</pubTime>
+        
+        <tag>Netty</tag>
+         
+         
+           
+             
+              <breadCrumb title="Java" url="peachey.blog/categories/Java/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>peachey.blog/2018/05/04/java-dubbo-hessian/</loc>
-    <lastmod>2018-09-15T16:39:42.897Z</lastmod>
+    <lastmod>2018-09-17T04:27:33.200Z</lastmod>
     <data>
         <display>
         <title>Hessian Lite序列化简析</title>
@@ -32,26 +92,6 @@
         <pubTime>2018-08-27T12:03:44.000Z</pubTime>
         
         <tag>Dubbo</tag>
-         
-         
-           
-             
-              <breadCrumb title="Java" url="peachey.blog/categories/Java/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>peachey.blog/2018/09/10/netty-overview/</loc>
-    <lastmod>2018-09-09T18:46:44.658Z</lastmod>
-    <data>
-        <display>
-        <title>Netty面观</title>
-        <pubTime>2018-09-09T18:44:06.000Z</pubTime>
-        
-        <tag>Netty</tag>
          
          
            
