@@ -9,19 +9,19 @@
     
         <meta name="keywords" content="Nio" />
     
-    <meta name="description" content="本文抄书，并未有很精深的见解，纯粹是对nio理解与使用的一个总结，旨在能够让读者在最短的时间内明白nio的原理，以及能够入门使用nio, 如果有存在问题的地方，还请指出，共同进步。">
+    <meta name="description" content="本文纯粹是对nio的一个总结，旨在能够让读者在最短的时间内明白nio为何物，可能也不全面, 也可能表达不清楚，如果有存在问题的地方，还请指出，共同进步。  目录 IO模型1.1 UNIX IO模型1.2 四种IO模型 NIO组件2.1 缓冲区2.2 通道2.3 Selector &amp;amp; SelectKey NIO整体流程 参考   1. IO模型IO是Input/Output的缩写，为输入">
 <meta name="keywords" content="Nio">
 <meta property="og:type" content="article">
 <meta property="og:title" content="一篇读懂NIO">
 <meta property="og:url" content="peachey.blog/2018/11/14/java-nio-overview/index.html">
 <meta property="og:site_name" content="Peachey Blog">
-<meta property="og:description" content="本文抄书，并未有很精深的见解，纯粹是对nio理解与使用的一个总结，旨在能够让读者在最短的时间内明白nio的原理，以及能够入门使用nio, 如果有存在问题的地方，还请指出，共同进步。">
+<meta property="og:description" content="本文纯粹是对nio的一个总结，旨在能够让读者在最短的时间内明白nio为何物，可能也不全面, 也可能表达不清楚，如果有存在问题的地方，还请指出，共同进步。  目录 IO模型1.1 UNIX IO模型1.2 四种IO模型 NIO组件2.1 缓冲区2.2 通道2.3 Selector &amp;amp; SelectKey NIO整体流程 参考   1. IO模型IO是Input/Output的缩写，为输入">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="/img/java/java-io.png">
-<meta property="og:updated_time" content="2018-11-13T16:54:16.954Z">
+<meta property="og:updated_time" content="2018-12-06T17:23:58.911Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一篇读懂NIO">
-<meta name="twitter:description" content="本文抄书，并未有很精深的见解，纯粹是对nio理解与使用的一个总结，旨在能够让读者在最短的时间内明白nio的原理，以及能够入门使用nio, 如果有存在问题的地方，还请指出，共同进步。">
+<meta name="twitter:description" content="本文纯粹是对nio的一个总结，旨在能够让读者在最短的时间内明白nio为何物，可能也不全面, 也可能表达不清楚，如果有存在问题的地方，还请指出，共同进步。  目录 IO模型1.1 UNIX IO模型1.2 四种IO模型 NIO组件2.1 缓冲区2.2 通道2.3 Selector &amp;amp; SelectKey NIO整体流程 参考   1. IO模型IO是Input/Output的缩写，为输入">
 <meta name="twitter:image" content="/img/java/java-io.png">
     
 
@@ -175,8 +175,171 @@
         <div class="article-entry" itemprop="articleBody">
             <p><img src="/img/java/java-io.png" alt=""></p>
 <blockquote>
-<p>本文抄书，并未有很精深的见解，纯粹是对nio理解与使用的一个总结，旨在能够让读者在最短的时间内明白nio的原理，以及能够入门使用nio, 如果有存在问题的地方，还请指出，共同进步。</p>
+<p>本文纯粹是对nio的一个总结，旨在能够让读者在最短的时间内明白nio为何物，可能也不全面, 也可能表达不清楚，如果有存在问题的地方，还请指出，共同进步。</p>
 </blockquote>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ol>
+<li><a href="#1">IO模型</a><br>1.1 <a href="#1.1">UNIX IO模型</a><br>1.2 <a href="#1.2">四种IO模型</a></li>
+<li><a href="#2">NIO组件</a><br>2.1 <a href="#2.1">缓冲区</a><br>2.2 <a href="#2.2">通道</a><br>2.3 <a href="#2.3">Selector &amp; SelectKey</a></li>
+<li><a href="#3">NIO整体流程</a></li>
+<li><a href="#4">参考</a></li>
+</ol>
+<p><span id="1"></span></p>
+<h3 id="1-IO模型"><a href="#1-IO模型" class="headerlink" title="1. IO模型"></a>1. IO模型</h3><p>IO是Input/Output的缩写，为输入和输出，在计算机系统中，一般IO类型有三种：内存IO，网络IO和磁盘IO，在我们实际涉及到的一般是后边两种，内存的读写很快，很少会成为性能的瓶颈，在涉及到IO的逻辑过程中，很多案例IO处理要花费大部分的时间，计算往往要快的多，网络IO和磁盘IO容易成为性能的瓶颈，因此也出现了很多的对于IO处理的优化。</p>
+<p><span id="1.1"></span></p>
+<h4 id="1-1-UNIX-IO模型"><a href="#1-1-UNIX-IO模型" class="headerlink" title="1.1 UNIX IO模型"></a>1.1 UNIX IO模型</h4><p>在UNIX网络编程一书中，将IO模型分成了五种类型，在介绍这五种IO模型之前需要简单提一下，在进行IO处理时，数据的拷贝需要经过两个阶段，第一阶段是等待数据准备（读取磁盘的话是等待数据由磁盘读取到相应内核空间，socket io的话通常是等待网络分组到达，然后将数据复制到内核的某个缓存空间），第二阶段是将数据由内核空间拷贝到进程的内存地址下，也就是内核态到用户态的转化，根据此两个阶段将IO模型划分为如下五种，如图：</p>
+<p><img src="/img/java/java-unix-io.png" alt="UNIX IO模型"></p>
+<ul>
+<li>阻塞I/O：执行线程/进程发起IO请求后，会阻塞，在阻塞的过程中执行线程/进程是处于一个被动挂起的状态，在此状态下是释放cpu的，一直等待数据的到达，映射到java的话就是BIO，java最原始的IO处理方式。</li>
+<li>非阻塞I/O：执行线程发起IO请求后，不会阻塞，但是会定期的都会发起一个系统调用去检查数据是否到达，此类型是将等待数据到达的阻塞方式替换为多个时间片的阻塞，虽然在时间片内执行线程可以取处理其他事情，但是总体还是处于一种同步等待的状态，其实是NIO的selectNow方式。</li>
+<li>I/O复用: 此模型最大的特点是可以少量线程去复用多个连接，但是对于每个连接的处理上，发起请求后还是要阻塞掉当前的连接，然后等待数据到达，在数据到达后，在数据到达后发起一个系统调用将数据拷贝到用户态，此模型一般会单独起一个线程去做IO事件的管理，其实也就是NIO的select方式。</li>
+<li>信号驱动I/O：此模型与异步模型很类似，虽然在数据等待这一阶段解放了解放了该线程，但是线程通知是在数据准备好以后，用内核态到用户态的数据复制还是需要线程发起系统调用来完成，还是处于一种同步等待线程通知的状态。</li>
+<li>异步I/O：此模型是对线程的一种完全解放，在发起请求后，执行线程可以去执行其他事情，在数据拷贝到用户态后，系统会通知线程已经准备好，然后线程读取数据并进行相应逻辑计算。</li>
+</ul>
+<p>其实在上述的IO模型当中，一部分模型已经实现了部分异步，但根据POSIX的严格定义来说异步IO要求没有任何一点阻塞，前四种IO模型在不同程度上都有阻塞，只有最后一种实现完全的异步。</p>
+<blockquote>
+<p>在读取本地数据并将数据通过socket发送到远程客户端这一过程中，会伴随着多次的上下文切换以及数据拷贝，其实本来内核空间的存在能够起到一定的提升性能的作用，当读取数据时，内核空间可以做到预读取，在写入时，内核空间的存在可以使写请求实现异步，但是蛋疼的是当数据的size远远大于内核空间的size时，这种方式成为性能瓶颈，零拷贝技术减少了上下文的切换以及数据的拷贝次数，详细请看<a href="https://www.ibm.com/developerworks/cn/linux/l-cn-zerocopy2/index.html" target="_blank" rel="noopener">Linux中的零拷贝技术</a></p>
+</blockquote>
+<p><span id="1.2"></span></p>
+<h4 id="1-2-四种IO模型"><a href="#1-2-四种IO模型" class="headerlink" title="1.2 四种IO模型"></a>1.2 四种IO模型</h4><p>IO模型有四个概念：同步、异步、阻塞以及非阻塞，出处不知，根据此四个概念排列组合出来四种IO模型：同步阻塞、同步非阻塞、异步阻塞以及异步非阻塞，其实按我理解的话，应该是根据实际的场景来判断该场景符合哪两种概念，这样感觉比较合理一点，而不是就是说此四种IO模型，比如异步阻塞模型我是没想到什么场景会适用这种模型。</p>
+<p>要理解以上概念，首先第一点要将同步/异步，阻塞/非阻塞区分开来看，同步/异步是指执行线程在处理整个请求上的方式，而阻塞与非阻塞是指执行线程在发起请求后的状态，前后两种概念的切入点是不同的。</p>
+<p>通过整理网上的一些资料以及自己琢磨，同步/异步的区分方式有如下几种：</p>
+<ul>
+<li>分布式系统中调用，可以通过是否需要等待结果返回来区分该处理方式是否为异步</li>
+<li>在整个请求处理中，逻辑的执行顺序是否有序来区分是否为异步</li>
+<li>从实现的方式来理解，是否需要被通知来区分是否为异步，因为异步模型的实现很多都是利用通知或回调来实现。</li>
+<li>是否需要协作，这个更直接了，异步肯定不会是单独的一个线程。</li>
+</ul>
+<p>对于阻塞/非阻塞，这个看执行线程的状态就ok，只要不是被动挂起的状态，就是非阻塞。</p>
+<p>这么说的话是很简单的，但是实际上去理解还是很难理解清楚这四种模型的具体区别在什么地方，在网上看到一个很有趣的例子，老张烧水，此处借用一下：</p>
+<ul>
+<li>同步阻塞：老张把水壶放火上等水开 （傻等）</li>
+<li>同步非阻塞：老张把水壶放火上，去客厅看电视，时不时看看水有没有开 （聪明一点）</li>
+<li>异步阻塞：老张把响水壶放火上等水开 （更傻）</li>
+<li>异步非阻塞：老张把响水壶放火上，去客厅看电视，水开了响水壶响 （聪明）</li>
+</ul>
+<blockquote>
+<p>此处响水壶会响，响可以理解为通知，BIO数据同步阻塞IO，NIO属于同步非阻塞IO，AIO(NIO2)属于异步非阻塞IO</p>
+</blockquote>
+<p><span id="2"></span></p>
+<h3 id="2-NIO组件"><a href="#2-NIO组件" class="headerlink" title="2. NIO组件"></a>2. NIO组件</h3><p>NIO有以下几种组件，此几个组件共同构成整个NIO，以下分小节对各个组件进行分享。</p>
+<p><span id="2.1"></span></p>
+<h4 id="2-1-缓冲区"><a href="#2-1-缓冲区" class="headerlink" title="2.1 缓冲区"></a>2.1 缓冲区</h4><h5 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h5><p>Nio与传统Bio的处理方式一个很大的区别就是从流IO向块IO的转变，所谓块IO意思处理的数据是块为单位，于是引入了缓冲区的概念，输入和输出的数据必须经过缓冲区，这样的处理方式提高了数据的处理效率。</p>
+<p>缓冲区（Buffer）有一下四个属性，通过对此4个属性的操作来完成缓存区数据的读取与写入，值得一提的是，大部分关于此4中属性的操作是不会涉及数据移动的操作，仅仅是对下标的一种更改。</p>
+<ul>
+<li>容量(Capacity)<br>缓冲区能够容纳的数据元素的最大数量。这一容量在缓冲区创建时被设定，并且永远不能被改变。</li>
+<li>上界(Limit)<br>缓冲区的第一个不能被读或写的元素，这个要区分的来说，在写入时，上界的意义即为该缓冲区的容量，在读取时，上界的意义是为第一个不能被读取的位置，如下图所示</li>
+</ul>
+<p><img src="/img/java/java-nio-write.png" alt="Buffer写入"></p>
+<p><img src="/img/java/java-nio-read.png" alt="Buffer读取"></p>
+<ul>
+<li>位置(Position)<br>下一个要被读或写的元素的索引</li>
+<li>标记(Mark)<br>一个备忘位置，当调用Buffer.reset()方法时，会将position设置为mark的下标位置。</li>
+</ul>
+<h5 id="api介绍"><a href="#api介绍" class="headerlink" title="api介绍"></a>api介绍</h5><p><code>Buffer</code>有几个很重要的方法，这几个方法会对上述的四个属性进行操作，改变其坐标来进行模式切换。</p>
+<ul>
+<li><code>flip</code>:该函数从写模式转换为读模式，所做操作如下：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">limit = position;</span><br><span class="line">position = <span class="number">0</span>;</span><br><span class="line">mark = -<span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>clear</code>:该函数从读模式转换为写模式，所做操作如下：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">position = <span class="number">0</span>;</span><br><span class="line">limit = capacity;</span><br><span class="line">mark = -<span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>rewind</code>:该函数与clear相似，只是对position进行操作，所做操作如下：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">position = <span class="number">0</span>;</span><br><span class="line">mark = -<span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>reset</code>:该函数仅对position操作，所做操作如下：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">position = mark; <span class="comment">//有一步转换 将mark的值存入中间变量，将中间变量赋值给position</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>compact</code>:该函数是<code>ByteBuffer</code>中的函数，是将有效数据整体向前移动到缓冲区开头位置，然后将position赋值为下一个可写入的位置，将limit赋值为容量</li>
+</ul>
+<h5 id="直接缓冲区与非直接缓冲区"><a href="#直接缓冲区与非直接缓冲区" class="headerlink" title="直接缓冲区与非直接缓冲区"></a>直接缓冲区与非直接缓冲区</h5><p>字节缓冲区分两种：直接缓冲区、非直接缓冲区，此两种缓冲区最大的区别就是在于缓冲数据的位置是否在堆内，以下分别对两种进行介绍：</p>
+<h6 id="非直接缓冲区"><a href="#非直接缓冲区" class="headerlink" title="非直接缓冲区"></a>非直接缓冲区</h6><p>非直接缓冲区是在JVM的堆空间中开辟空间来进行缓冲数据，可以通过<code>allocate()</code>方法来创建，磁盘中数据如果要复制到非直接缓冲区，会先复制到OS的缓存空间中，然后再向JVM缓冲空间中复制，中间经历了一个内核态到用户态的转换，也就是由内核地址空间到用户地址空间复制数据，这也是为什么非直接缓冲区的效率要低于直接缓冲区的原因，当复制一个大的文件时，排除堆溢出的情况，非直接缓冲效率会很低，会涉及到多次上下文切换，出现多次系统调用（需要保存现场以及恢复现场，需要CPU参与的话），Java 虚拟机会尽最大努力直接在此缓冲区上执行本机 I/O 操作。也就是说，在每次调用基础操作系统的一个本机 I/O 操作之前（或之后），虚拟机都会尽量避免将缓冲区的内容复制到中间缓冲区中（或从中间缓冲区中复制内容）。另外由于非直接缓冲区托管在JVM中，不能常驻内存，否则会导致缓冲数据进入老年代，可能会引起JVM的fullGC，同时JVM的垃圾回收也可能会影响非直接缓冲区。数据复制参见下图：</p>
+<p><img src="/img/java/java-nio-undirect.png" alt="非直接缓冲区"></p>
+<h6 id="直接缓冲区"><a href="#直接缓冲区" class="headerlink" title="直接缓冲区"></a>直接缓冲区</h6><p>直接缓冲区是在物理内存中申请了一块空间，这块空间会映射到内核地址空间和用户地址空间，应用程序与磁盘会共享这块内存空间，对此内存空间直接操作变绕过了内核态与用户态之间的转换，同时也少了copy操作，在处理大文件时，效率得到极大提升，这个也可以称为NIO的零拷贝技术。直接缓冲区可以利用函数<code>allocateDirect()</code>来进行创建，实际是利用<code>unsafe.setMemory</code>申请内存空间，还可以利用<code>FileChannel</code>的<code>map()</code>方法将文件区域直接映射到内存中来创建<code>MappedByteBuffer</code>。直接缓冲区的内容可以驻留在常规的垃圾回收堆之外，常用于那些易受基础系统的本机 I/O 操作影响的大型、持久的缓冲区。直接缓冲区虽然相较于非直接缓冲区虽然性能很好，但是创建于释放直接缓冲区的花销要大，同时由于是堆外内存，对于直接缓冲区的回收只能依靠JVM的垃圾回收来处理，在<code>DirectByteBuffer</code>中，有个属性<code>sun.misc.Cleaner</code>，该属性实现了<code>PhantomReference</code>, 当直接缓冲区没有强/软引用指向时，当垃圾回收线程在处理虚引用时，会对<code>Cleaner</code>特殊处理，会调用<code>Cleaner#clean()</code>, 最后会调用<code>DirectByteBuffer$Deallocator#run()</code>，然后利用<code>Unsafe#freeMemory(long)</code>来释放内存，正常情况下不用担心直接缓冲区造成内存泄露，但是直接缓冲区只能依赖垃圾回收机制，无法感知到堆内存的压力。</p>
+<p><img src="/img/java/java-nio-direct.png" alt="直接缓冲区"></p>
+<blockquote>
+<p>要注意一点是缓冲区是非线程安全的，如果有多个线程共享一个缓冲区，需要做同步处理。</p>
+</blockquote>
+<p><span id="2.2"></span></p>
+<h4 id="2-2-通道"><a href="#2-2-通道" class="headerlink" title="2.2 通道"></a>2.2 通道</h4><p>通道抽象的可以理解为数据传输必须要经过的一个通道，无论是输入还是输出必须要进过通道，每个通道都会持有一个缓冲区，用于处理输入或输出的数据，通道的类图如下（图有点丑）：</p>
+<p><img src="/img/java/java-nio-channel.png" alt="Channel类图"></p>
+<p>如上图所示，通道从接口层可以分为三种：</p>
+<ul>
+<li>可中断的：此通道可以被异步关闭和中断.实现此接口的通道是可被异步关闭的,如果某个线程阻塞于InterruptibleChannel的I/O操作中,另一个线程可以调用该通道的close方法.此时被阻塞的线程将会受到AsynchronousCloseException.实现此接口的通道是可被中断的,如果某个线程阻塞于InterruptibleChannel的I/O操作中,则另一个线程可调用该阻塞线程的interrupt方法.这将导致channel被关闭,已阻塞线程将收到ClosedByInterruptException,并且设置阻塞线程的状态为中断.如果已设置某个线程的中断状态,此后它在通道上调用某个阻塞的I/O操作,则该通道将会被关闭且该线程将立即受到ClosedByInterruptException.此接口没有特殊的方法,只是重新定义了close()方法.</li>
+<li>可读的：单向通道，可以意为该通道只能接收数据。</li>
+<li>可写的：单向通道，可以意为改通道只能发送数据。</li>
+</ul>
+<blockquote>
+<p>ByteChannel实现可读与可写通道，因此为双向通道。</p>
+</blockquote>
+<p>通道从功能来区分可以分为两大类，文件通道（<code>FileChannel</code>用于本地文件文件）以及Socket通道（用于处理远程通信），<code>SocketChannel</code>和<code>ServerSocketChannel</code>是用于处理tcp通信，前者可以理解为tcp客户端，后者可以理解为tcp服务端，<code>DatagramChannel</code>是用于处理udp通信，其中Socket通道都实现了<code>SelectableChannel</code>，此接口定义了一些通道共用的方法。</p>
+<blockquote>
+<p>Socket 通道是线程安全的。并发访问时无需特别措施来保护发起访问的多个线程，不过任何时 候都只有一个读操作和一个写操作在进行中.进行读写时会加<code>synchronized</code>锁。</p>
+</blockquote>
+<p>通道是java为处理大批量I/O抽象出来的一种概念，在系统底层一个通道与一个文件描述符相关联，通道可以以阻塞(blocking)或非阻塞(nonblocking)模式运行。非阻塞模式的通道永远不会 让调用的线程休眠。请求的操作要么立即完成，要么返回一个结果表明未进行任何操作。只有面向流的(stream-oriented)的通道，如 sockets 和 pipes 才能使用非阻塞模式。</p>
+<blockquote>
+<p>Scatter/Gather又被称为矢量I/O是指在多个缓冲区上实现一个简单的I/O操作。对于一个write操作而言，数据是从几个缓冲区按顺序抽取(称为gather)并沿着通道发送的。对于 read 操作而言，从 通道读取的数据会按顺序被散布(称为 scatter)到多个缓冲区，将每个缓冲区填满直至通道中的数据或者缓冲区的最大空间被消耗完。一个Scatter/Gather 操作请求会被翻译为适当的本地调用来直接填充或抽取缓冲区。这是一个很大的进步，因为减少或避免了缓冲区拷贝和系统调用（类似将循环调用转为一次批量操作）。</p>
+</blockquote>
+<p><span id="2.3"></span></p>
+<h4 id="2-3-Selector-amp-SelectKey"><a href="#2-3-Selector-amp-SelectKey" class="headerlink" title="2.3 Selector &amp; SelectKey"></a>2.3 Selector &amp; SelectKey</h4><p>选择器类管理着一个被注册的通道集合的信息和它们的就绪状态，选择器在整个nio体系中充当的是一种多路复用器。通道是和选择器一起被注册的，并且使用选择器来更新通道的就绪状态。通道可以注册到多个选择器上，注册时可以指定其支持的操作，但是每个通道与每个选择器只能有一次生效的注册关系，多次注册一最后一次为准，通道支持的操作有四种:</p>
+<ul>
+<li><code>OP_READ = 1 &lt;&lt; 0</code>：读，数据读取/接收；</li>
+<li><code>OP_WRITE = 1 &lt;&lt; 2</code>：写，数据写入/发送；</li>
+<li><code>OP_CONNECT = 1 &lt;&lt; 3</code>：连接，<code>SocketChannel/DatagramChannel</code>支持的操作；</li>
+<li><code>OP_ACCEPT = 1 &lt;&lt; 4</code>：接受，<code>ServerChannel</code>仅支持的操作。</li>
+</ul>
+<p>选择键是通道和选择器的注册关系的一种抽象，通过选择键的<code>interestOps()</code>可以获取此时绑定的通道的感兴趣的操作，也就是该通道在绑定到选择器上的操作，<code>readOps()</code>可以获得绑定通道的已经就绪的操作，此两个函数返回的是整数，通过二进制位来标识其操作，如上所示，对于操作的就绪状态如何更新是由选择器来完成的。</p>
+<h5 id="选择器的select操作做了什么"><a href="#选择器的select操作做了什么" class="headerlink" title="选择器的select操作做了什么"></a>选择器的<code>select</code>操作做了什么</h5><p>选择器核心操作便是更新通道操作的就绪状态，通过select操作来完成就绪操作状态的更新，select操作有三种表现形式，此三个函数的返回值都是拥有就绪通道的数量：</p>
+<ul>
+<li><code>select()</code>:此种形式是会阻塞的，直到至少有一种操作就绪的通道出现。</li>
+<li><code>select(long)</code>:此种形式可以设置超时时间，在到达超时时间后，还未出现有就绪操作的通道，会返回，如果超时时间设置为0的话效果和第一种形式相同。</li>
+<li><code>selectNow()</code>:此种形式是完全非阻塞的，不管是否有就绪操作的通道，都会立即返回。</li>
+</ul>
+<p>选择器内部持有三个Set(此处用<code>Set</code>而不用<code>List</code>是<code>Set#contains</code>在底层利用<code>Map</code>数据接收实现的，在数量很大时会比List快的多)，分别为：</p>
+<ul>
+<li>已注册的键的集合：从字面上很容易理解，就是与该选择器相关的选择键的集合，该集合是可读取的，但是无法修改。</li>
+<li>已选择的键的集合：这个集合是已注册的键的集合的子集，在此集合中相关的通道都是被判断为准备好的，就绪的。</li>
+<li>已取消的键的集合：这个集合中包含了<code>cancel()</code>方法被调用过的键，但是并未注销，这样处理的原因是防止线程在取消时被阻塞掉，或者与正在执行select操作的选择器产生冲突，因为注销通道是一种代价很高的操作。</li>
+</ul>
+<p>接下来看下select到底做了什么：</p>
+<ul>
+<li>检查已取消的键的集合，如果该集合非空，会将该集合中的键移除，并将相关通道注销。</li>
+<li>检查已注册的键的集合，此操作会依赖系统的底层，如果出现通道就绪，则检查该通道相关联的键是否在已选择的键的集合，如果存在则直接重置键的ready值，并将就绪操作设置，若不在已选择的键的集合中，则先重置键的ready值，并将就绪操作设置，然后将键添加到已选择的键的集合中（此处与java nio书中描述不一致，看了jdk8代码后此处有进行过更改，之前的ready值会累加），代码如下：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">//sun.nio.ch.AbstractPollSelectorImpl#updateSelectedKeys</span><br><span class="line">//此处判断是否在已选择的键的集合中，在直接进行检查并赋值</span><br><span class="line">if (this.selectedKeys.contains(var4)) &#123;</span><br><span class="line">    if (var4.channel.translateAndSetReadyOps(var3, var4)) &#123;</span><br><span class="line">        ++var1;</span><br><span class="line">    &#125;</span><br><span class="line">&#125; else &#123;</span><br><span class="line">	//如果不在会先检查赋值，然后添加到集合</span><br><span class="line">    var4.channel.translateAndSetReadyOps(var3, var4);</span><br><span class="line">    if ((var4.nioReadyOps() &amp; var4.nioInterestOps()) != 0) &#123;</span><br><span class="line">        this.selectedKeys.add(var4);</span><br><span class="line">        ++var1;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><span id="3"></span></p>
+<h3 id="3-NIO整体流程"><a href="#3-NIO整体流程" class="headerlink" title="3. NIO整体流程"></a>3. NIO整体流程</h3><p><img src="/img/java/java-nio-relationship.png" alt="NIO整体流程"></p>
+<p>如图所示，该图将各个组件串联在一起，描述了通常NIO整体的工作流程，以下进行简单解释：</p>
+<ul>
+<li>通道绑定ip端口，并在选择器上注册事件也就是操作。</li>
+<li>选择器轮询监听，直到有事件发生。</li>
+<li>遍历选择器的已注册的键的集合，发现就绪的通道，确定相应的处理逻辑。</li>
+<li>将逻辑新起线程去执行。</li>
+</ul>
+<p>常见nio服务端代码demo如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">//创建ServerSocketChannel，绑定地址端口，设置为非阻塞模式，注册到选择键</span><br><span class="line">ServerSocketChannel serverChannel = ServerSocketChannel.open();</span><br><span class="line">ServerSocket serverSocket = serverChannel.socket();</span><br><span class="line">Selector selector = Selector.open();</span><br><span class="line">serverSocket.bind(new InetSocketAddress(port));</span><br><span class="line">serverChannel.configureBlocking(false);</span><br><span class="line">serverChannel.register(selector, SelectionKey.OP_ACCEPT);</span><br><span class="line"></span><br><span class="line">while (true) &#123;</span><br><span class="line">    //选择键轮询</span><br><span class="line">    int n = selector.select();</span><br><span class="line">    if (n == 0) &#123;</span><br><span class="line">        continue; </span><br><span class="line">    &#125;</span><br><span class="line">    Iterator it = selector.selectedKeys().iterator();</span><br><span class="line">    while (it.hasNext()) &#123;</span><br><span class="line">        SelectionKey key = (SelectionKey) it.next();</span><br><span class="line">        //新连接通道注册到</span><br><span class="line">        if (key.isAcceptable()) &#123;</span><br><span class="line">            ServerSocketChannel server = (ServerSocketChannel) key.channel();</span><br><span class="line">            SocketChannel channel = server.accept();</span><br><span class="line">            channel.register(selector, ops);</span><br><span class="line">            ...</span><br><span class="line">        &#125;</span><br><span class="line">        if (key.isReadable()) &#123;</span><br><span class="line">            //do by the thread pool</span><br><span class="line">            ...</span><br><span class="line">        &#125;</span><br><span class="line">        ...</span><br><span class="line">        it.remove(); </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>其实在此种轮询模式下会存在一种问题，就是当并发量很高的情况下，已选择的键的集合的size会很大，在每次遍历时会很慢，导致出现性能瓶颈，主要解决方式如下：</p>
+<ul>
+<li>更改数据结构，使遍历很快，比如利用堆排序，将就绪的键放在前面，但是nio不支持，需要封装一层。</li>
+<li>每次轮询，将非就绪的移除，减少键集合size。</li>
+<li>回调，当通道就绪时，执行回调函数，将自己添加到一个集合中，每次遍历只遍历就绪的集合。</li>
+<li>等等</li>
+</ul>
+<p><span id="4"></span></p>
+<h3 id="4-参考"><a href="#4-参考" class="headerlink" title="4. 参考"></a>4. 参考</h3><ul>
+<li>《Java NIO》</li>
+<li>Java nio 部分源码</li>
+<li><a href="https://www.ibm.com/developerworks/cn/education/java/j-nio/j-nio.html" target="_blank" rel="noopener">NIO 入门</a></li>
+<li><a href="https://www.jianshu.com/p/486b0965c296" target="_blank" rel="noopener">聊聊Linux 五种IO模型</a></li>
+<li><a href="https://www.cnblogs.com/showing/p/6759653.html" target="_blank" rel="noopener">NIO原理剖析与Netty初步</a></li>
+<li><a href="https://my.oschina.net/oosc/blog/1627362" target="_blank" rel="noopener">JAVA NIO 直接缓冲区和非直接缓冲区</a></li>
+<li><a href="https://stackoverflow.com/questions/6697709/are-java-directbytebuffer-wrappers-garbage-collected/6699007#6699007" target="_blank" rel="noopener">Are Java DirectByteBuffer wrappers garbage collected</a></li>
+<li><a href="https://shift-alt-ctrl.iteye.com/blog/1840408" target="_blank" rel="noopener">NIO-Channel相关接口详解</a></li>
+<li><a href="http://www.udpwork.com/item/5542.html" target="_blank" rel="noopener">Java NIO 选择器(Selector)与通道(Channel)</a></li>
+<li><a href="https://www.ibm.com/developerworks/cn/linux/l-cn-zerocopy2/index.html" target="_blank" rel="noopener">Linux中的零拷贝技术</a></li>
+</ul>
 
         </div>
         <footer class="article-footer">
