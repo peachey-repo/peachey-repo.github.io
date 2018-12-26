@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>peachey.blog/2016/08/20/java-concurrent-note-1/</loc>
+    
+    <lastmod>2018-12-26T12:00:16.272Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>peachey.blog/2016/12/21/java-lock/</loc>
+    
+    <lastmod>2018-12-26T11:04:23.747Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>peachey.blog/2018/12/10/java-concurrenthashmap/</loc>
     
     <lastmod>2018-12-18T18:08:30.955Z</lastmod>
