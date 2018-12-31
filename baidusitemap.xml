@@ -4,8 +4,30 @@
 
     
   <url>
+    <loc>peachey.blog/2016/12/27/java-concurrent-note2/</loc>
+    <lastmod>2018-12-31T15:23:15.846Z</lastmod>
+    <data>
+        <display>
+        <title>并发编程实战笔记——组合对象</title>
+        <pubTime>2016-12-27T07:56:49.000Z</pubTime>
+        
+        <tag>并发</tag>
+         
+        <tag>读书笔记</tag>
+         
+         
+           
+             
+              <breadCrumb title="Java" url="peachey.blog/categories/Java/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>peachey.blog/2016/08/20/java-concurrent-note-1/</loc>
-    <lastmod>2018-12-26T12:00:16.272Z</lastmod>
+    <lastmod>2018-12-27T08:05:50.630Z</lastmod>
     <data>
         <display>
         <title>并发编程实战笔记-线程安全与对象共享</title>

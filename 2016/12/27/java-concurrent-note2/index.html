@@ -3,17 +3,26 @@
 <head>
     <meta charset="utf-8">
     
-    <title>归档: 2016/12 | Peachey Blog</title>
+    <title>并发编程实战笔记——组合对象 | Peachey Blog</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Peachey Blog">
-<meta property="og:url" content="peachey.blog/archives/2016/12/index.html">
+        <meta name="keywords" content="并发,读书笔记" />
+    
+    <meta name="description" content="组合对象设计线程安全的类 确定对象状态由那些变量构成 确定限制状态变量的不变约束 指定一个管理并发访问对象状态的策略  此处有如下一些概念：  状态空间：一个对象的所有变量的变化的范围为该对象的状态空间 不变约束：指某个变量的取值区域，比如一个long变量的不变约束为Long.MAX_VALUE~Long.MIN_VALUE 鲜艳条件：指某个变量或操作的状态变化需要依赖的一个条件，比如从队列中取">
+<meta name="keywords" content="并发,读书笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="并发编程实战笔记——组合对象">
+<meta property="og:url" content="peachey.blog/2016/12/27/java-concurrent-note2/index.html">
 <meta property="og:site_name" content="Peachey Blog">
+<meta property="og:description" content="组合对象设计线程安全的类 确定对象状态由那些变量构成 确定限制状态变量的不变约束 指定一个管理并发访问对象状态的策略  此处有如下一些概念：  状态空间：一个对象的所有变量的变化的范围为该对象的状态空间 不变约束：指某个变量的取值区域，比如一个long变量的不变约束为Long.MAX_VALUE~Long.MIN_VALUE 鲜艳条件：指某个变量或操作的状态变化需要依赖的一个条件，比如从队列中取">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="/img/java/java-concurrent.jpg">
+<meta property="og:updated_time" content="2018-12-31T15:23:15.846Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Peachey Blog">
+<meta name="twitter:title" content="并发编程实战笔记——组合对象">
+<meta name="twitter:description" content="组合对象设计线程安全的类 确定对象状态由那些变量构成 确定限制状态变量的不变约束 指定一个管理并发访问对象状态的策略  此处有如下一些概念：  状态空间：一个对象的所有变量的变化的范围为该对象的状态空间 不变约束：指某个变量的取值区域，比如一个long变量的不变约束为Long.MAX_VALUE~Long.MIN_VALUE 鲜艳条件：指某个变量或操作的状态变化需要依赖的一个条件，比如从队列中取">
+<meta name="twitter:image" content="/img/java/java-concurrent.jpg">
     
 
     
@@ -128,129 +137,144 @@
                         <div class="main-body-header">
     <h1 class="header">
     
-    <i class="icon fa fa-archive"></i>归档: 2016/12
+    <a class="page-title-link" href="/categories/Java/">Java</a>
     </h1>
 </div>
                         <div class="main-body-content">
-                            
-
-    
-    
+                            <article id="post-java-concurrent-note2" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
         
-        
-        <section class="archives-wrap">
-            <div class="archive-year-wrap">
-                <a href="/archives/2016" class="archive-year"><i class="icon fa fa-calendar-o"></i>2016</a>
-            </div>
-            <div class="archives">
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2016/12/27/java-concurrent-note2/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/img/java/java-concurrent.jpg)" alt="并发编程实战笔记——组合对象" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/Java/">Java</a>
-            </div>
-            <div class="date"><time datetime="2016-12-27T07:56:49.000Z" itemprop="datePublished">2016-12-27</time></div>
-        </div>
-        
+            <header class="article-header">
+                
     
         <h1 class="article-title" itemprop="name">
-        <a href="/2016/12/27/java-concurrent-note2/">并发编程实战笔记——组合对象</a>
+        并发编程实战笔记——组合对象
         </h1>
     
 
-        <p class="article-excerpt">
-            
-组合对象设计线程安全的类
-确定对象状态由那些变量构成
-确定限制状态变量的不变约束
-指定一个管理并发访问对象状态的策略
-
-此处有如下一些概念：
-
-状态空间：一个对象的所有变量的变化的范围为该对象的状态空间
-不变约束：指某个变量的取值区域，比如一个long变量的不变约束为Long.MAX_VALUE~Long.MIN_VALUE
-鲜艳条件：指某个变量或操作的状态变化需要依赖的一个条件，比如从队列中取
-        </p>
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2016/12/27/java-concurrent-note2/" class="article-date">
+            <time datetime="2016-12-27T07:56:49.000Z" itemprop="datePublished">2016-12-27</time>
+        </a>
     </div>
-</article>
-    
 
-    
-    
-    
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2016/12/21/java-lock/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/img/java/java-lock.jpg)" alt="Java锁总览" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-</span>
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/并发/">并发</a>, <a class="tag-link" href="/tags/读书笔记/">读书笔记</a>
+    </div>
 
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/Java/">Java</a>
             </div>
-            <div class="date"><time datetime="2016-12-20T16:37:14.000Z" itemprop="datePublished">2016-12-21</time></div>
-        </div>
         
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2016/12/21/java-lock/">Java锁总览</a>
-        </h1>
-    
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p><img src="/img/java/java-concurrent.jpg" alt=""></p>
+<h4 id="组合对象"><a href="#组合对象" class="headerlink" title="组合对象"></a>组合对象</h4><h5 id="设计线程安全的类"><a href="#设计线程安全的类" class="headerlink" title="设计线程安全的类"></a>设计线程安全的类</h5><ul>
+<li>确定对象状态由那些变量构成</li>
+<li>确定限制状态变量的不变约束</li>
+<li>指定一个管理并发访问对象状态的策略</li>
+</ul>
+<p>此处有如下一些概念：</p>
+<ul>
+<li>状态空间：一个对象的所有变量的变化的范围为该对象的状态空间</li>
+<li>不变约束：指某个变量的取值区域，比如一个<code>long</code>变量的不变约束为<code>Long.MAX_VALUE</code>~<code>Long.MIN_VALUE</code></li>
+<li>鲜艳条件：指某个变量或操作的状态变化需要依赖的一个条件，比如从队列中取一个元素，先验条件为该队列不能为空，如果为空取的操作必会失败。</li>
+<li>后验条件：指某个变量或操作的状态变化后的状态需要满足一个条件，比如一个变量值为7，下一个值必须为8，这个必须为8就是后验条件</li>
+<li>状态依赖：如果一个操作存在基于状态的先验条件，则称该操作为状态依赖的。</li>
+</ul>
+<blockquote>
+<p>如果变量的下一个状态源于前一个状态，及变量值的变化是依赖于之前的状态，则此状态变化为一个复合操作，需要对该操作进行同步。不变约束和后验条件施加在状态转换上的约束，引入额外同步和封装的需要。</p>
+</blockquote>
+<h5 id="实例限制"><a href="#实例限制" class="headerlink" title="实例限制"></a>实例限制</h5><p>将数据封装在对象内部，把对数据的访问限制在对象的方法上，更易确保线程在访问数据时总能获得正确的锁</p>
+<h5 id="委托线程安全"><a href="#委托线程安全" class="headerlink" title="委托线程安全"></a>委托线程安全</h5><p>此概念是一个对象将自己的线程安全特性依赖于内部线程安全的属性，比如一个对象持有一个<code>AtomicLong</code>属性，同时并未施加额外的约束，因此该对象是线程安全的。但如果委托给内部多个线程安全的属性，多个属性间存在相互依赖或者约束时，对一个属性的操作可能是符合操作，这样导致单点是线程安全，但组合起来线程并未安全，因此委托给多个线程安全属性的前提是其之间无依赖关系或约束。</p>
+<h5 id="客户端加锁"><a href="#客户端加锁" class="headerlink" title="客户端加锁"></a>客户端加锁</h5><p>当同步容器的提供的功能无法满足是，通常需要扩展同步容器功能，最简单的方式修改同步容器的源码，但是这个是不现实的，最直接的方式是封装同步容器，这个时候要注意一个问题，对于复合操作要注意是同步容易内部同步机制用的锁，如果与封装类不是同一个的话，这个时候对于复合操作的同步加锁是无效的，</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ListHelper</span>&lt;<span class="title">E</span>&gt; </span>&#123;</span><br><span class="line">	<span class="keyword">public</span> List&lt;E&gt; list = Collections.synchronizedList(<span class="keyword">new</span> ArrayList&lt;E&gt;());</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="keyword">synchronized</span> <span class="title">putIfAbsent</span><span class="params">(E x)</span></span>&#123;</span><br><span class="line">		<span class="keyword">boolean</span> absent = !list.contains(x);</span><br><span class="line">		<span class="keyword">if</span>(absent)&#123;</span><br><span class="line">			list.add(x);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> absent;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如上述代码，同步容器加锁是用的内部持有的锁，而此封装类加锁用的是<code>this</code>,二者用的不是一个锁，如果此同步容器在其他地方还有调用处，可能当线程检查list不包含x到添加这个时间片内，有线程将x利用同步容器类的put操作将x元素放入了容器中。</p>
+<h5 id="同步策略"><a href="#同步策略" class="headerlink" title="同步策略"></a>同步策略</h5><p>在设计同步策略是需要考虑的是：</p>
+<ul>
+<li>那些变量声明为volatile类型</li>
+<li>哪些变量需要被锁保护</li>
+<li>那些锁需要保护那些变量</li>
+<li>那些变量是不可变的</li>
+<li>那些变量需要封装在线程内，也就是对其他线程不可见</li>
+<li>那些操作必须是原子的</li>
+</ul>
 
-        <p class="article-excerpt">
+        </div>
+        <footer class="article-footer">
             
 
-Java中存在多种锁，
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
 
 
-        </p>
+        </footer>
     </div>
 </article>
+
+    <section id="comments">
     
-        </div>
+        
+    <div id="valine-thread"></div>
+
     
-
-
-    </div></section>
-
+    </section>
 
 
                         </div>
@@ -311,6 +335,29 @@ Java中存在多种锁，
             
         </ul>
     </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2017/12/28/py-shadowsocks/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            Shadowsocks原理详解
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2016/12/21/java-lock/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">Java锁总览</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
     
     <div class="widgets-container">
         

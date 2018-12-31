@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>peachey.blog/2016/12/27/java-concurrent-note2/</loc>
+    
+    <lastmod>2018-12-31T15:23:15.846Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>peachey.blog/2016/08/20/java-concurrent-note-1/</loc>
     
-    <lastmod>2018-12-26T12:00:16.272Z</lastmod>
+    <lastmod>2018-12-27T08:05:50.630Z</lastmod>
     
   </url>
   
