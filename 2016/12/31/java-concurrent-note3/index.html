@@ -3,26 +3,26 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Java锁总览 | Peachey Blog</title>
+    <title>并发编程实战笔记——基础构建模块 | Peachey Blog</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-        <meta name="keywords" content="并发" />
+        <meta name="keywords" content="并发,读书笔记" />
     
-    <meta name="description" content="Java中存在多种锁，">
-<meta name="keywords" content="并发">
+    <meta name="description" content="并发包提供的一些并发基础构建模块  同步容器类 同步容器保证线程安全的方式：将状态封装起来，对外提供公共方法，在公共方法上进行同步操作，使得同时仅有一个线程可以访问容器。  同步容器存在的问题同步容器的每一个提供的操作都是线程安全的，但当处理一些复合操作时，会存在问题，常见的复合操作：迭代、条件运算（先检查再运行）。对于条件运算，需要使用与单操作相同的锁来实现同步，详细可以查看上节的客户端加锁">
+<meta name="keywords" content="并发,读书笔记">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java锁总览">
-<meta property="og:url" content="peachey.blog/2016/12/21/java-lock/index.html">
+<meta property="og:title" content="并发编程实战笔记——基础构建模块">
+<meta property="og:url" content="peachey.blog/2016/12/31/java-concurrent-note3/index.html">
 <meta property="og:site_name" content="Peachey Blog">
-<meta property="og:description" content="Java中存在多种锁，">
+<meta property="og:description" content="并发包提供的一些并发基础构建模块  同步容器类 同步容器保证线程安全的方式：将状态封装起来，对外提供公共方法，在公共方法上进行同步操作，使得同时仅有一个线程可以访问容器。  同步容器存在的问题同步容器的每一个提供的操作都是线程安全的，但当处理一些复合操作时，会存在问题，常见的复合操作：迭代、条件运算（先检查再运行）。对于条件运算，需要使用与单操作相同的锁来实现同步，详细可以查看上节的客户端加锁">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="/img/java/java-lock.jpg">
-<meta property="og:updated_time" content="2018-12-26T11:04:23.747Z">
+<meta property="og:image" content="/img/java/java-concurrent.jpg">
+<meta property="og:updated_time" content="2019-01-06T13:55:44.082Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java锁总览">
-<meta name="twitter:description" content="Java中存在多种锁，">
-<meta name="twitter:image" content="/img/java/java-lock.jpg">
+<meta name="twitter:title" content="并发编程实战笔记——基础构建模块">
+<meta name="twitter:description" content="并发包提供的一些并发基础构建模块  同步容器类 同步容器保证线程安全的方式：将状态封装起来，对外提供公共方法，在公共方法上进行同步操作，使得同时仅有一个线程可以访问容器。  同步容器存在的问题同步容器的每一个提供的操作都是线程安全的，但当处理一些复合操作时，会存在问题，常见的复合操作：迭代、条件运算（先检查再运行）。对于条件运算，需要使用与单操作相同的锁来实现同步，详细可以查看上节的客户端加锁">
+<meta name="twitter:image" content="/img/java/java-concurrent.jpg">
     
 
     
@@ -141,14 +141,14 @@
     </h1>
 </div>
                         <div class="main-body-content">
-                            <article id="post-java-lock" class="article article-single article-type-post" itemscope itemprop="blogPost">
+                            <article id="post-java-concurrent-note3" class="article article-single article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
             <header class="article-header">
                 
     
         <h1 class="article-title" itemprop="name">
-        Java锁总览
+        并发编程实战笔记——基础构建模块
         </h1>
     
 
@@ -158,25 +158,78 @@
             <div class="article-meta">
                 
     <div class="article-date">
-        <a href="/2016/12/21/java-lock/" class="article-date">
-            <time datetime="2016-12-20T16:37:14.000Z" itemprop="datePublished">2016-12-21</time>
+        <a href="/2016/12/31/java-concurrent-note3/" class="article-date">
+            <time datetime="2016-12-31T15:24:57.000Z" itemprop="datePublished">2016-12-31</time>
         </a>
     </div>
 
                 
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/并发/">并发</a>
+        <a class="tag-link" href="/tags/并发/">并发</a>, <a class="tag-link" href="/tags/读书笔记/">读书笔记</a>
     </div>
 
             </div>
         
         
         <div class="article-entry" itemprop="articleBody">
-            <p><img src="/img/java/java-lock.jpg" alt=""></p>
+            <p><img src="/img/java/java-concurrent.jpg" alt=""></p>
 <blockquote>
-<p>Java中存在多种锁，</p>
+<p>并发包提供的一些并发基础构建模块</p>
 </blockquote>
+<h4 id="同步容器类"><a href="#同步容器类" class="headerlink" title="同步容器类"></a>同步容器类</h4><blockquote>
+<p>同步容器保证线程安全的方式：将状态封装起来，对外提供公共方法，在公共方法上进行同步操作，使得同时仅有一个线程可以访问容器。</p>
+</blockquote>
+<h5 id="同步容器存在的问题"><a href="#同步容器存在的问题" class="headerlink" title="同步容器存在的问题"></a>同步容器存在的问题</h5><p>同步容器的每一个提供的操作都是线程安全的，但当处理一些复合操作时，会存在问题，常见的复合操作：迭代、条件运算（先检查再运行）。对于条件运算，需要使用与单操作相同的锁来实现同步，详细可以查看上节的客户端加锁。</p>
+<p>对于迭代操作，同步容器并未考虑到迭代是并发修改的问题，对于此种情况变现的行为是”快速失败”（fail-fast）,抛出<code>ConcurrentModificationException</code>,此行为并非是一种处理操作，而是一种示警，如果需要保证线程安全，需要对迭代操作进行加锁，如果容器规模很大，迭代操作时间很长，则会导致其他线程长时间等待，出现饥饿，甚至可能会产生死锁，即使不出现如上问题，长时间的持有锁会导致锁上竞争很激烈，如果多个线程长时间等待，会极大的降低吞吐量和cpu的利用率，迭代整体加锁的另一种替代方式便是克隆容器，对容器的副本进行迭代，比如<code>CopyOnWriteArrayList</code>。</p>
+<h4 id="并发容器"><a href="#并发容器" class="headerlink" title="并发容器"></a>并发容器</h4><blockquote>
+<p>jdk提供了并发容器来改善同步容器的性能</p>
+</blockquote>
+<ul>
+<li><code>Map</code>类：<code>ConcurrentHashMap</code>(同步的<code>HashMap</code>),<code>ConcurrentSkipListMap</code>(同步的<code>SortedMap</code>)</li>
+<li><code>List</code>类：<code>CopyOnWriteArrayList</code>:遍历为主要操作的容器</li>
+<li><code>Set</code>类：<code>ConcurrentSkipListMap</code>(代替<code>SortedSet</code>)</li>
+<li><code>Queue</code>类：<code>ConcurrentLinkedQueue</code>；<code>PriorityQueue</code>非线程安全，可以自然顺序，也可以根据<code>Comparator</code>排序；<code>BlockingQueue</code>阻塞队列；<code>BlockingDeque</code>双端队列，具体实现有<code>ArrayDeque</code>和<code>LinkedBlockingDeque</code>。</li>
+<li><code>Deque</code>：双端队列，实现在队列头和队列尾进行插入和移除</li>
+</ul>
+<h5 id="ConcurrentHashMap"><a href="#ConcurrentHashMap" class="headerlink" title="ConcurrentHashMap"></a><code>ConcurrentHashMap</code></h5><ul>
+<li>利用分段锁来实现更大程度上的共享</li>
+<li>迭代器具有弱一致性，而并非及时失败，容忍并发的修改，因此size计算返回的是一个估计值（jdk1.8以前），jdk1.8之后size的计算方式改变</li>
+</ul>
+<h5 id="CopyOnWriteArrayList"><a href="#CopyOnWriteArrayList" class="headerlink" title="CopyOnWriteArrayList"></a><code>CopyOnWriteArrayList</code></h5><ul>
+<li>写入时复制：在每次修改时，都会创建并重新发布一个新的容器副本，从而实现可变性</li>
+<li>每次修改都要复制，需要一定的开销，当迭代操作远远多于修改操作时，才应该使用</li>
+</ul>
+<h4 id="阻塞队列"><a href="#阻塞队列" class="headerlink" title="阻塞队列"></a>阻塞队列</h4><ul>
+<li>阻塞队列简化了生产者-消费者的实现过程，将生产者和消费者直接的同步机制封装到阻塞队列中</li>
+<li>常见的生产者-消费者设计模式是线程池与工作队列组合</li>
+<li><code>BlocckingQueue</code>的实现：<code>LinkedBlockingQueue</code>, <code>ArrayBlockingQueue</code>, <code>PriorityBlockingQueue</code>, <code>SynchronousQueue</code></li>
+<li><code>SynchronousQueue</code>:维护一组线程，元素的交付直接在线程之间完成，降低了数据从生产者到与消费者的延迟</li>
+<li><code>BlockingDeque</code>:阻塞双端队列适用于工作密取设计，每个消费者都有各自的双端队列，如果一个消费者完成了自己双端对垒的全部工作，可以从其他消费者双端队列末尾偷取工作</li>
+</ul>
+<h4 id="阻塞方法与中断方法"><a href="#阻塞方法与中断方法" class="headerlink" title="阻塞方法与中断方法"></a>阻塞方法与中断方法</h4><ul>
+<li>中断是一种协作机制，一个线程不能强制其他线程停止正在执行的操作而却执行其他的操作，也就是说被中断的线程并非会直接停止，而是在可暂停的地方停止</li>
+<li><code>Thread.currentThread().interrupt()</code>可恢复被中断的状态</li>
+<li>对于处理中断异常的一种策略是将中断异常抛给调用者</li>
+</ul>
+<h4 id="同步工具类"><a href="#同步工具类" class="headerlink" title="同步工具类"></a>同步工具类</h4><ul>
+<li>同步工具类可以是任何一个对象，只要它根据其自身的状态来协调线程的控制流</li>
+<li>同步工具类：阻塞队列, 信号量<code>Semaphore</code>, 栅栏<code>Barrier</code>, 闭锁<code>Latch</code></li>
+</ul>
+<h5 id="闭锁"><a href="#闭锁" class="headerlink" title="闭锁"></a>闭锁</h5><ul>
+<li>闭锁用来确保某些事件待其他事件执行完才能够继续执行</li>
+<li><code>CountDownLatch</code>是一种计数的闭锁实现，当计数为0时才会继续执行</li>
+<li><code>FutureTask</code>可以做闭锁，有三种状态：等待执行，执行中，执行完成，当进入执行完成状态后会永远停止在这个状态</li>
+</ul>
+<h5 id="信号量"><a href="#信号量" class="headerlink" title="信号量"></a>信号量</h5><ul>
+<li>计数信号量用来控制同时访问某个特定资源的操作数量，或者某个指定操作的数量</li>
+<li><code>Semaphore</code>管理一组虚拟的许可，在执行操作时，可以首先获得许可并在适用之后释放</li>
+</ul>
+<h5 id="栅栏"><a href="#栅栏" class="headerlink" title="栅栏"></a>栅栏</h5><ul>
+<li>阻塞一组线程知道某个时间发生</li>
+<li>栅栏关注点在线程，闭锁关注点在事件</li>
+<li>栅栏的实现：<code>CyclicBarrier</code>, <code>Exchanger</code>(用于在栅栏位置交换数据，比如线程之间交换写入与读取的缓冲区)</li>
+</ul>
 
         </div>
         <footer class="article-footer">
@@ -312,20 +365,20 @@
         
 <nav id="article-nav">
     
-        <a href="/2016/12/27/java-concurrent-note2/" id="article-nav-newer" class="article-nav-link-wrap">
+        <a href="/2017/12/28/py-shadowsocks/" id="article-nav-newer" class="article-nav-link-wrap">
         <strong class="article-nav-caption">下一篇</strong>
         <p class="article-nav-title">
         
-            并发编程实战笔记——对象的组合
+            Shadowsocks原理详解
         
         </p>
         <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
     </a>
     
     
-        <a href="/2016/11/12/java-maven-introduction/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2016/12/27/java-concurrent-note2/" id="article-nav-older" class="article-nav-link-wrap">
         <strong class="article-nav-caption">上一篇</strong>
-        <p class="article-nav-title">Maven入门指南</p>
+        <p class="article-nav-title">并发编程实战笔记——对象的组合</p>
         <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
         </a>
     

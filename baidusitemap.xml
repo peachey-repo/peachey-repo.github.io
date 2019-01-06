@@ -4,11 +4,33 @@
 
     
   <url>
-    <loc>peachey.blog/2016/12/27/java-concurrent-note2/</loc>
-    <lastmod>2018-12-31T15:23:15.846Z</lastmod>
+    <loc>peachey.blog/2016/12/31/java-concurrent-note3/</loc>
+    <lastmod>2019-01-06T13:55:44.082Z</lastmod>
     <data>
         <display>
-        <title>并发编程实战笔记——组合对象</title>
+        <title>并发编程实战笔记——基础构建模块</title>
+        <pubTime>2016-12-31T15:24:57.000Z</pubTime>
+        
+        <tag>并发</tag>
+         
+        <tag>读书笔记</tag>
+         
+         
+           
+             
+              <breadCrumb title="Java" url="peachey.blog/categories/Java/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>peachey.blog/2016/12/27/java-concurrent-note2/</loc>
+    <lastmod>2018-12-31T15:39:30.966Z</lastmod>
+    <data>
+        <display>
+        <title>并发编程实战笔记——对象的组合</title>
         <pubTime>2016-12-27T07:56:49.000Z</pubTime>
         
         <tag>并发</tag>
