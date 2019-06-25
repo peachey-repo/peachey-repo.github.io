@@ -2,9 +2,37 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>peachey.blog/2019/05/26/java-spring-framework-summary/</loc>
+    <loc>peachey.blog/2018/06/23/java-spring-xml-validate/</loc>
     
-    <lastmod>2019-05-26T15:23:25.829Z</lastmod>
+    <lastmod>2019-06-25T14:10:09.157Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>peachey.blog/2018/06/23/java-spring-resource/</loc>
+    
+    <lastmod>2019-06-23T08:38:41.161Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>peachey.blog/2018/06/23/java-spring-bean-load-summary/</loc>
+    
+    <lastmod>2019-06-23T08:37:59.887Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>peachey.blog/2018/05/26/java-spring-framework-summary/</loc>
+    
+    <lastmod>2019-06-23T08:29:18.559Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>peachey.blog/2019/05/26/plant-uml-grammar/</loc>
+    
+    <lastmod>2019-05-26T16:04:34.289Z</lastmod>
     
   </url>
   

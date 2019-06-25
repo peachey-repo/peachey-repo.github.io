@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>【Spring源码】（二）资源 | Peachey Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="Spring" />
+    
+    <meta name="description" content="目录资源资源加载  资源Spring引入了资源的概念，资源是对一种底层资源的实际类型抽象出来的一种资源描述符。其实可以理解为一个持有路径的类（封装），路径比如可以是文件路径（ClassPathResource），也可以是URL（URLResource），也可以是文件（FileUrlResource），以下是Spring资源的一个类图：   InputStreamSource: 一个接口用于标识这">
+<meta name="keywords" content="Spring">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【Spring源码】（二）资源">
+<meta property="og:url" content="peachey.blog/2018/06/23/java-spring-resource/index.html">
+<meta property="og:site_name" content="Peachey Blog">
+<meta property="og:description" content="目录资源资源加载  资源Spring引入了资源的概念，资源是对一种底层资源的实际类型抽象出来的一种资源描述符。其实可以理解为一个持有路径的类（封装），路径比如可以是文件路径（ClassPathResource），也可以是URL（URLResource），也可以是文件（FileUrlResource），以下是Spring资源的一个类图：   InputStreamSource: 一个接口用于标识这">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="/img/java/spring.jpeg">
+<meta property="og:updated_time" content="2019-06-23T08:38:41.161Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【Spring源码】（二）资源">
+<meta name="twitter:description" content="目录资源资源加载  资源Spring引入了资源的概念，资源是对一种底层资源的实际类型抽象出来的一种资源描述符。其实可以理解为一个持有路径的类（封装），路径比如可以是文件路径（ClassPathResource），也可以是URL（URLResource），也可以是文件（FileUrlResource），以下是Spring资源的一个类图：   InputStreamSource: 一个接口用于标识这">
+<meta name="twitter:image" content="/img/java/spring.jpeg">
+    
+
+    
+        <link rel="alternate" href="/" title="Peachey Blog" type="application/atom+xml" />
+    
+
+    
+        <link rel="icon" href="/css/images/favicon.ico" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">Never Give Up</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/DB/">DB</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/DB/Mysql/">Mysql</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Java/">Java</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Python/">Python</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/杂记/">杂记</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/算法/">算法</a></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    未分类
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-java-spring-resource" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        【Spring源码】（二）资源
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2018/06/23/java-spring-resource/" class="article-date">
+            <time datetime="2018-06-23T08:25:13.000Z" itemprop="datePublished">2018-06-23</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Spring/">Spring</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p><img src="/img/java/spring.jpeg" alt=""></p>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><p><a href="#1">资源</a><br><a href="#2">资源加载</a></p>
+<p><span id="1"></span></p>
+<h4 id="资源"><a href="#资源" class="headerlink" title="资源"></a>资源</h4><p>Spring引入了资源的概念，资源是对一种底层资源的实际类型抽象出来的一种资源描述符。其实可以理解为一个持有路径的类（封装），路径比如可以是文件路径（ClassPathResource），也可以是URL（URLResource），也可以是文件（FileUrlResource），以下是Spring资源的一个类图：</p>
+<p><img src="/img/java/java-resource-skelton.jpg" alt="Resource类图"></p>
+<ol>
+<li><p><code>InputStreamSource</code>: 一个接口用于标识这个对象是来源于<code>InputStream</code>的，声明了一个方法，<code>InputStream getInputStream() throws IOException</code>，该方法可以获取子类持有的字节流</p>
+</li>
+<li><p><code>Resource</code>:该类是资源抽象的父接口，定义了一些通用的资源处理方法，如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">exists</span><span class="params">()</span></span>; <span class="comment">//判断物理资源是否存在</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">default</span> <span class="keyword">boolean</span> <span class="title">isReadable</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> exists();</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//判断资源是否被打开，InputStream不能够被多次读取， 必须进行关闭以防资源泄露</span></span><br><span class="line"><span class="function"><span class="keyword">default</span> <span class="keyword">boolean</span> <span class="title">isOpen</span><span class="params">()</span> </span>&#123;</span><br><span class="line">   <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//该资源是否为文件，但不保证getFile()可以成功返回</span></span><br><span class="line"><span class="function"><span class="keyword">default</span> <span class="keyword">boolean</span> <span class="title">isFile</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//返回资源的URL句柄，如果不能被处理，则抛出异常</span></span><br><span class="line"><span class="function">URL <span class="title">getURL</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//返回资源的URI句柄，如果不能被处理，则抛出异常</span></span><br><span class="line"><span class="function">URI <span class="title">getURI</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span>;</span><br><span class="line"><span class="comment">//返回资源的文件句柄，文件不存在</span></span><br><span class="line"><span class="function">File <span class="title">getFile</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span>;</span><br><span class="line"><span class="comment">//返回只读的字节流通道（NIO），可以利用此通道进行nio操作</span></span><br><span class="line"><span class="function"><span class="keyword">default</span> ReadableByteChannel <span class="title">readableChannel</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> Channels.newChannel(getInputStream());</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//返回内容的长度</span></span><br><span class="line"><span class="function"><span class="keyword">long</span> <span class="title">contentLength</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span>;</span><br><span class="line"><span class="comment">//最后一次修改的时间戳</span></span><br><span class="line"><span class="function"><span class="keyword">long</span> <span class="title">lastModified</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span>;</span><br><span class="line"><span class="comment">//创建一个相对于当前资源路径的资源</span></span><br><span class="line"><span class="function">Resource <span class="title">createRelative</span><span class="params">(String relativePath)</span> <span class="keyword">throws</span> IOException</span>;</span><br><span class="line"><span class="comment">//获取文件名称</span></span><br><span class="line"><span class="function">String <span class="title">getFilename</span><span class="params">()</span></span>;</span><br><span class="line"><span class="comment">//获取资源描述，一般用于使用资源错误的时候进行错误输出</span></span><br><span class="line"><span class="function">String <span class="title">getDescription</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ContextResource:上下文资源，是从上下文中加载的资源，比如<code>ServletContext</code>或者<code>PortletContext</code>，该接口只有一个函数，<code>getPathWithinContext()</code>返回该资源的相对路径，路径是相对于上下文的根目录</p>
+</li>
+<li><p><code>WriteableResource</code>:可修改的资源，该资源提供了三个函数，如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//返回是否可读写，默认true</span></span><br><span class="line"><span class="function"><span class="keyword">default</span> <span class="keyword">boolean</span> <span class="title">isWritable</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line"><span class="comment">//获取输出流，该流可以进行读取资源</span></span><br><span class="line">	<span class="function">OutputStream <span class="title">getOutputStream</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span>;</span><br><span class="line"><span class="comment">//返回可写的字节流通道（nio），可以利用nio对该通道进行修改</span></span><br><span class="line">	<span class="function"><span class="keyword">default</span> WritableByteChannel <span class="title">writableChannel</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> Channels.newChannel(getOutputStream());</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>AbstractResource</code>:Reosurce的抽象实现类</p>
+</li>
+<li><p><code>AbstractFileResolvingResource</code>:抽象类用于将URL解析为文件引用的资源</p>
+</li>
+<li><p><code>VfsResource</code>:JBoss VFS的一种资源实现</p>
+</li>
+<li><code>DescriptiveResource</code>: 单纯的持有一种资源的描述，不会真正的指向一个可读资源</li>
+<li><code>ByteArrayResource</code>:对于指定的字节数组是很有用的，<code>InputStreamResource</code>只能使用一次，特别是创建邮件附件很有用，因为java的邮件需要多次读取，字节数组是构造参数的入参，也就是说创建<code>ByteArrayResource</code>时，必须把资源加载后传入才可以，而比如<code>ClassPathResource</code>仅仅是持有一个链接，在调用<code>getInputStream</code>时才进行加载</li>
+<li><code>InputStreamResource</code>:是InputStream的一个Resource,使用这个时一般是没有其它具体的Resource实现类时选择使用，更多的会选择使用<code>ByteArrayResource</code>或者其它的基于文件的实现类</li>
+<li><code>PathResource</code>:这个类已经废弃掉了，其主要作用是用于对<code>File</code>或者<code>URL</code>的一种操作</li>
+<li><code>FileSystemResource</code>:该资源可以对<code>File</code>进行处理，需要提的是，在Spring 5.1中，该资源类对与读写的操作用的是JAVA NIO.2</li>
+<li><code>ClassPathResource</code>:利用类加载器或者<code>Class</code>去加载类，需要注意的是，在该资源类仅支持文件路径下的类路径，对于jar包中的文件是不起作用的，在实际获取字节流时是利用类加载器去加载的（<code>classLoader.getResourceAsStream</code>）。</li>
+<li><code>URLResource</code>:资源类可以加载<code>URL</code>或者文件类型的资源，加载文件需要指定协议”file:” </li>
+<li><code>FileUrlResource</code>:在<code>URLResource</code>基础之上增加对文件的支持</li>
+</ol>
+<p><span id="2"></span></p>
+<h3 id="资源加载"><a href="#资源加载" class="headerlink" title="资源加载"></a>资源加载</h3><p><img src="/img/java/java-resource-load.jpg" alt="资源加载"></p>
+<p><code>ResourceLoader</code>:资源加载器，主要定义了一下加载资源的接口，可以被单独使用，使用特定的上下文加载策略，可以在运行中利用字符串填充Bean的资源属性,<code>ResourcePatternResolver</code>是其扩展，可以支持模式批量加载资源</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 给定资源路径，返回资源的引用也就是操作句柄，需要支持如下条件:</span></span><br><span class="line"><span class="comment"> * 必须支持完全限定的URL，比如："file:C:/test.dat".</span></span><br><span class="line"><span class="comment"> * 必须支持类路径，比如："classpath:test.dat".</span></span><br><span class="line"><span class="comment"> * 必须支持相对的文件路径，比如："WEB-INF/test.dat".</span></span><br><span class="line"><span class="comment"> * 上述会由具体的应用上下文（ApplicationContext）来实现</span></span><br><span class="line"><span class="comment"> * 另外需要注意的是资源句柄不一定表明资源存在，需要利用Resource#exists来检查</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function">Resource <span class="title">getResource</span><span class="params">(String location)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取ResourceLoader的类加载器，当类加载器不可被访问时会返回为空</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"> </span><br><span class="line"><span class="function">ClassLoader <span class="title">getClassLoader</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
+<p><code>DefaultResourceLoader</code>:该类是一个默认实现的资源加载器，此类可以单独使用，同时也被<code>AbstractApplicationContext</code>继承，如果传值为url则会返回一个<code>URLResource</code>，如果传值不是url(path或classpath:)则返回</p>
+<p>具体看下获取资源的逻辑：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (ProtocolResolver protocolResolver : <span class="keyword">this</span>.protocolResolvers) &#123;</span><br><span class="line">	Resource resource = protocolResolver.resolve(location, <span class="keyword">this</span>);</span><br><span class="line">	<span class="keyword">if</span> (resource != <span class="keyword">null</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span> resource;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (location.startsWith(<span class="string">"/"</span>)) &#123;</span><br><span class="line">	<span class="keyword">return</span> getResourceByPath(location);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (location.startsWith(CLASSPATH_URL_PREFIX)) &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> ClassPathResource(location.substring(CLASSPATH_URL_PREFIX.length()), getClassLoader());</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> &#123;</span><br><span class="line">	URL url = <span class="keyword">new</span> URL(location);</span><br><span class="line">	<span class="keyword">return</span> (ResourceUtils.isFileURL(url) ? <span class="keyword">new</span> FileUrlResource(url) : <span class="keyword">new</span> UrlResource(url));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>主要逻辑如下：</p>
+<ul>
+<li>利用<code>ProtocolResolver</code>来处理loction来获取资源，这个是利用spi实现的可动态扩展的自定义资源解析器，内部持有一个<code>LinkedHashSet</code>（有序）用于存储<code>ProtocolResolver</code>，并提供了一个方法<code>addProtocolResolver</code>用于向<code>Set</code>中添加。</li>
+<li>进行文件路径方式获取资源，</li>
+<li>进行class path方式获取资源</li>
+<li>进行URL方式获取资源</li>
+</ul>
+<p><code>FileSystemResourceLoader</code>:该类继承了<code>DefaultResourceLoader</code>，对getResourceByPath方法进行了具体实现，其实就是生成一个对象持有文件路径，具体实现如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> Resource <span class="title">getResourceByPath</span><span class="params">(String path)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (path.startsWith(<span class="string">"/"</span>)) &#123;</span><br><span class="line">		path = path.substring(<span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> FileSystemContextResource(path);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">FileSystemContextResource</span> <span class="keyword">extends</span> <span class="title">FileSystemResource</span> <span class="keyword">implements</span> <span class="title">ContextResource</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">FileSystemContextResource</span><span class="params">(String path)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>(path);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getPathWithinContext</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> getPath();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><code>ClassRelativeResourceLoader</code>:该类继承了<code>DefaultResourceLoader</code>，对getResourceByPath方法进行了具体实现，其实就是生成一个对象持有文件路径，要特别说一下的时<code>getResourceByPath</code>方法的入参<code>path</code>是相对路径，也就是说会根据类加载器去加载，具体实现如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">protected</span> Resource <span class="title">getResourceByPath</span><span class="params">(String path)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> ClassRelativeContextResource(path, <span class="keyword">this</span>.clazz);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">ClassRelativeContextResource</span> <span class="keyword">extends</span> <span class="title">ClassPathResource</span> <span class="keyword">implements</span> <span class="title">ContextResource</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> Class&lt;?&gt; clazz;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">ClassRelativeContextResource</span><span class="params">(String path, Class&lt;?&gt; clazz)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>(path, clazz);</span><br><span class="line">		<span class="keyword">this</span>.clazz = clazz;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getPathWithinContext</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> getPath();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> Resource <span class="title">createRelative</span><span class="params">(String relativePath)</span> </span>&#123;</span><br><span class="line">		String pathToUse = StringUtils.applyRelativePath(getPath(), relativePath);</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> ClassRelativeContextResource(pathToUse, <span class="keyword">this</span>.clazz);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="valine-thread"></div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="/" target="_blank">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="/" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="/" target="_blank">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/ppoffice/hexo-theme-hueman" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="/" target="_blank">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/" target="_blank">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/06/23/java-spring-bean-load-summary/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            【Spring源码】（三）Spring Bean加载概览
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2018/05/26/java-spring-framework-summary/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">【Spring源码】（一）Spring概览</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/05/26/plant-uml-grammar/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/java/uml-logo.png)" alt="Plant UML 语法" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Java/">Java</a></p>
+                            <p class="item-title"><a href="/2019/05/26/plant-uml-grammar/" class="title">Plant UML 语法</a></p>
+                            <p class="item-date"><time datetime="2019-05-26T15:37:52.000Z" itemprop="datePublished">2019-05-26</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/02/21/java-threadlocal/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/java/java-concurrent.jpg)" alt="ThreadLocal详解" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Java/">Java</a></p>
+                            <p class="item-title"><a href="/2019/02/21/java-threadlocal/" class="title">ThreadLocal详解</a></p>
+                            <p class="item-date"><time datetime="2019-02-21T08:04:58.000Z" itemprop="datePublished">2019-02-21</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/02/21/java-concurrent-summary/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/java/java-concurrent.jpg)" alt="Java多线程的一点思考和总结" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Java/">Java</a></p>
+                            <p class="item-title"><a href="/2019/02/21/java-concurrent-summary/" class="title">Java多线程的一点思考和总结</a></p>
+                            <p class="item-date"><time datetime="2019-02-21T05:18:33.000Z" itemprop="datePublished">2019-02-21</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/12/10/java-concurrenthashmap/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/java/java-concurrent.jpg)" alt="ConcurrentHashMap源码演进" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Java/">Java</a></p>
+                            <p class="item-title"><a href="/2018/12/10/java-concurrenthashmap/" class="title">ConcurrentHashMap源码演进</a></p>
+                            <p class="item-date"><time datetime="2018-12-09T16:28:17.000Z" itemprop="datePublished">2018-12-10</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/11/16/java-art-code-segment/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/java/clean-code.png)" alt="精巧的代码片段设计" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Java/">Java</a></p>
+                            <p class="item-title"><a href="/2018/11/16/java-art-code-segment/" class="title">精巧的代码片段设计</a></p>
+                            <p class="item-date"><time datetime="2018-11-16T08:49:14.000Z" itemprop="datePublished">2018-11-16</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/DB/">DB</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/DB/Mysql/">Mysql</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">21</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/杂记/">杂记</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a><span class="category-list-count">4</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Clean-Code/">Clean Code</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dubbo/">Dubbo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LeetCode/">LeetCode</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Maven/">Maven</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mybatis/">Mybatis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/">Mysql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Netty/">Netty</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nio/">Nio</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shadowsocks/">Shadowsocks</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/">Spring</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UML/">UML</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/并发/">并发</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/读书笔记/">读书笔记</a><span class="tag-list-count">4</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Clean-Code/" style="font-size: 10px;">Clean Code</a> <a href="/tags/Dubbo/" style="font-size: 13.33px;">Dubbo</a> <a href="/tags/Java/" style="font-size: 13.33px;">Java</a> <a href="/tags/LeetCode/" style="font-size: 16.67px;">LeetCode</a> <a href="/tags/Maven/" style="font-size: 10px;">Maven</a> <a href="/tags/Mybatis/" style="font-size: 10px;">Mybatis</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/Netty/" style="font-size: 10px;">Netty</a> <a href="/tags/Nio/" style="font-size: 10px;">Nio</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Spring/" style="font-size: 16.67px;">Spring</a> <a href="/tags/UML/" style="font-size: 10px;">UML</a> <a href="/tags/并发/" style="font-size: 20px;">并发</a> <a href="/tags/设计模式/" style="font-size: 10px;">设计模式</a> <a href="/tags/读书笔记/" style="font-size: 16.67px;">读书笔记</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2019 Peachey</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//cdn.jsdelivr.net/gh/xcss/valine@v1.1.7-rc3/dist/Valine.min.js"></script>
+    <script>
+        new Valine({
+            el: '#valine-thread' ,
+            notify:false,
+            verify:true,
+            app_id: 'm643zV6fkatNCTYrsSGVp9t7-gzGzoHsz',
+            app_key: 'D2IHXCDEAUsrUI29D0U4CvYD',
+            placeholder: '可以发表下你的看法~'
+        });
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
