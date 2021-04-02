@@ -3,26 +3,26 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Plant UML 语法 | Peachey Blog</title>
+    <title>缓存击穿、穿透、雪崩、热点数据 | Peachey Blog</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-        <meta name="keywords" content="UML" />
+        <meta name="keywords" content="redis" />
     
-    <meta name="description" content="通用骨架123@startuml...@enduml 皮肤1skinparam monochrome true 强制启用黑白模式 分辨率1scale 1024*768 设置分辨率 类图 继承：Class &amp;lt;|-- SubClass 实现：&amp;lt;|..">
-<meta name="keywords" content="UML">
+    <meta name="description" content="前置在谈缓存击穿、缓存穿透、缓存雪崩等条件之前，前提条件得确定缓存的查询方式为下图：  缓存穿透是什么？那么请求去查询一条压根儿数据库中根本就不存在的数据，也就是缓存和数据库都查询不到这条数据，但是请求每次都会打到数据库上面去，这种查询不存在数据的现象我们称为缓存穿透。如果存在大量请求会导致DB压力剧增。 解决方案异常值过滤在服务器端，接收参数时业务接口中过滤不合法的值，null，负值，和空值进">
+<meta name="keywords" content="redis">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Plant UML 语法">
-<meta property="og:url" content="peachey.blog/2019/05/26/plant-uml-grammar/index.html">
+<meta property="og:title" content="缓存击穿、穿透、雪崩、热点数据">
+<meta property="og:url" content="peachey.blog/2021/04/03/cache-breakdown-slide-hotpot/index.html">
 <meta property="og:site_name" content="Peachey Blog">
-<meta property="og:description" content="通用骨架123@startuml...@enduml 皮肤1skinparam monochrome true 强制启用黑白模式 分辨率1scale 1024*768 设置分辨率 类图 继承：Class &amp;lt;|-- SubClass 实现：&amp;lt;|..">
+<meta property="og:description" content="前置在谈缓存击穿、缓存穿透、缓存雪崩等条件之前，前提条件得确定缓存的查询方式为下图：  缓存穿透是什么？那么请求去查询一条压根儿数据库中根本就不存在的数据，也就是缓存和数据库都查询不到这条数据，但是请求每次都会打到数据库上面去，这种查询不存在数据的现象我们称为缓存穿透。如果存在大量请求会导致DB压力剧增。 解决方案异常值过滤在服务器端，接收参数时业务接口中过滤不合法的值，null，负值，和空值进">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="/img/java/uml-logo.png">
-<meta property="og:updated_time" content="2021-04-02T16:11:03.301Z">
+<meta property="og:image" content="/img/cache/redis.jpeg">
+<meta property="og:updated_time" content="2021-04-02T17:13:14.802Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Plant UML 语法">
-<meta name="twitter:description" content="通用骨架123@startuml...@enduml 皮肤1skinparam monochrome true 强制启用黑白模式 分辨率1scale 1024*768 设置分辨率 类图 继承：Class &amp;lt;|-- SubClass 实现：&amp;lt;|..">
-<meta name="twitter:image" content="/img/java/uml-logo.png">
+<meta name="twitter:title" content="缓存击穿、穿透、雪崩、热点数据">
+<meta name="twitter:description" content="前置在谈缓存击穿、缓存穿透、缓存雪崩等条件之前，前提条件得确定缓存的查询方式为下图：  缓存穿透是什么？那么请求去查询一条压根儿数据库中根本就不存在的数据，也就是缓存和数据库都查询不到这条数据，但是请求每次都会打到数据库上面去，这种查询不存在数据的现象我们称为缓存穿透。如果存在大量请求会导致DB压力剧增。 解决方案异常值过滤在服务器端，接收参数时业务接口中过滤不合法的值，null，负值，和空值进">
+<meta name="twitter:image" content="/img/cache/redis.jpeg">
     
 
     
@@ -141,14 +141,14 @@
     </h1>
 </div>
                         <div class="main-body-content">
-                            <article id="post-plant-uml-grammar" class="article article-single article-type-post" itemscope itemprop="blogPost">
+                            <article id="post-cache-breakdown-slide-hotpot" class="article article-single article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
             <header class="article-header">
                 
     
         <h1 class="article-title" itemprop="name">
-        Plant UML 语法
+        缓存击穿、穿透、雪崩、热点数据
         </h1>
     
 
@@ -158,29 +158,45 @@
             <div class="article-meta">
                 
     <div class="article-date">
-        <a href="/2019/05/26/plant-uml-grammar/" class="article-date">
-            <time datetime="2019-05-26T15:37:52.000Z" itemprop="datePublished">2019-05-26</time>
+        <a href="/2021/04/03/cache-breakdown-slide-hotpot/" class="article-date">
+            <time datetime="2021-04-02T16:23:03.000Z" itemprop="datePublished">2021-04-03</time>
         </a>
     </div>
 
                 
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/UML/">UML</a>
+        <a class="tag-link" href="/tags/redis/">redis</a>
     </div>
 
             </div>
         
         
         <div class="article-entry" itemprop="articleBody">
-            <p><img src="/img/java/uml-logo.png" alt=""></p>
-<h4 id="通用"><a href="#通用" class="headerlink" title="通用"></a>通用</h4><h6 id="骨架"><a href="#骨架" class="headerlink" title="骨架"></a>骨架</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@startuml</span><br><span class="line">...</span><br><span class="line">@enduml</span><br></pre></td></tr></table></figure>
-<h6 id="皮肤"><a href="#皮肤" class="headerlink" title="皮肤"></a>皮肤</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">skinparam monochrome true 强制启用黑白模式</span><br></pre></td></tr></table></figure>
-<h6 id="分辨率"><a href="#分辨率" class="headerlink" title="分辨率"></a>分辨率</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scale 1024*768 设置分辨率</span><br></pre></td></tr></table></figure>
-<h4 id="类图"><a href="#类图" class="headerlink" title="类图"></a>类图</h4><ul>
-<li>继承：<code>Class &lt;|-- SubClass</code></li>
-<li>实现：<code>&lt;|..</code></li>
+            <p><img src="/img/cache/redis.jpeg" alt=""></p>
+<h2 id="前置"><a href="#前置" class="headerlink" title="前置"></a>前置</h2><p>在谈缓存击穿、缓存穿透、缓存雪崩等条件之前，前提条件得确定缓存的查询方式为下图：</p>
+<p><img src="/img/cache/cache-db-req.png" alt=""></p>
+<h2 id="缓存穿透"><a href="#缓存穿透" class="headerlink" title="缓存穿透"></a>缓存穿透</h2><h4 id="是什么？"><a href="#是什么？" class="headerlink" title="是什么？"></a>是什么？</h4><p>那么请求去查询一条压根儿数据库中根本就不存在的数据，也就是缓存和数据库都查询不到这条数据，但是请求每次都会打到数据库上面去，这种查询不存在数据的现象我们称为缓存穿透。如果存在大量请求会导致DB压力剧增。</p>
+<h4 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h4><h5 id="异常值过滤"><a href="#异常值过滤" class="headerlink" title="异常值过滤"></a>异常值过滤</h5><p>在服务器端，接收参数时业务接口中过滤不合法的值，null，负值，和空值进行检测和空值。</p>
+<h5 id="缓存空值"><a href="#缓存空值" class="headerlink" title="缓存空值"></a>缓存空值</h5><p>一种比较简单的解决办法，在第一次查询完不存在的数据后，将该key与对应的空值也放入缓存中，只不过设定为较短的失效时间，例如几分钟，这样则可以应对短时间的大量的该key攻击，设置为较短的失效时间是因为该值可能业务无关，存在意义不大，且该次的查询也未必是攻击者发起，无过久存储的必要，故可以早点失效。</p>
+<h5 id="布隆过滤器"><a href="#布隆过滤器" class="headerlink" title="布隆过滤器"></a>布隆过滤器</h5><p>布隆过滤器是一种bitMap的实现，会检查入参是否在存在，如果检查不存在，那必定不存在，如果存在也有可能不存在，因为布隆过滤器会存在误差，原因在于布隆过滤器需要先对数据集进行计算，对于每个数据的处理，会应用多个hash函数，每个hash结果会在bitMap中占用1位。在判断是否存在时，同样利用相同的多个hash函数计算，只有所有的hash结果的位置都为1的话，才判断该数据值在集合中存在。</p>
+<p>利用布隆过滤器解决缓存击穿问题思路是：通过布隆过滤器判断是否存在，如果不存在，返回一个默认的值，大幅度削减穿透的流量，如下图：</p>
+<p><img src="/img/cache/cache-bloom.jpeg" alt=""></p>
+<h2 id="缓存击穿"><a href="#缓存击穿" class="headerlink" title="缓存击穿"></a>缓存击穿</h2><h4 id="是什么？-1"><a href="#是什么？-1" class="headerlink" title="是什么？"></a>是什么？</h4><p>缓存击穿实际上是缓存雪崩的一个特例，缓存击穿是指缓存中没有但数据库中有的数据（一般是缓存时间到期），这时由于并发用户特别多，同时读缓存没读到数据，又同时去数据库去取数据，引起数据库压力瞬间增大，造成过大压力。击穿与雪崩的区别即在于击穿是对于某一特定的热点数据来说，而雪崩是全部数据。</p>
+<h4 id="解决方案-1"><a href="#解决方案-1" class="headerlink" title="解决方案"></a>解决方案</h4><h5 id="缓存设置不过期"><a href="#缓存设置不过期" class="headerlink" title="缓存设置不过期"></a>缓存设置不过期</h5><p>物理不过期，不会出现热点key过期问题。但是它会遇到一个数据更新的问题，或者说数据不一致的问题。</p>
+<h5 id="使用锁工具"><a href="#使用锁工具" class="headerlink" title="使用锁工具"></a>使用锁工具</h5><p>当查询在缓存不存在是，当查询数据库重写缓存时加锁，削减击穿流量，其他请求可以返回一个mock值、或者等待一直至超时，这要看具体的业务场景。</p>
+<h2 id="缓存雪崩"><a href="#缓存雪崩" class="headerlink" title="缓存雪崩"></a>缓存雪崩</h2><h4 id="是什么？-2"><a href="#是什么？-2" class="headerlink" title="是什么？"></a>是什么？</h4><p>因为缓存服务挂掉或者热点缓存失效，所有请求都去查数据库，导致数据库连接不够或者数据库处理不过来，从而导致整个系统不可用。</p>
+<h4 id="解决方案-2"><a href="#解决方案-2" class="headerlink" title="解决方案"></a>解决方案</h4><h5 id="缓存设置不过期-1"><a href="#缓存设置不过期-1" class="headerlink" title="缓存设置不过期"></a>缓存设置不过期</h5><p>物理不过期，不会出现缓存雪崩。但是它会遇到一个数据更新的问题，或者说数据不一致的问题。</p>
+<h5 id="使用锁工具-1"><a href="#使用锁工具-1" class="headerlink" title="使用锁工具"></a>使用锁工具</h5><p>只让一个线程构建缓存，其他线程等待构建缓存的线程执行完，重新从缓存获取数据才可以，每个时刻只有一个线程在执行请求，减轻了db的压力，但缺点也很明显，降低了系统的qps。</p>
+<h5 id="打散失效时间"><a href="#打散失效时间" class="headerlink" title="打散失效时间"></a>打散失效时间</h5><p>在缓存进行失效时间设置的时候，从某个适当的值域中随机一个时间作为失效时间即可</p>
+<h3 id="热点数据缓存方案"><a href="#热点数据缓存方案" class="headerlink" title="热点数据缓存方案"></a>热点数据缓存方案</h3><h4 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h4><p>大查询流量命中少量缓存数据，造成缓存热点数据，会造成缓存分片服务压力剧增</p>
+<h4 id="需要考虑的问题"><a href="#需要考虑的问题" class="headerlink" title="需要考虑的问题"></a>需要考虑的问题</h4><ul>
+<li>缓存穿透</li>
+<li>缓存击穿</li>
+<li>热点key</li>
 </ul>
+<h4 id="热点key解决方案"><a href="#热点key解决方案" class="headerlink" title="热点key解决方案"></a>热点key解决方案</h4><h5 id="二级缓存"><a href="#二级缓存" class="headerlink" title="二级缓存"></a>二级缓存</h5><p>在服务内存中构建LRU本地缓存，对数据进行短时间的缓存，削减打到缓存的流量，此种方式可能会造成数据不一致问题，不适合部分业务场景，比如库存等</p>
+<h5 id="数据多份"><a href="#数据多份" class="headerlink" title="数据多份"></a>数据多份</h5><p>将数据复制多份，在查询时可以将流量打散到不同分片上，不过要注意保证多份数据的一致性</p>
 
         </div>
         <footer class="article-footer">
@@ -316,20 +332,10 @@
         
 <nav id="article-nav">
     
-        <a href="/2021/04/02/java-basics-equal-hashcode/" id="article-nav-newer" class="article-nav-link-wrap">
-        <strong class="article-nav-caption">下一篇</strong>
-        <p class="article-nav-title">
-        
-            equals和hashCode
-        
-        </p>
-        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
-    </a>
     
-    
-        <a href="/2019/02/21/java-threadlocal/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2021/04/02/java-basics-equal-hashcode/" id="article-nav-older" class="article-nav-link-wrap">
         <strong class="article-nav-caption">上一篇</strong>
-        <p class="article-nav-title">ThreadLocal详解</p>
+        <p class="article-nav-title">equals和hashCode</p>
         <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
         </a>
     
@@ -351,6 +357,26 @@
                     <li>
                         
                         <div class="item-thumbnail">
+                            <a href="/2021/04/03/cache-breakdown-slide-hotpot/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/cache/redis.jpeg)" alt="缓存击穿、穿透、雪崩、热点数据" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/技术/">技术</a></p>
+                            <p class="item-title"><a href="/2021/04/03/cache-breakdown-slide-hotpot/" class="title">缓存击穿、穿透、雪崩、热点数据</a></p>
+                            <p class="item-date"><time datetime="2021-04-02T16:23:03.000Z" itemprop="datePublished">2021-04-03</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
                             <a href="/2021/04/02/java-basics-equal-hashcode/" class="thumbnail">
     
     
@@ -365,26 +391,6 @@
                             <p class="item-category"><a class="article-category-link" href="/categories/技术/">技术</a></p>
                             <p class="item-title"><a href="/2021/04/02/java-basics-equal-hashcode/" class="title">equals和hashCode</a></p>
                             <p class="item-date"><time datetime="2021-04-02T15:12:14.000Z" itemprop="datePublished">2021-04-02</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2019/05/26/plant-uml-grammar/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/img/java/uml-logo.png)" alt="Plant UML 语法" class="thumbnail-image"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/技术/">技术</a></p>
-                            <p class="item-title"><a href="/2019/05/26/plant-uml-grammar/" class="title">Plant UML 语法</a></p>
-                            <p class="item-date"><time datetime="2019-05-26T15:37:52.000Z" itemprop="datePublished">2019-05-26</time></p>
                         </div>
                     </li>
                 
@@ -467,7 +473,7 @@
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -477,7 +483,7 @@
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">标签</h3>
         <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dubbo/">Dubbo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LeetCode/">LeetCode</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Maven/">Maven</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mybatis/">Mybatis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/">Mysql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nio/">Nio</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shadowsocks/">Shadowsocks</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/">Spring</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UML/">UML</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/并发/">并发</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/读书笔记/">读书笔记</a><span class="tag-list-count">4</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dubbo/">Dubbo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LeetCode/">LeetCode</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Maven/">Maven</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mybatis/">Mybatis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/">Mysql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nio/">Nio</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shadowsocks/">Shadowsocks</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/">Spring</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/并发/">并发</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/读书笔记/">读书笔记</a><span class="tag-list-count">4</span></li></ul>
         </div>
     </div>
 
@@ -487,7 +493,7 @@
     <div class="widget-wrap widget-float">
         <h3 class="widget-title">标签云</h3>
         <div class="widget tagcloud">
-            <a href="/tags/Dubbo/" style="font-size: 12.5px;">Dubbo</a> <a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/LeetCode/" style="font-size: 17.5px;">LeetCode</a> <a href="/tags/Maven/" style="font-size: 10px;">Maven</a> <a href="/tags/Mybatis/" style="font-size: 10px;">Mybatis</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/Nio/" style="font-size: 10px;">Nio</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Spring/" style="font-size: 17.5px;">Spring</a> <a href="/tags/UML/" style="font-size: 10px;">UML</a> <a href="/tags/并发/" style="font-size: 20px;">并发</a> <a href="/tags/设计模式/" style="font-size: 10px;">设计模式</a> <a href="/tags/读书笔记/" style="font-size: 17.5px;">读书笔记</a>
+            <a href="/tags/Dubbo/" style="font-size: 12.5px;">Dubbo</a> <a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/LeetCode/" style="font-size: 17.5px;">LeetCode</a> <a href="/tags/Maven/" style="font-size: 10px;">Maven</a> <a href="/tags/Mybatis/" style="font-size: 10px;">Mybatis</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/Nio/" style="font-size: 10px;">Nio</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Spring/" style="font-size: 17.5px;">Spring</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/并发/" style="font-size: 20px;">并发</a> <a href="/tags/设计模式/" style="font-size: 10px;">设计模式</a> <a href="/tags/读书笔记/" style="font-size: 17.5px;">读书笔记</a>
         </div>
     </div>
 
