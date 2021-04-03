@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>peachey.blog/2021/04/03/redis-set-nx/</loc>
+    <lastmod>2021-04-03T14:41:38.421Z</lastmod>
+    <data>
+        <display>
+        <title>Redis中是如何实现分布式锁的</title>
+        <pubTime>2021-04-03T14:25:21.000Z</pubTime>
+        
+        <tag>Redis</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术" url="peachey.blog/categories/%E6%8A%80%E6%9C%AF/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>peachey.blog/2021/04/03/java-object-methods/</loc>
     <lastmod>2021-04-03T14:12:44.959Z</lastmod>
     <data>

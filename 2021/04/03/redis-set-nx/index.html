@@ -3,17 +3,26 @@
 <head>
     <meta charset="utf-8">
     
-    <title>标签：: Maven | Peachey Blog</title>
+    <title>Redis中是如何实现分布式锁的 | Peachey Blog</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Peachey Blog">
-<meta property="og:url" content="peachey.blog/tags/Maven/index.html">
+        <meta name="keywords" content="Redis" />
+    
+    <meta name="description" content="分布式锁常见的三种实现方式：  数据库乐观锁； 基于Redis的分布式锁； 基于ZooKeeper的分布式锁。   要点Redis要实现分布式锁，以下条件应该得到满足 互斥性 在任意时刻，只有一个客户端能持有锁。  不能死锁 客户端在持有锁的期间崩溃而没有主动解锁，也能保证后续其他客户端能加锁。  实现可以直接通过 set key value px milliseconds nx 命令实现加锁">
+<meta name="keywords" content="Redis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis中是如何实现分布式锁的">
+<meta property="og:url" content="peachey.blog/2021/04/03/redis-set-nx/index.html">
 <meta property="og:site_name" content="Peachey Blog">
+<meta property="og:description" content="分布式锁常见的三种实现方式：  数据库乐观锁； 基于Redis的分布式锁； 基于ZooKeeper的分布式锁。   要点Redis要实现分布式锁，以下条件应该得到满足 互斥性 在任意时刻，只有一个客户端能持有锁。  不能死锁 客户端在持有锁的期间崩溃而没有主动解锁，也能保证后续其他客户端能加锁。  实现可以直接通过 set key value px milliseconds nx 命令实现加锁">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="/img/cache/redis.jpeg">
+<meta property="og:updated_time" content="2021-04-03T14:41:38.421Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Peachey Blog">
+<meta name="twitter:title" content="Redis中是如何实现分布式锁的">
+<meta name="twitter:description" content="分布式锁常见的三种实现方式：  数据库乐观锁； 基于Redis的分布式锁； 基于ZooKeeper的分布式锁。   要点Redis要实现分布式锁，以下条件应该得到满足 互斥性 在任意时刻，只有一个客户端能持有锁。  不能死锁 客户端在持有锁的期间崩溃而没有主动解锁，也能保证后续其他客户端能加锁。  实现可以直接通过 set key value px milliseconds nx 命令实现加锁">
+<meta name="twitter:image" content="/img/cache/redis.jpeg">
     
 
     
@@ -128,73 +137,166 @@
                         <div class="main-body-header">
     <h1 class="header">
     
-    <i class="icon fa fa-tag"></i>标签：: <em>Maven</em>
+    <a class="page-title-link" href="/categories/技术/">技术</a>
     </h1>
 </div>
                         <div class="main-body-content">
-                            
-
-    
-    
+                            <article id="post-redis-set-nx" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
         
-        
-        <section class="archives-wrap">
-            <div class="archive-year-wrap">
-                <a href="/archives/2016" class="archive-year"><i class="icon fa fa-calendar-o"></i>2016</a>
-            </div>
-            <div class="archives">
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2016/11/12/java-maven-introduction/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/img/maven.jpg)" alt="Maven入门指南" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/技术/">技术</a>
-            </div>
-            <div class="date"><time datetime="2016-11-12T14:25:44.000Z" itemprop="datePublished">2016-11-12</time></div>
-        </div>
-        
+            <header class="article-header">
+                
     
         <h1 class="article-title" itemprop="name">
-        <a href="/2016/11/12/java-maven-introduction/">Maven入门指南</a>
+        Redis中是如何实现分布式锁的
         </h1>
     
 
-        <p class="article-excerpt">
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2021/04/03/redis-set-nx/" class="article-date">
+            <time datetime="2021-04-03T14:25:21.000Z" itemprop="datePublished">2021-04-03</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Redis/">Redis</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p><img src="/img/cache/redis.jpeg" alt=""></p>
+<blockquote>
+<p>分布式锁常见的三种实现方式：</p>
+<ul>
+<li>数据库乐观锁；</li>
+<li>基于Redis的分布式锁；</li>
+<li>基于ZooKeeper的分布式锁。</li>
+</ul>
+</blockquote>
+<h4 id="要点"><a href="#要点" class="headerlink" title="要点"></a>要点</h4><p>Redis要实现分布式锁，以下条件应该得到满足</p>
+<h6 id="互斥性"><a href="#互斥性" class="headerlink" title="互斥性"></a>互斥性</h6><ul>
+<li>在任意时刻，只有一个客户端能持有锁。</li>
+</ul>
+<h6 id="不能死锁"><a href="#不能死锁" class="headerlink" title="不能死锁"></a>不能死锁</h6><ul>
+<li>客户端在持有锁的期间崩溃而没有主动解锁，也能保证后续其他客户端能加锁。</li>
+</ul>
+<h4 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h4><p>可以直接通过 <code>set key value px milliseconds nx</code> 命令实现加锁， 通过Lua脚本实现解锁。</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//获取锁（unique_value可以是UUID等）</span><br><span class="line">SET resource_name unique_value NX PX  <span class="number">30000</span></span><br><span class="line"></span><br><span class="line">//释放锁（lua脚本中，一定要比较value，防止误解锁）</span><br><span class="line"><span class="keyword">if</span> redis.call(<span class="string">"get"</span>,KEYS[<span class="number">1</span>]) == ARGV[<span class="number">1</span>] <span class="keyword">then</span></span><br><span class="line">    <span class="keyword">return</span> redis.call(<span class="string">"del"</span>,KEYS[<span class="number">1</span>])</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<h6 id="代码解释"><a href="#代码解释" class="headerlink" title="代码解释"></a>代码解释</h6><ul>
+<li>set 命令要用 <code>set key value px milliseconds nx</code>，替代 <code>setnx + expire</code>需要分两次执行命令的方式，保证了原子性</li>
+<li>value 要具有唯一性，可以使用<code>UUID.randomUUID().toString()</code>方法生成，用来标识这把锁是属于哪个请求加的，在解锁的时候就可以有依据</li>
+<li>释放锁时要验证 value 值，防止误解锁</li>
+<li>通过 Lua 脚本来避免 Check And Set 模型的并发问题，因为在释放锁的时候因为涉及到多个Redis操作 （利用了eval命令执行Lua脚本的原子性）</li>
+</ul>
+<h6 id="加锁代码分析"><a href="#加锁代码分析" class="headerlink" title="加锁代码分析"></a>加锁代码分析</h6><p>首先，set()加入了NX参数，可以保证如果已有key存在，则函数不会调用成功，也就是只有一个客户端能持有锁，满足互斥性。其次，由于我们对锁设置了过期时间，即使锁的持有者后续发生崩溃而没有解锁，锁也会因为到了过期时间而自动解锁（即key被删除），不会发生死锁。最后，因为我们将value赋值为requestId，用来标识这把锁是属于哪个请求加的，那么在客户端在解锁的时候就可以进行校验是否是同一个客户端。</p>
+<h6 id="解锁代码分析"><a href="#解锁代码分析" class="headerlink" title="解锁代码分析"></a>解锁代码分析</h6><p>将Lua代码传到jedis.eval()方法里，并使参数KEYS[1]赋值为lockKey，ARGV[1]赋值为requestId。在执行的时候，首先会获取锁对应的value值，检查是否与requestId相等，如果相等则解锁（删除key）。</p>
+<h6 id="存在的风险"><a href="#存在的风险" class="headerlink" title="存在的风险"></a>存在的风险</h6><p>如果存储锁对应key的那个节点挂了的话，就可能存在丢失锁的风险，导致出现多个客户端持有锁的情况，这样就不能实现资源的独享了。</p>
+<ol>
+<li>客户端A从master获取到锁</li>
+<li>在master将锁同步到slave之前，master宕掉了（Redis的主从同步通常是异步的）,主从切换，slave节点被晋级为master节点</li>
+<li>客户端B取得了同一个资源被客户端A已经获取到的另外一个锁。导致存在同一时刻存不止一个线程获取到锁的情况。</li>
+</ol>
+<h4 id="redlock算法出现"><a href="#redlock算法出现" class="headerlink" title="redlock算法出现"></a>redlock算法出现</h4><p>这个场景是假设有一个 redis cluster，有 5 个 redis master 实例。然后执行如下步骤获取一把锁：</p>
+<ol>
+<li>获取当前时间戳，单位是毫秒；</li>
+<li>跟上面类似，轮流尝试在每个 master 节点上创建锁，过期时间较短，一般就几十毫秒；</li>
+<li>尝试在大多数节点上建立一个锁，比如 5 个节点就要求是 3 个节点 n / 2 + 1；</li>
+<li>客户端计算建立好锁的时间，如果建立锁的时间小于超时时间，就算建立成功了；</li>
+<li>要是锁建立失败了，那么就依次之前建立过的锁删除；</li>
+<li>只要别人建立了一把分布式锁，你就得不断轮询去尝试获取锁。</li>
+</ol>
+<p><img src="/img/cache/redis-red-lock.png" alt=""></p>
+<p>Redis 官方给出了以上两种基于 Redis 实现分布式锁的方法，详细说明可以查看：</p>
+<blockquote>
+<p><a href="https://redis.io/topics/distlock" target="_blank" rel="noopener">https://redis.io/topics/distlock</a> </p>
+</blockquote>
+<h4 id="Redisson实现"><a href="#Redisson实现" class="headerlink" title="Redisson实现"></a>Redisson实现</h4><p>Redisson是一个在Redis的基础上实现的Java驻内存数据网格（In-Memory Data Grid）。它不仅提供了一系列的分布式的Java常用对象，还实现了可重入锁（Reentrant Lock）、公平锁（Fair Lock、联锁（MultiLock）、 红锁（RedLock）、 读写锁（ReadWriteLock）等，还提供了许多分布式服务。</p>
+<p>Redisson提供了使用Redis的最简单和最便捷的方法。Redisson的宗旨是促进使用者对Redis的关注分离（Separation of Concern），从而让使用者能够将精力更集中地放在处理业务逻辑上。</p>
+<h6 id="Redisson-分布式重入锁用法"><a href="#Redisson-分布式重入锁用法" class="headerlink" title="Redisson 分布式重入锁用法"></a>Redisson 分布式重入锁用法</h6><p>Redisson 支持单点模式、主从模式、哨兵模式、集群模式，这里以单点模式为例：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1.构造redisson实现分布式锁必要的Config</span></span><br><span class="line">Config config = <span class="keyword">new</span> Config();</span><br><span class="line">config.useSingleServer().setAddress(<span class="string">"redis://127.0.0.1:5379"</span>).setPassword(<span class="string">"123456"</span>).setDatabase(<span class="number">0</span>);</span><br><span class="line"><span class="comment">// 2.构造RedissonClient</span></span><br><span class="line">RedissonClient redissonClient = Redisson.create(config);</span><br><span class="line"><span class="comment">// 3.获取锁对象实例（无法保证是按线程的顺序获取到）</span></span><br><span class="line">RLock rLock = redissonClient.getLock(lockKey);</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 4.尝试获取锁</span></span><br><span class="line"><span class="comment">     * waitTimeout 尝试获取锁的最大等待时间，超过这个值，则认为获取锁失败</span></span><br><span class="line"><span class="comment">     * leaseTime   锁的持有时间,超过这个时间锁会自动失效（值应设置为大于业务处理的时间，确保在锁有效期内业务能处理完）</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">boolean</span> res = rLock.tryLock((<span class="keyword">long</span>)waitTimeout, (<span class="keyword">long</span>)leaseTime, TimeUnit.SECONDS);</span><br><span class="line">    <span class="keyword">if</span> (res) &#123;</span><br><span class="line">        <span class="comment">//成功获得锁，在这里处理业务</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"aquire lock fail"</span>);</span><br><span class="line">&#125;<span class="keyword">finally</span>&#123;</span><br><span class="line">    <span class="comment">//无论如何, 最后都要解锁</span></span><br><span class="line">    rLock.unlock();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>加锁流程图</strong></p>
+<p><img src="/img/cache/redis-single-lock.png" alt=""></p>
+<p><strong>解锁流程图</strong></p>
+<p><img src="/img/cache/redis-single-unlock.png" alt=""></p>
+
+        </div>
+        <footer class="article-footer">
             
 
-在业余时间对Maven的文档做了一个翻译，由于本人的水平有限，可能会有一些出入，欢迎指正。这个指南意欲为第一次使用Maven的人做参考，同时也是作为一个常见用例的指南。对于第一次使用的人，推荐按这个指南的步骤去学习，对于比较熟悉Maven的人来说，这个指南尽量为目前的需求提供一个快速的解决方案。以下的教程是假设读者已经下载Maven并将Maven本地安装的前提下，如果没有进行次步，请点击这个链
-        </p>
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
     </div>
 </article>
+
+    <section id="comments">
     
-        </div>
+        
+    <div id="valine-thread"></div>
+
     
-
-
-    </div></section>
-
+    </section>
 
 
                         </div>
@@ -255,6 +357,19 @@
             
         </ul>
     </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2021/04/03/java-object-methods/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">Object有几种方法</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
     
     <div class="widgets-container">
         
