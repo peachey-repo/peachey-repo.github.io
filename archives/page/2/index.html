@@ -151,6 +151,57 @@
         <article class="article article-summary">
     <div class="article-summary-inner">
         
+        <a href="/2018/06/23/java-spring-bean-load-summary/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/java/spring.jpeg)" alt="【Spring源码】（三）Spring Bean加载概览" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+</span>
+
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/技术/">技术</a>
+            </div>
+            <div class="date"><time datetime="2018-06-23T08:34:41.000Z" itemprop="datePublished">2018-06-23</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2018/06/23/java-spring-bean-load-summary/">【Spring源码】（三）Spring Bean加载概览</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            
+目录类介绍Bean加载流程概览代码心得
+
+本篇仅对Spring Bean加载的流程做一个概括性的介绍，并不会对细节进行深纠，具体加载细节会在其它章节进行介绍
+
+
+类介绍
+XmlBeanFactory:该类是用于从xml中加载Bean的，主要是继承了DefaultListableBeanFactory，同时内部持有了XmlBeanDefinitionReader，提供了两个构建函数，利用传入的Re
+        </p>
+    </div>
+</article>
+    
+
+    
+    
+    
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
         <a href="/2018/06/23/java-spring-resource/" class="thumbnail">
     
     
@@ -193,10 +244,14 @@ InputStreamSource: 一个接口用于标识这
     </div>
 </article>
     
+        </div>
+    
 
     
     
     
+    
+        <div class="article-row">
     
         <article class="article article-summary">
     <div class="article-summary-inner">
@@ -244,14 +299,10 @@ Core Container:包含Core、Beans、Context和Expr
     </div>
 </article>
     
-        </div>
-    
 
     
     
     
-    
-        <div class="article-row">
     
         <article class="article article-summary">
     <div class="article-summary-inner">
@@ -297,10 +348,14 @@ Core Container:包含Core、Beans、Context和Expr
     </div>
 </article>
     
+        </div>
+    
 
     
     
     
+    
+        <div class="article-row">
     
         <article class="article article-summary">
     <div class="article-summary-inner">
@@ -346,14 +401,10 @@ Core Container:包含Core、Beans、Context和Expr
     </div>
 </article>
     
-        </div>
-    
 
     
     
     
-    
-        <div class="article-row">
     
         <article class="article article-summary">
     <div class="article-summary-inner">
@@ -397,10 +448,14 @@ Core Container:包含Core、Beans、Context和Expr
     </div>
 </article>
     
+        </div>
+    
 
     
     
     
+    
+        <div class="article-row">
     
         <article class="article article-summary">
     <div class="article-summary-inner">
@@ -444,14 +499,10 @@ Core Container:包含Core、Beans、Context和Expr
     </div>
 </article>
     
-        </div>
-    
 
     
     
     
-    
-        <div class="article-row">
     
         <article class="article article-summary">
     <div class="article-summary-inner">
@@ -499,10 +550,14 @@ H
     </div>
 </article>
     
+        </div>
+    
 
     
     
     
+    
+        <div class="article-row">
     
         <article class="article article-summary">
     <div class="article-summary-inner">
@@ -556,8 +611,6 @@ sql优化建议
         </p>
     </div>
 </article>
-    
-        </div>
     
 
     
@@ -616,59 +669,6 @@ Shadowsocks作为一个科学上网工具神器，它的出现极大的便利了
         </p>
     </div>
 </article>
-    
-
-    
-    
-    
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2017/01/07/java-concurrent-note4/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/img/java/java-concurrent.jpg)" alt="并发编程实战笔记——任务执行与中断取消" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/技术/">技术</a>
-            </div>
-            <div class="date"><time datetime="2017-01-07T05:23:11.000Z" itemprop="datePublished">2017-01-07</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2017/01/07/java-concurrent-note4/">并发编程实战笔记——任务执行与中断取消</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            
-线程中执行任务
-顺序去执行，单线程
-每个任务创建一个线程执行
-线程池执行，复用线程
-
-
-无限创建线程缺点：1、线程声明周期的开销，线程的创建和销毁会耗费一定的资源，同时创建线程会带来一定的处理延迟2、资源消耗量，大量空闲线程会占用大量内存资源，大量线程竞争会耗费cpu资源3、上下文切换开销，线程切换，cpu会保存现场和恢复现场，存在性能消耗4、稳定性，需要限制线程的数量，限制会受到jvm参数、线
-        </p>
-    </div>
-</article>
-    
-        </div>
     
 
 
@@ -755,6 +755,26 @@ Shadowsocks作为一个科学上网工具神器，它的出现极大的便利了
                     <li>
                         
                         <div class="item-thumbnail">
+                            <a href="/2021/04/03/java-object-methods/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/java-logo.png)" alt="java-object-methods" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2021/04/03/java-object-methods/" class="title">java-object-methods</a></p>
+                            <p class="item-date"><time datetime="2021-04-03T12:55:40.000Z" itemprop="datePublished">2021-04-03</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
                             <a href="/2021/04/03/cache-breakdown-slide-hotpot/" class="thumbnail">
     
     
@@ -832,26 +852,6 @@ Shadowsocks作为一个科学上网工具神器，它的出现极大的便利了
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/11/14/java-nio-overview/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/img/java/java-io.png)" alt="NIO原理详解" class="thumbnail-image"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/技术/">技术</a></p>
-                            <p class="item-title"><a href="/2018/11/14/java-nio-overview/" class="title">NIO原理详解</a></p>
-                            <p class="item-date"><time datetime="2018-11-13T16:37:57.000Z" itemprop="datePublished">2018-11-14</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -871,7 +871,7 @@ Shadowsocks作为一个科学上网工具神器，它的出现极大的便利了
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -881,7 +881,7 @@ Shadowsocks作为一个科学上网工具神器，它的出现极大的便利了
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">标签</h3>
         <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dubbo/">Dubbo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LeetCode/">LeetCode</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Maven/">Maven</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mybatis/">Mybatis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/">Mysql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nio/">Nio</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shadowsocks/">Shadowsocks</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/">Spring</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/并发/">并发</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/读书笔记/">读书笔记</a><span class="tag-list-count">4</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dubbo/">Dubbo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LeetCode/">LeetCode</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Maven/">Maven</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mybatis/">Mybatis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/">Mysql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nio/">Nio</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shadowsocks/">Shadowsocks</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/">Spring</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/并发/">并发</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/读书笔记/">读书笔记</a><span class="tag-list-count">4</span></li></ul>
         </div>
     </div>
 
@@ -891,7 +891,7 @@ Shadowsocks作为一个科学上网工具神器，它的出现极大的便利了
     <div class="widget-wrap widget-float">
         <h3 class="widget-title">标签云</h3>
         <div class="widget tagcloud">
-            <a href="/tags/Dubbo/" style="font-size: 12.5px;">Dubbo</a> <a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/LeetCode/" style="font-size: 17.5px;">LeetCode</a> <a href="/tags/Maven/" style="font-size: 10px;">Maven</a> <a href="/tags/Mybatis/" style="font-size: 10px;">Mybatis</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/Nio/" style="font-size: 10px;">Nio</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Spring/" style="font-size: 17.5px;">Spring</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/并发/" style="font-size: 20px;">并发</a> <a href="/tags/设计模式/" style="font-size: 10px;">设计模式</a> <a href="/tags/读书笔记/" style="font-size: 17.5px;">读书笔记</a>
+            <a href="/tags/Dubbo/" style="font-size: 13.33px;">Dubbo</a> <a href="/tags/Java/" style="font-size: 16.67px;">Java</a> <a href="/tags/LeetCode/" style="font-size: 16.67px;">LeetCode</a> <a href="/tags/Maven/" style="font-size: 10px;">Maven</a> <a href="/tags/Mybatis/" style="font-size: 10px;">Mybatis</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/Nio/" style="font-size: 10px;">Nio</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Spring/" style="font-size: 16.67px;">Spring</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/并发/" style="font-size: 20px;">并发</a> <a href="/tags/设计模式/" style="font-size: 10px;">设计模式</a> <a href="/tags/读书笔记/" style="font-size: 16.67px;">读书笔记</a>
         </div>
     </div>
 

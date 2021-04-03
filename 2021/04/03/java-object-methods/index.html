@@ -3,17 +3,26 @@
 <head>
     <meta charset="utf-8">
     
-    <title>标签：: 并发 | Peachey Blog</title>
+    <title>java-object-methods | Peachey Blog</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Peachey Blog">
-<meta property="og:url" content="peachey.blog/tags/并发/index.html">
+        <meta name="keywords" content="Java" />
+    
+    <meta name="description" content="Java语言是一种单继承结构语言，Java中所有的类都有一个共同的祖先。这个祖先就是Object类。如果一个类没有用extends明确指出继承于某个类，那么它默认继承Object类。Object的方法我们在平时基本都会用到，但如果没有准备被忽然这么一问，还是有点懵圈的。  Object()Object类的构造方法 registerNatives()为了使JVM发现本机功能，他们被一定的方式命名">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java-object-methods">
+<meta property="og:url" content="peachey.blog/2021/04/03/java-object-methods/index.html">
 <meta property="og:site_name" content="Peachey Blog">
+<meta property="og:description" content="Java语言是一种单继承结构语言，Java中所有的类都有一个共同的祖先。这个祖先就是Object类。如果一个类没有用extends明确指出继承于某个类，那么它默认继承Object类。Object的方法我们在平时基本都会用到，但如果没有准备被忽然这么一问，还是有点懵圈的。  Object()Object类的构造方法 registerNatives()为了使JVM发现本机功能，他们被一定的方式命名">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="/img/java-logo.png">
+<meta property="og:updated_time" content="2021-04-03T13:07:51.900Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Peachey Blog">
+<meta name="twitter:title" content="java-object-methods">
+<meta name="twitter:description" content="Java语言是一种单继承结构语言，Java中所有的类都有一个共同的祖先。这个祖先就是Object类。如果一个类没有用extends明确指出继承于某个类，那么它默认继承Object类。Object的方法我们在平时基本都会用到，但如果没有准备被忽然这么一问，还是有点懵圈的。  Object()Object类的构造方法 registerNatives()为了使JVM发现本机功能，他们被一定的方式命名">
+<meta name="twitter:image" content="/img/java-logo.png">
     
 
     
@@ -128,377 +137,131 @@
                         <div class="main-body-header">
     <h1 class="header">
     
-    <i class="icon fa fa-tag"></i>标签：: <em>并发</em>
+    未分类
     </h1>
 </div>
                         <div class="main-body-content">
-                            
-
-    
-    
+                            <article id="post-java-object-methods" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
         
-        
-        <section class="archives-wrap">
-            <div class="archive-year-wrap">
-                <a href="/archives/2019" class="archive-year"><i class="icon fa fa-calendar-o"></i>2019</a>
-            </div>
-            <div class="archives">
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2019/02/21/java-threadlocal/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/img/java/java-concurrent.jpg)" alt="ThreadLocal详解" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/技术/">技术</a>
-            </div>
-            <div class="date"><time datetime="2019-02-21T08:04:58.000Z" itemprop="datePublished">2019-02-21</time></div>
-        </div>
-        
+            <header class="article-header">
+                
     
         <h1 class="article-title" itemprop="name">
-        <a href="/2019/02/21/java-threadlocal/">ThreadLocal详解</a>
+        java-object-methods
         </h1>
     
 
-        <p class="article-excerpt">
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2021/04/03/java-object-methods/" class="article-date">
+            <time datetime="2021-04-03T12:55:40.000Z" itemprop="datePublished">2021-04-03</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Java/">Java</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p><img src="/img/java-logo.png" alt=""></p>
+<blockquote>
+<p>Java语言是一种单继承结构语言，Java中所有的类都有一个共同的祖先。这个祖先就是Object类。如果一个类没有用extends明确指出继承于某个类，那么它默认继承Object类。Object的方法我们在平时基本都会用到，但如果没有准备被忽然这么一问，还是有点懵圈的。</p>
+</blockquote>
+<h5 id="Object"><a href="#Object" class="headerlink" title="Object()"></a>Object()</h5><p>Object类的构造方法</p>
+<h5 id="registerNatives"><a href="#registerNatives" class="headerlink" title="registerNatives()"></a>registerNatives()</h5><p>为了使JVM发现本机功能，他们被一定的方式命名。例如，对于java.lang.Object.registerNatives，对应的C函数命名为Java_java_lang_Object_registerNatives。</p>
+<p>通过使用registerNatives（或者更确切地说，JNI函数RegisterNatives），可以命名任何你想要你的C函数。</p>
+<h5 id="clone"><a href="#clone" class="headerlink" title="clone()"></a>clone()</h5><p>clone()函数的用途是用来另存一个当前存在的对象。只有实现了Cloneable接口才可以调用该方法，否则抛出CloneNotSupportedException异常。</p>
+<h5 id="getClass"><a href="#getClass" class="headerlink" title="getClass()"></a>getClass()</h5><p>final方法，用于获得运行时的类型。该方法返回的是此Object对象的类对象/运行时类对象Class。效果与Object.class相同。</p>
+<h5 id="equals"><a href="#equals" class="headerlink" title="equals()"></a>equals()</h5><p>equals用来比较两个对象的内容是否相等。默认情况下(继承自Object类)，equals和==是一样的，除非被覆写(override)了</p>
+<h5 id="hashCode"><a href="#hashCode" class="headerlink" title="hashCode()"></a>hashCode()</h5><p>该方法用来返回其所在对象的物理地址（哈希码值），常会和equals方法同时重写，确保相等的两个对象拥有相等的hashCode。</p>
+<h5 id="toString-NaN"><a href="#toString-NaN" class="headerlink" title="toString()"></a>toString()</h5><p>toString()方法返回该对象的字符串表示</p>
+<h5 id="wait"><a href="#wait" class="headerlink" title="wait()"></a>wait()</h5><p>导致当前的线程等待，直到其他线程调用此对象的 notify() 方法或 notifyAll() 方法</p>
+<h5 id="wait-long-timeout"><a href="#wait-long-timeout" class="headerlink" title="wait(long timeout)"></a>wait(long timeout)</h5><p>导致当前的线程等待，直到其他线程调用此对象的 notify() 方法或 notifyAll() 方法，或者超过指定的时间量。</p>
+<h5 id="wait-long-timeout-int-nanos"><a href="#wait-long-timeout-int-nanos" class="headerlink" title="wait(long timeout, int nanos)"></a>wait(long timeout, int nanos)</h5><p>导致当前的线程等待，直到其他线程调用此对象的 notify() 方法或 notifyAll() 方法，或者其他某个线程中断当前线程，或者已超过某个实际时间量。</p>
+<h5 id="notify"><a href="#notify" class="headerlink" title="notify()"></a>notify()</h5><p>唤醒在此对象监视器上等待的单个线程。</p>
+<h5 id="notifyAll"><a href="#notifyAll" class="headerlink" title="notifyAll()"></a>notifyAll()</h5><p>唤醒在此对象监视器上等待的所有线程。</p>
+<h5 id="finalize"><a href="#finalize" class="headerlink" title="finalize()"></a>finalize()</h5><p>当垃圾回收器确定不存在对该对象的更多引用时，由对象的垃圾回收器调用此方法。</p>
+
+        </div>
+        <footer class="article-footer">
             
 
-本文对ThreadLocal源码进行分析，同时会对ThreadLocal使用不当造成的内存泄露问题进行深入分析，如有错误还请指出
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
 
 
-ThreadLocal图解
-ThreadLocal实现
-ThreadLocal内存泄露问题
-参考
-
-
-1. ThreadLocal图解ThreadLocal为创建线程局部变量的类，利用ThreadLocal声明的变量在每个线程访问时，会为每个线程创建一个变量副本
-        </p>
+        </footer>
     </div>
 </article>
-    
 
-    
+    <section id="comments">
     
         
-            </div></section>
-        
-        
-        <section class="archives-wrap">
-            <div class="archive-year-wrap">
-                <a href="/archives/2018" class="archive-year"><i class="icon fa fa-calendar-o"></i>2018</a>
-            </div>
-            <div class="archives">
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2018/12/10/java-concurrenthashmap/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/img/java/java-concurrent.jpg)" alt="ConcurrentHashMap源码演进" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-</span>
-
+    <div id="valine-thread"></div>
 
     
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/技术/">技术</a>
-            </div>
-            <div class="date"><time datetime="2018-12-09T16:28:17.000Z" itemprop="datePublished">2018-12-10</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2018/12/10/java-concurrenthashmap/">ConcurrentHashMap源码演进</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            
-
-ConcurrentHashMap是在并发操作当中经常用到的一个容器类，能够比较高性能的线程安全的支持kv操作，在jdk7，8以及后续的版本中，该源码也进行了一些变化，本文从源码角度入手对该容器类进行分析，阐述其如何能够高效进行kv操作并保证线程安全，并且在新的jdk版本中又做了何种新的优化，主要分析get,put,size等方法。
-
-目录
-ConcurrentHashMap经典设计
-jdk 
-        </p>
-    </div>
-</article>
-    
-
-    
-    
-        
-            </div></section>
-        
-        
-        <section class="archives-wrap">
-            <div class="archive-year-wrap">
-                <a href="/archives/2017" class="archive-year"><i class="icon fa fa-calendar-o"></i>2017</a>
-            </div>
-            <div class="archives">
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2017/01/07/java-concurrent-note4/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/img/java/java-concurrent.jpg)" alt="并发编程实战笔记——任务执行与中断取消" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/技术/">技术</a>
-            </div>
-            <div class="date"><time datetime="2017-01-07T05:23:11.000Z" itemprop="datePublished">2017-01-07</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2017/01/07/java-concurrent-note4/">并发编程实战笔记——任务执行与中断取消</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            
-线程中执行任务
-顺序去执行，单线程
-每个任务创建一个线程执行
-线程池执行，复用线程
-
-
-无限创建线程缺点：1、线程声明周期的开销，线程的创建和销毁会耗费一定的资源，同时创建线程会带来一定的处理延迟2、资源消耗量，大量空闲线程会占用大量内存资源，大量线程竞争会耗费cpu资源3、上下文切换开销，线程切换，cpu会保存现场和恢复现场，存在性能消耗4、稳定性，需要限制线程的数量，限制会受到jvm参数、线
-        </p>
-    </div>
-</article>
-    
-
-    
-    
-        
-            </div></section>
-        
-        
-        <section class="archives-wrap">
-            <div class="archive-year-wrap">
-                <a href="/archives/2016" class="archive-year"><i class="icon fa fa-calendar-o"></i>2016</a>
-            </div>
-            <div class="archives">
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2016/12/31/java-concurrent-note3/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/img/java/java-concurrent.jpg)" alt="并发编程实战笔记——基础构建模块" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/技术/">技术</a>
-            </div>
-            <div class="date"><time datetime="2016-12-31T15:24:57.000Z" itemprop="datePublished">2016-12-31</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2016/12/31/java-concurrent-note3/">并发编程实战笔记——基础构建模块</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            
-
-并发包提供的一些并发基础构建模块
-
-同步容器类
-同步容器保证线程安全的方式：将状态封装起来，对外提供公共方法，在公共方法上进行同步操作，使得同时仅有一个线程可以访问容器。
-
-同步容器存在的问题同步容器的每一个提供的操作都是线程安全的，但当处理一些复合操作时，会存在问题，常见的复合操作：迭代、条件运算（先检查再运行）。对于条件运算，需要使用与单操作相同的锁来实现同步，详细可以查看上节的客户端加锁
-        </p>
-    </div>
-</article>
-    
-
-    
-    
-    
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2016/12/27/java-concurrent-note2/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/img/java/java-concurrent.jpg)" alt="并发编程实战笔记——对象的组合" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/技术/">技术</a>
-            </div>
-            <div class="date"><time datetime="2016-12-27T07:56:49.000Z" itemprop="datePublished">2016-12-27</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2016/12/27/java-concurrent-note2/">并发编程实战笔记——对象的组合</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            
-
-将线程安全的组件组合成更大规模的组件或程序，组合模式
-
-设计线程安全的类
-确定对象状态由那些变量构成
-确定限制状态变量的不变约束
-指定一个管理并发访问对象状态的策略
-
-此处有如下一些概念：
-
-状态空间：一个对象的所有变量的变化的范围为该对象的状态空间
-不变约束：指某个变量的取值区域，比如一个long变量的不变约束为Long.MAX_VALUE~Long.MIN_VALUE
-鲜艳条件：指某个变量
-        </p>
-    </div>
-</article>
-    
-        </div>
-    
-
-    
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2016/08/20/java-concurrent-note-1/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/img/java/java-concurrent.jpg)" alt="并发编程实战笔记-线程安全与对象共享" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/技术/">技术</a>
-            </div>
-            <div class="date"><time datetime="2016-08-19T16:03:07.000Z" itemprop="datePublished">2016-08-20</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2016/08/20/java-concurrent-note-1/">并发编程实战笔记-线程安全与对象共享</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            
-1 线程安全性1.1 出现并发问题的两个因素 可变、共享
-1.2 线程安全类 当多个线程访问某个类时，不管运行时环境以何种方式调度或这些线程该如何执行，并且在主调代码中不需要任何额外的同步操作，这个类都表现正确，成为线程同步类
-1.3 竟态条件 由于线程不恰当的执行时序而出现的不正确的结果，称之为竟态条件，明白的来说就是某一系列操作不是原子性的，当多个线程执行时序不同时，可能会导致错误的结果。
-
-        </p>
-    </div>
-</article>
-    
-
-
-    </div></section>
-
+    </section>
 
 
                         </div>
@@ -559,6 +322,19 @@ jdk
             
         </ul>
     </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2021/04/03/cache-breakdown-slide-hotpot/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">缓存击穿、穿透、雪崩、热点数据</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
     
     <div class="widgets-container">
         
